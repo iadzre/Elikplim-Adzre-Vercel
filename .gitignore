@@ -7,9 +7,5 @@ dist
 website.zip
 .vscode
 
-# Portfolio media (~700MB) — too large for reliable Git HTTPS push.
-# Files stay on disk for local/Vercel CLI deploys. See README “Media & Git”.
-public/images/
-
-# Exceeds GitHub 100MB file limit if tracked individually
-public/images/Prj13/Director_2.mp4
+# Over 100MB — must use Git LFS (see .gitattributes)
+# public/images/Prj13/Director_2.mp4 is tracked via LFS
