@@ -1,0 +1,22 @@
+@import './styles.css';
+@import './about-timeline.css';
+
+/* React root mirrors original body flex layout (footer margin-top: auto) */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Font classes referenced in original HTML (same fallbacks as before) */
+.gotham-book {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+}
+
+.josefin-extra-bold {
+  font-family: 'Josefin Sans', 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+}

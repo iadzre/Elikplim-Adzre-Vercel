@@ -1,0 +1,13 @@
+/* Hide timeline scrollbar specifically */
+#timeline-scroll,
+.timeline-scroll {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+#timeline-scroll::-webkit-scrollbar,
+.timeline-scroll::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+}
