@@ -1,3 +1,2 @@
-# Git LFS — only files over GitHub's 100MB limit
-public/images/Prj13/Director_2.mp4 filter=lfs diff=lfs merge=lfs -text
+# Portfolio media — Git LFS (resumable uploads; Director_2.mp4 exceeds GitHub 100MB limit)
 public/images/** filter=lfs diff=lfs merge=lfs -text

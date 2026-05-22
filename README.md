@@ -123,7 +123,7 @@ supabase/
 
 ## Media & Git
 
-Portfolio files in `public/images/` (~700MB) are in the repo. **Videos** (`.mp4`) use [Git LFS](https://git-lfs.com) because `Director_2.mp4` exceeds GitHub’s 100MB file limit.
+Portfolio files in `public/images/` (~900MB) are tracked with [Git LFS](https://git-lfs.com). After clone: `git lfs install && git lfs pull`.
 
 After clone: `git lfs install` then `git lfs pull`
 
