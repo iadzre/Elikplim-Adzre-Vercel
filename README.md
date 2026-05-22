@@ -121,6 +121,16 @@ supabase/
   seed.sql        # Seed data
 ```
 
+## Media & Git
+
+Portfolio files in `public/images/` (~700MB) are **gitignored** so pushes to GitHub stay fast and reliable.
+
+- **Local / Vercel CLI:** keep `public/images/` on disk; run `vercel deploy` or `npm run build` from this folder.
+- **GitHub → Vercel (Git integration):** upload media separately (e.g. [Git LFS](https://git-lfs.com), Supabase Storage, or copy `public/images/` into the Vercel project after clone).
+- **Large file:** `public/images/Prj13/Director_2.mp4` (156MB) exceeds GitHub’s 100MB limit if tracked.
+
+**Remote:** [github.com/iadzre/Elikplim-Adzre-Vercel](https://github.com/iadzre/Elikplim-Adzre-Vercel)
+
 ## Notes
 
 - **Portfolio media** lives in `public/images/` and is referenced as `/images/...` in Supabase seed rows.
