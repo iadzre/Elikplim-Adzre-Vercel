@@ -188,7 +188,9 @@ supabase/
 
 Portfolio files in `public/images/` (~900MB) are tracked with [Git LFS](https://git-lfs.com). After clone: `npm run media:pull` (or `git lfs install && git lfs pull`).
 
-**Vercel:** Enable **Git → Git Large File Storage (LFS)** in project settings, then redeploy. `vercel.json` also runs `git lfs pull` during install. Without LFS, production serves 133-byte pointer files instead of images.
+**LFS budget exceeded?** See [docs/MEDIA-LFS-BUDGET.md](docs/MEDIA-LFS-BUDGET.md) — restore GitHub LFS quota, disable LFS on Vercel, or migrate media to Supabase Storage.
+
+**Vercel:** Disable **Git → Git Large File Storage (LFS)** in project settings (or set `GIT_LFS_SKIP_SMUDGE=1`). `vercel.json` does **not** run `git lfs pull` so deploys are not blocked by LFS bandwidth. Without real media files (LFS or Supabase URLs), production serves 133-byte pointer files instead of images.
 
 To regenerate Supabase image links after adding files to `public/images/`:
 
