@@ -83,16 +83,20 @@ function AppContent() {
   useCustomCursor(!isAdmin);
 
   useEffect(() => {
-    document.documentElement.classList.toggle('admin-route', isAdmin);
-    document.body.classList.toggle('admin-route', isAdmin);
     if (isAdmin) {
+      document.documentElement.className = 'admin-route';
+      document.body.className = 'admin-route';
       document.body.classList.remove('overflow-hidden', 'no-scroll');
       document.documentElement.classList.remove('no-scroll');
+      return () => {
+        document.documentElement.classList.remove('admin-route');
+        document.body.classList.remove('admin-route');
+      };
     }
-    return () => {
-      document.documentElement.classList.remove('admin-route');
-      document.body.classList.remove('admin-route');
-    };
+
+    document.documentElement.classList.remove('admin-route');
+    document.body.classList.remove('admin-route');
+    return undefined;
   }, [isAdmin]);
 
   return (
