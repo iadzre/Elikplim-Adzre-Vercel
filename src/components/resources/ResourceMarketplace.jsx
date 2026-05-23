@@ -48,16 +48,11 @@ export function ResourceMarketplace({
     <section
       ref={sectionRef}
       id="resource-marketplace"
-      className="w-full px-4 sm:px-6 md:px-8 lg:px-12 py-12 md:py-20"
-      aria-labelledby="marketplace-heading"
+      className="w-full px-4 sm:px-6 md:px-8 lg:px-12 pb-12"
+      aria-label="Resource catalog"
     >
-      <div className="max-w-6xl mx-auto">
-        <h2 id="marketplace-heading" className="gazzetta-bold text-2xl md:text-4xl text-[#2A2F7F]">
-          Marketplace
-        </h2>
-        <p className="text-sm text-[#2A2F7F]/70 mt-2">Search, filter, and sort the full catalog.</p>
-
-        <div className="flex flex-col lg:flex-row gap-4 mt-8">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <label htmlFor={searchId} className="sr-only">
             Search resources
           </label>
@@ -66,8 +61,8 @@ export function ResourceMarketplace({
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by title, tag, or keyword…"
-            className="resources-input flex-1 py-3 px-4 rounded-full text-sm text-[#2A2F7F] josefin"
+            placeholder="Search…"
+            className="resources-input flex-1 py-2 px-3 text-sm text-[#2A2F7F]"
             autoComplete="off"
           />
           <label htmlFor={sortId} className="sr-only">
@@ -77,9 +72,9 @@ export function ResourceMarketplace({
             id={sortId}
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="resources-input py-3 px-4 rounded-full text-xs uppercase tracking-widest josefin text-[#2A2F7F] lg:w-52"
+            className="resources-input py-2 px-3 text-xs josefin uppercase tracking-wider text-[#2A2F7F] sm:w-44"
           >
-            <option value="featured">Featured first</option>
+            <option value="featured">Featured</option>
             <option value="downloads">Most downloaded</option>
             <option value="rating">Highest rated</option>
             <option value="price-asc">Price: low to high</option>
@@ -89,9 +84,9 @@ export function ResourceMarketplace({
         </div>
 
         <div
-          className="flex gap-2 mt-6 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin"
+          className="flex gap-2 mb-8 overflow-x-auto pb-1"
           role="tablist"
-          aria-label="Category filters"
+          aria-label="Categories"
         >
           {tabs.map((tab) => (
             <button
@@ -100,10 +95,10 @@ export function ResourceMarketplace({
               role="tab"
               aria-selected={category === tab.id}
               onClick={() => setCategory(tab.id)}
-              className={`shrink-0 py-2 px-4 rounded-full text-[10px] uppercase tracking-[0.2em] josefin border transition-colors ${
+              className={`shrink-0 py-1.5 px-3 text-[10px] uppercase tracking-[0.2em] josefin border-b-2 transition-colors ${
                 category === tab.id
-                  ? 'bg-[#2A2F7F] text-[#f3fcf0] border-[#2A2F7F]'
-                  : 'bg-white/50 text-[#2A2F7F] border-[#2A2F7F]/15 hover:border-[#F45D01]/40'
+                  ? 'border-[#F45D01] text-[#2A2F7F]'
+                  : 'border-transparent text-[#2A2F7F]/50 hover:text-[#2A2F7F]'
               }`}
             >
               {tab.label}
@@ -112,7 +107,11 @@ export function ResourceMarketplace({
         </div>
 
         {loading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-10" aria-busy="true" aria-label="Loading resources">
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5"
+            aria-busy="true"
+            aria-label="Loading resources"
+          >
             {Array.from({ length: 6 }).map((_, i) => (
               <ResourceCardSkeleton key={i} />
             ))}
@@ -120,17 +119,12 @@ export function ResourceMarketplace({
         )}
 
         {!loading && isEmpty && (
-          <div className="mt-16 text-center py-16 rounded-2xl border border-dashed border-[#2A2F7F]/20 bg-white/30">
-            <p className="gazzetta-bold text-xl text-[#2A2F7F]">No resources match your filters</p>
-            <p className="text-sm text-[#2A2F7F]/70 mt-2 max-w-md mx-auto">
-              Try clearing search or selecting a different category.
-            </p>
+          <div className="py-16 text-center">
+            <p className="text-sm text-[#2A2F7F]">No resources match your filters.</p>
             <button
               type="button"
-              className="resources-btn-ghost mt-6 py-2.5 px-6 text-xs uppercase tracking-widest josefin rounded-full"
-              onClick={() => {
-                onResetFilters?.();
-              }}
+              className="resources-link mt-3 text-xs josefin uppercase tracking-widest"
+              onClick={() => onResetFilters?.()}
             >
               Reset filters
             </button>
@@ -139,30 +133,30 @@ export function ResourceMarketplace({
 
         {!loading && !isEmpty && (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
               {items.map((resource) => (
-                <ResourceCard key={resource.id} resource={resource} onSelect={onSelect} onQuickView={onSelect} />
+                <ResourceCard key={resource.id} resource={resource} onSelect={onSelect} />
               ))}
             </div>
 
             {totalPages > 1 && (
-              <nav className="flex items-center justify-center gap-4 mt-12" aria-label="Pagination">
+              <nav className="flex items-center justify-center gap-6 mt-10 text-xs josefin tracking-widest text-[#2A2F7F]/70" aria-label="Pagination">
                 <button
                   type="button"
                   disabled={page <= 1}
                   onClick={() => setPage(page - 1)}
-                  className="resources-btn-ghost py-2 px-5 text-xs uppercase tracking-widest josefin rounded-full disabled:opacity-40"
+                  className="disabled:opacity-30 hover:text-[#F45D01] transition-colors"
                 >
                   Previous
                 </button>
-                <span className="text-xs josefin text-[#2A2F7F]/70 tracking-widest">
-                  Page {page} of {totalPages}
+                <span>
+                  {page} / {totalPages}
                 </span>
                 <button
                   type="button"
                   disabled={page >= totalPages}
                   onClick={() => setPage(page + 1)}
-                  className="resources-btn-ghost py-2 px-5 text-xs uppercase tracking-widest josefin rounded-full disabled:opacity-40"
+                  className="disabled:opacity-30 hover:text-[#F45D01] transition-colors"
                 >
                   Next
                 </button>
