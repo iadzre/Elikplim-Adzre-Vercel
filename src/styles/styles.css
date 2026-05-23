@@ -785,6 +785,22 @@ body.projects-page {
     min-height: 100vh;
 }
 
+html.resources-page-html {
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100vh;
+}
+
+body.resources-page {
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100vh;
+}
+
+body.resources-page .page-shell {
+    overflow: visible;
+}
+
 html.get-in-touch-page-html,
 html.leave-a-note-page-html {
     height: auto !important;

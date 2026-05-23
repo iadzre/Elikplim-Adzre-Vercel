@@ -6,6 +6,7 @@
     { "source": "/about%20me.html", "destination": "/about", "permanent": true },
     { "source": "/about me.html", "destination": "/about", "permanent": true },
     { "source": "/projects.html", "destination": "/projects", "permanent": true },
+    { "source": "/resources.html", "destination": "/resources", "permanent": true },
     { "source": "/leave%20a%20note.html", "destination": "/leave-a-note", "permanent": true },
     { "source": "/leave a note.html", "destination": "/leave-a-note", "permanent": true }
   ],

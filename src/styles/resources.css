@@ -1,0 +1,210 @@
+/* Resources marketplace — matches site tokens (#F45D01, #2A2F7F, editorial motion) */
+
+@keyframes resources-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes resources-hero-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(2%, -1.5%) scale(1.02);
+  }
+}
+
+@keyframes resources-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.resources-animate-in {
+  animation: resources-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.resources-animate-in-delay-1 {
+  animation-delay: 0.08s;
+}
+
+.resources-animate-in-delay-2 {
+  animation-delay: 0.16s;
+}
+
+.resources-animate-in-delay-3 {
+  animation-delay: 0.24s;
+}
+
+.resources-hero-orb {
+  animation: resources-hero-drift 18s ease-in-out infinite;
+}
+
+.resources-card {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(42, 47, 127, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+}
+
+.resources-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 40px -12px rgba(42, 47, 127, 0.15),
+    0 0 0 1px rgba(244, 93, 1, 0.12);
+  border-color: rgba(244, 93, 1, 0.2);
+}
+
+.resources-category-card {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.resources-category-card:hover,
+.resources-category-card.is-active {
+  transform: translateY(-2px);
+  border-color: rgba(244, 93, 1, 0.35);
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.resources-category-card.is-active {
+  box-shadow: 0 8px 24px -8px rgba(244, 93, 1, 0.2);
+}
+
+.resources-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(205, 220, 200, 0.5) 0%,
+    rgba(245, 241, 202, 0.9) 50%,
+    rgba(205, 220, 200, 0.5) 100%
+  );
+  background-size: 200% 100%;
+  animation: resources-shimmer 1.4s ease-in-out infinite;
+}
+
+.resources-badge-free {
+  background: rgba(42, 47, 127, 0.08);
+  color: #2a2f7f;
+}
+
+.resources-badge-premium {
+  background: rgba(244, 93, 1, 0.12);
+  color: #c44a01;
+}
+
+.resources-modal {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.resources-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.resources-modal-panel {
+  transform: translateY(1.5rem) scale(0.98);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.resources-modal.is-open .resources-modal-panel {
+  transform: translateY(0) scale(1);
+}
+
+.resources-thumb-zoom img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.resources-card:hover .resources-thumb-zoom img {
+  transform: scale(1.04);
+}
+
+.resources-input {
+  border: 1px solid rgba(42, 47, 127, 0.15);
+  background: rgba(255, 255, 255, 0.7);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.resources-input:focus {
+  outline: none;
+  border-color: rgba(244, 93, 1, 0.5);
+  box-shadow: 0 0 0 3px rgba(244, 93, 1, 0.12);
+}
+
+.resources-btn-primary {
+  background: #2a2f7f;
+  color: #f3fcf0;
+  transition:
+    background 0.3s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.resources-btn-primary:hover {
+  background: #1e2260;
+  transform: translateY(-1px);
+}
+
+.resources-btn-accent {
+  background: #f45d01;
+  color: #fff;
+  transition:
+    background 0.3s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.resources-btn-accent:hover {
+  background: #d94f00;
+  transform: translateY(-1px);
+}
+
+.resources-btn-ghost {
+  border: 1px solid rgba(42, 47, 127, 0.2);
+  color: #2a2f7f;
+  background: transparent;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease,
+    background 0.3s ease;
+}
+
+.resources-btn-ghost:hover {
+  border-color: #f45d01;
+  color: #f45d01;
+  background: rgba(244, 93, 1, 0.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resources-animate-in,
+  .resources-hero-orb,
+  .resources-skeleton {
+    animation: none;
+  }
+
+  .resources-card:hover,
+  .resources-category-card:hover {
+    transform: none;
+  }
+}

@@ -24,7 +24,8 @@ insert into public.nav_links (label, href, display_order, visible)
 select * from (values
   ('About Me', '/about', 0, true),
   ('Projects', '/projects', 1, true),
-  ('Leave a Note', '/leave-a-note', 2, true)
+  ('Resources', '/resources', 2, true),
+  ('Leave a Note', '/leave-a-note', 3, true)
 ) as v(label, href, display_order, visible)
 where not exists (select 1 from public.nav_links limit 1);
 

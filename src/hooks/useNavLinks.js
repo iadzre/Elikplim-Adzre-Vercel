@@ -5,6 +5,7 @@ import { mapNavLinks } from '../lib/cmsMappers';
 const FALLBACK_NAV = [
   { id: 'about', label: 'About Me', href: '/about' },
   { id: 'projects', label: 'Projects', href: '/projects' },
+  { id: 'resources', label: 'Resources', href: '/resources' },
   { id: 'note', label: 'Leave a Note', href: '/leave-a-note' },
 ];
 

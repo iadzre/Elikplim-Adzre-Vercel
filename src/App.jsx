@@ -13,6 +13,9 @@ const AboutPage = lazy(() =>
 const ProjectsPage = lazy(() =>
   import('./pages/ProjectsPage').then((m) => ({ default: m.ProjectsPage }))
 );
+const ResourcesPage = lazy(() =>
+  import('./pages/ResourcesPage').then((m) => ({ default: m.ResourcesPage }))
+);
 const LeaveANotePage = lazy(() =>
   import('./pages/LeaveANotePage').then((m) => ({ default: m.LeaveANotePage }))
 );
@@ -108,6 +111,7 @@ function AppContent() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/leave-a-note" element={<LeaveANotePage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route element={<ProtectedRoute />}>
