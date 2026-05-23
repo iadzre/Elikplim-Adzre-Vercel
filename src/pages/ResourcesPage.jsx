@@ -10,12 +10,7 @@ import { useHeaderBlur } from '../hooks/useHeaderBlur';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { useMarketplace } from '../features/resources/hooks/useMarketplace';
 import { useUserLibrary } from '../features/resources/hooks/useUserLibrary';
-import { useResourceAuth } from '../features/resources/hooks/useResourceAuth';
-import {
-  checkResourceAccess,
-  fetchIsFavorited,
-  fetchApprovedReviews,
-} from '../lib/services/resourcesService';
+import { fetchApprovedReviews } from '../lib/services/resourcesService';
 import { ALL_DOWNLOADS_FREE } from '../lib/resources/marketplaceConfig';
 import '../styles/resources.css';
 
@@ -31,15 +26,11 @@ export function ResourcesPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [checkoutNotice, setCheckoutNotice] = useState(null);
   const [modalMeta, setModalMeta] = useState({
-    hasAccess: false,
-    isFavorited: false,
     reviews: [],
   });
 
   const marketplace = useMarketplace();
   const library = useUserLibrary();
-  const { isSignedIn } = useResourceAuth();
-
   usePageTitle('Resources');
 
   useEffect(() => {
@@ -56,14 +47,8 @@ export function ResourcesPage() {
     setSelected(resource);
     setModalOpen(true);
     window.history.pushState(null, '', `/resources/${resource.slug}`);
-    const [accessRes, favRes, revRes] = await Promise.all([
-      checkResourceAccess(resource.id),
-      fetchIsFavorited(resource.id),
-      fetchApprovedReviews(resource.id),
-    ]);
+    const revRes = await fetchApprovedReviews(resource.id);
     setModalMeta({
-      hasAccess: Boolean(accessRes.data),
-      isFavorited: Boolean(favRes.data),
       reviews: revRes.data ?? [],
     });
   }, []);
@@ -164,15 +149,9 @@ export function ResourcesPage() {
             resource={selected}
             isOpen={modalOpen}
             onClose={closeModal}
-            hasAccess={modalMeta.hasAccess || ALL_DOWNLOADS_FREE || (selected.isFree ?? false) || library.owns(selected.id)}
-            isFavorited={modalMeta.isFavorited}
-            onFavoriteChange={(v) => setModalMeta((m) => ({ ...m, isFavorited: v }))}
-            onAccessGranted={() => {
-              setModalMeta((m) => ({ ...m, hasAccess: true }));
-              library.refresh();
-            }}
+            hasAccess={ALL_DOWNLOADS_FREE || (selected.isFree ?? false) || library.owns(selected.id)}
+            onAccessGranted={() => library.refresh()}
             reviews={modalMeta.reviews}
-            isSignedIn={isSignedIn}
           />
         )}
       </Suspense>

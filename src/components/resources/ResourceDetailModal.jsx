@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { LazyImage } from '../shared/LazyImage';
-import {
-  downloadResourceFile,
-  createPendingPurchase,
-  startStripeCheckout,
-  toggleFavorite,
-  createReview,
-} from '../../lib/services/resourcesService';
+import { downloadResourceFile } from '../../lib/services/resourcesService';
 import { ALL_DOWNLOADS_FREE } from '../../lib/resources/marketplaceConfig';
 
 /**
@@ -15,11 +9,8 @@ import { ALL_DOWNLOADS_FREE } from '../../lib/resources/marketplaceConfig';
  *   isOpen: boolean;
  *   onClose: () => void;
  *   hasAccess: boolean;
- *   isFavorited: boolean;
- *   onFavoriteChange: (v: boolean) => void;
  *   onAccessGranted: () => void;
  *   reviews?: Array<{ rating: number; review_text?: string; profiles?: { full_name?: string } }>;
- *   isSignedIn: boolean;
  * }} props
  */
 export function ResourceDetailModal({
@@ -27,18 +18,13 @@ export function ResourceDetailModal({
   isOpen,
   onClose,
   hasAccess,
-  isFavorited,
-  onFavoriteChange,
   onAccessGranted,
   reviews = [],
-  isSignedIn,
 }) {
   const closeRef = useRef(null);
   const [previewIndex, setPreviewIndex] = useState(0);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState(/** @type {{ type: 'error'|'success'; text: string } | null} */ (null));
-  const [reviewRating, setReviewRating] = useState(5);
-  const [reviewText, setReviewText] = useState('');
 
   useEffect(() => {
     if (!isOpen) return;
@@ -76,62 +62,6 @@ export function ResourceDetailModal({
       setMessage({ type: 'success', text: 'Download started.' });
       onAccessGranted();
     }
-  }
-
-  async function handlePurchase() {
-    if (!isSignedIn) {
-      setMessage({ type: 'error', text: 'Sign in to purchase.' });
-      return;
-    }
-    setBusy(true);
-    setMessage(null);
-    const { data: purchaseId, error: purchaseError } = await createPendingPurchase(resource.id);
-    if (purchaseError || !purchaseId) {
-      setBusy(false);
-      setMessage({ type: 'error', text: purchaseError?.message ?? 'Could not start purchase' });
-      return;
-    }
-    const { url, error: checkoutError } = await startStripeCheckout(purchaseId, resource.slug);
-    setBusy(false);
-    if (checkoutError || !url) {
-      setMessage({ type: 'error', text: checkoutError?.message ?? 'Checkout unavailable' });
-      return;
-    }
-    window.location.href = url;
-  }
-
-  async function handleFavorite() {
-    if (!isSignedIn) {
-      setMessage({ type: 'error', text: 'Sign in to save favorites.' });
-      return;
-    }
-    const { data, error } = await toggleFavorite(resource.id);
-    if (error) {
-      setMessage({ type: 'error', text: error.message });
-      return;
-    }
-    onFavoriteChange(Boolean(data));
-  }
-
-  async function handleReview(e) {
-    e.preventDefault();
-    if (!isSignedIn) {
-      setMessage({ type: 'error', text: 'Sign in to leave a review.' });
-      return;
-    }
-    if (!hasAccess && !ALL_DOWNLOADS_FREE) {
-      setMessage({ type: 'error', text: 'Download or purchase before reviewing.' });
-      return;
-    }
-    setBusy(true);
-    const { error } = await createReview(resource.id, reviewRating, reviewText);
-    setBusy(false);
-    if (error) {
-      setMessage({ type: 'error', text: error.message });
-      return;
-    }
-    setMessage({ type: 'success', text: 'Review submitted for approval.' });
-    setReviewText('');
   }
 
   return (
@@ -191,7 +121,6 @@ export function ResourceDetailModal({
             <p className="mt-3 text-[#2A2F7F]/75 leading-relaxed">{resource.longDescription}</p>
             <p className="mt-4 text-xs text-[#2A2F7F]/55">
               {resource.rating} rating · {resource.downloadCount.toLocaleString()} downloads · {priceLabel}
-              {hasAccess && ' · You have access'}
             </p>
 
             {message && (
@@ -203,8 +132,8 @@ export function ResourceDetailModal({
               </p>
             )}
 
-            <div className="flex flex-wrap gap-3 mt-6">
-              {canDownload ? (
+            {canDownload && (
+              <div className="mt-6">
                 <button
                   type="button"
                   disabled={busy}
@@ -213,26 +142,8 @@ export function ResourceDetailModal({
                 >
                   Download →
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={handlePurchase}
-                  className="text-xs josefin uppercase tracking-[0.2em] hover:text-[#F45D01] disabled:opacity-50"
-                >
-                  Purchase {priceLabel} →
-                </button>
-              )}
-              {isSignedIn && (
-                <button
-                  type="button"
-                  onClick={handleFavorite}
-                  className="text-xs josefin uppercase tracking-[0.2em] text-[#2A2F7F]/70 hover:text-[#F45D01]"
-                >
-                  {isFavorited ? 'Unfavorite' : 'Favorite'}
-                </button>
-              )}
-            </div>
+              </div>
+            )}
 
             {reviews.length > 0 && (
               <div className="mt-6 pt-4 border-t border-[#2A2F7F]/10">
@@ -246,37 +157,6 @@ export function ResourceDetailModal({
                   ))}
                 </ul>
               </div>
-            )}
-
-            {isSignedIn && canDownload && (
-              <form onSubmit={handleReview} className="mt-6 pt-4 border-t border-[#2A2F7F]/10 space-y-2">
-                <h3 className="text-[10px] uppercase tracking-widest josefin text-[#2A2F7F]/60">Leave a review</h3>
-                <select
-                  value={reviewRating}
-                  onChange={(e) => setReviewRating(Number(e.target.value))}
-                  className="resources-input w-full py-1 px-2 text-xs"
-                >
-                  {[5, 4, 3, 2, 1].map((n) => (
-                    <option key={n} value={n}>
-                      {n} stars
-                    </option>
-                  ))}
-                </select>
-                <textarea
-                  value={reviewText}
-                  onChange={(e) => setReviewText(e.target.value)}
-                  rows={2}
-                  placeholder="Optional comment"
-                  className="resources-input w-full py-2 px-2 text-xs"
-                />
-                <button
-                  type="submit"
-                  disabled={busy}
-                  className="text-xs josefin uppercase tracking-widest hover:text-[#F45D01]"
-                >
-                  Submit review
-                </button>
-              </form>
             )}
           </div>
         </div>

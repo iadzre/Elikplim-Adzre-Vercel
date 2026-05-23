@@ -7,7 +7,6 @@ import { ResourceErrorBoundary } from '../components/resources/ResourceErrorBoun
 import { ContentMessage } from '../components/shared/ContentMessage';
 import { useHeaderBlur } from '../hooks/useHeaderBlur';
 import { useResourceDetail } from '../features/resources/hooks/useResourceDetail';
-import { useResourceAuth } from '../features/resources/hooks/useResourceAuth';
 import { ALL_DOWNLOADS_FREE } from '../lib/resources/marketplaceConfig';
 import '../styles/resources.css';
 
@@ -20,7 +19,6 @@ export function ResourceDetailPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const headerRef = useHeaderBlur(true);
-  const { isSignedIn } = useResourceAuth();
   const detail = useResourceDetail(slug);
   const [modalOpen, setModalOpen] = useState(true);
 
@@ -74,14 +72,8 @@ export function ResourceDetailPage() {
               navigate('/resources', { replace: true });
             }}
             hasAccess={detail.hasAccess || ALL_DOWNLOADS_FREE}
-            isFavorited={detail.isFavorited}
-            onFavoriteChange={detail.setIsFavorited}
-            onAccessGranted={() => {
-              detail.setHasAccess(true);
-              detail.refresh();
-            }}
+            onAccessGranted={() => detail.refresh()}
             reviews={detail.reviews}
-            isSignedIn={isSignedIn}
           />
         </Suspense>
       )}
