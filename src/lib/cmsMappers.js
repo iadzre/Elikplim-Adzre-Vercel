@@ -1,4 +1,5 @@
 import { mediaUrl } from './mediaUrl';
+import { normalizeCoverSrc } from './normalizeCoverSrc';
 
 /**
  * @param {Record<string, unknown>} row
@@ -6,7 +7,7 @@ import { mediaUrl } from './mediaUrl';
  */
 export function mapCmsProject(row) {
   const tags = /** @type {string[] | null} */ (row.tags) || [];
-  const cover = row.cover_image_url ? mediaUrl(String(row.cover_image_url)) : '';
+  const cover = normalizeCoverSrc(row.cover_image_url);
 
   return {
     id: String(row.id),

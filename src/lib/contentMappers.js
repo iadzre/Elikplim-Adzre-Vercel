@@ -2,6 +2,8 @@
  * @typedef {'image' | 'video' | 'mixed'} ProjectMediaType
  */
 
+import { normalizeCoverSrc } from './normalizeCoverSrc';
+
 /**
  * @typedef {Object} Project
  * @property {string} id
@@ -9,7 +11,7 @@
  * @property {string} subtitle
  * @property {string} tagLeft
  * @property {string} tagRight
- * @property {string} coverSrc
+ * @property {string | null} coverSrc
  * @property {string} coverAlt
  * @property {ProjectMediaType} mediaType
  * @property {string[]} mediaSrcs
@@ -55,10 +57,12 @@ export function mapProject(row) {
     subtitle: row.subtitle,
     tagLeft: row.tag_left,
     tagRight: row.tag_right,
-    coverSrc: row.cover_src ? String(row.cover_src) : '',
+    coverSrc: normalizeCoverSrc(row.cover_src),
     coverAlt: row.cover_alt,
     mediaType: row.media_type,
-    mediaSrcs: media.map((m) => (m.src ? String(m.src) : '')).filter(Boolean),
+    mediaSrcs: media
+      .map((m) => normalizeCoverSrc(m.src))
+      .filter((src) => src != null),
   };
 }
 
@@ -82,7 +86,7 @@ export function mapTestimonial(row) {
 export function mapHomeSlide(row) {
   return {
     id: row.id,
-    src: row.src ? String(row.src) : '',
+    src: normalizeCoverSrc(row.src) ?? '',
     alt: row.alt_text || '',
   };
 }

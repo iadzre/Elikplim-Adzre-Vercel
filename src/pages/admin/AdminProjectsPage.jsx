@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { AdminFeedback } from '../../components/admin/AdminFeedback';
 import { ReorderControls, swapOrder } from '../../components/admin/ReorderControls';
+import { ProjectCover } from '../../components/projects/ProjectCover';
 import { confirmAction, formatDate } from '../../lib/adminUtils';
+import { normalizeCoverSrc } from '../../lib/normalizeCoverSrc';
 
 export function AdminProjectsPage() {
   const [projects, setProjects] = useState([]);
@@ -105,11 +107,12 @@ export function AdminProjectsPage() {
                     />
                   </td>
                   <td>
-                    {p.cover_image_url ? (
-                      <img src={p.cover_image_url} alt="" className="admin-thumb" />
-                    ) : (
-                      <div className="admin-thumb" />
-                    )}
+                    <ProjectCover
+                      title={p.title}
+                      coverSrc={normalizeCoverSrc(p.cover_image_url)}
+                      projectId={p.id}
+                      className="admin-thumb"
+                    />
                   </td>
                   <td>
                     {p.title}

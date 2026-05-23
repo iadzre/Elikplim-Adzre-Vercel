@@ -980,6 +980,71 @@ footer {
     }
 }
 
+/* Project cover fallback (missing src or onError) */
+.project-cover-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2A2F7F 0%, #4a5099 45%, #F45D01 100%);
+}
+
+.project-cover-placeholder--0 {
+    background: linear-gradient(135deg, #2A2F7F 0%, #4a5099 50%, #F45D01 100%);
+}
+
+.project-cover-placeholder--1 {
+    background: linear-gradient(145deg, #F45D01 0%, #c94d08 40%, #2A2F7F 100%);
+}
+
+.project-cover-placeholder--2 {
+    background: linear-gradient(160deg, #cddcc8 0%, #6b8f5e 35%, #2A2F7F 100%);
+}
+
+.project-cover-placeholder--3 {
+    background: linear-gradient(120deg, #2A2F7F 0%, #1a1e4d 60%, #f5f1ca 100%);
+}
+
+.project-cover-placeholder--4 {
+    background: linear-gradient(135deg, #f3fcf0 0%, #F45D01 55%, #2A2F7F 100%);
+}
+
+.project-cover-placeholder__initial {
+    font-size: clamp(2.5rem, 14vw, 4.5rem);
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    user-select: none;
+}
+
+.project-tile .project-cover-placeholder__initial {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+}
+
+.admin-thumb.project-cover-placeholder,
+.admin-thumb.project-cover-placeholder--0,
+.admin-thumb.project-cover-placeholder--1,
+.admin-thumb.project-cover-placeholder--2,
+.admin-thumb.project-cover-placeholder--3,
+.admin-thumb.project-cover-placeholder--4 {
+    position: relative;
+    inset: auto;
+    min-width: 48px;
+    min-height: 48px;
+}
+
+.admin-thumb.project-cover-placeholder .project-cover-placeholder__initial,
+.admin-thumb.project-cover-placeholder--0 .project-cover-placeholder__initial,
+.admin-thumb.project-cover-placeholder--1 .project-cover-placeholder__initial,
+.admin-thumb.project-cover-placeholder--2 .project-cover-placeholder__initial,
+.admin-thumb.project-cover-placeholder--3 .project-cover-placeholder__initial,
+.admin-thumb.project-cover-placeholder--4 .project-cover-placeholder__initial {
+    font-size: 1.25rem;
+}
+
 /* Force hide default cursor on desktop - must be last to override all other styles */
 @media (min-width: 769px) {
     html *,

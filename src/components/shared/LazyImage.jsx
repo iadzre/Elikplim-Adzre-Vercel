@@ -23,7 +23,8 @@ export function LazyImage({
   ...props
 }) {
   const [failed, setFailed] = useState(false);
-  const resolved = failed || !src ? PLACEHOLDER : mediaUrl(src);
+  const safeSrc = src?.trim();
+  const resolved = failed || !safeSrc ? PLACEHOLDER : mediaUrl(safeSrc);
 
   return (
     <img

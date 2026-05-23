@@ -5,7 +5,9 @@ import { uploadFile } from '../../lib/upload';
 import { AdminField } from '../../components/admin/AdminField';
 import { AdminFeedback } from '../../components/admin/AdminFeedback';
 import { FileDropzone } from '../../components/admin/FileDropzone';
+import { ProjectCover } from '../../components/projects/ProjectCover';
 import { confirmAction, stringToTags, tagsToString } from '../../lib/adminUtils';
+import { normalizeCoverSrc } from '../../lib/normalizeCoverSrc';
 
 const empty = {
   title: '',
@@ -116,7 +118,14 @@ export function AdminProjectFormPage() {
               else if (url) update('cover_image_url', url);
             }}
           />
-          {form.cover_image_url && <img src={form.cover_image_url} alt="" style={{ marginTop: '0.5rem', maxHeight: 120, borderRadius: 6 }} />}
+          <div style={{ marginTop: '0.5rem', width: 120, height: 120, position: 'relative', borderRadius: 6, overflow: 'hidden' }}>
+            <ProjectCover
+              title={form.title || 'Project'}
+              coverSrc={normalizeCoverSrc(form.cover_image_url)}
+              projectId={id}
+              className="w-full h-full object-cover"
+            />
+          </div>
         </AdminField>
 
         <AdminField label="Tags (comma-separated)">
