@@ -1,11 +1,17 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { SidePanelProvider } from './context/SidePanelContext';
+import { SiteDataProvider } from './context/SiteDataContext';
 import { useCustomCursor } from './hooks/useCustomCursor';
 import { SiteMeta } from './components/shared/SiteMeta';
 import { HomePage } from './pages/HomePage';
-import { ProtectedRoute } from './components/admin/ProtectedRoute';
-import { AdminLayout } from './components/admin/AdminLayout';
+
+const AdminProtectedRoute = lazy(() =>
+  import('./components/admin/adminEntry.js').then((m) => ({ default: m.ProtectedRoute }))
+);
+const AdminLayout = lazy(() =>
+  import('./components/admin/adminEntry.js').then((m) => ({ default: m.AdminLayout }))
+);
 
 const AboutPage = lazy(() =>
   import('./pages/AboutPage').then((m) => ({ default: m.AboutPage }))
@@ -139,7 +145,7 @@ function AppContent() {
           <Route path="/resources/:slug" element={<ResourceDetailPage />} />
           <Route path="/leave-a-note" element={<LeaveANotePage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
-          <Route element={<ProtectedRoute />}>
+          <Route element={<AdminProtectedRoute />}>
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/hero" element={<AdminHeroPage />} />
@@ -174,9 +180,11 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter>
-      <SidePanelProvider>
-        <AppContent />
-      </SidePanelProvider>
+      <SiteDataProvider>
+        <SidePanelProvider>
+          <AppContent />
+        </SidePanelProvider>
+      </SiteDataProvider>
     </BrowserRouter>
   );
 }

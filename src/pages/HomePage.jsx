@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageLayout } from '../components/layout/PageLayout';
 import { LazyImage } from '../components/shared/LazyImage';
 import { ContentMessage } from '../components/shared/ContentMessage';
 import { useHeaderBlur } from '../hooks/useHeaderBlur';
 import { useHomeSlides } from '../hooks/useHomeSlides';
-import { useHero } from '../hooks/useHero';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { parseHeroDisplay, splitHeadlineLines } from '../lib/parseHeroDisplay';
 
 export function HomePage() {
   const headerRef = useHeaderBlur(true);
-  const { slides, loading, error, usingFallback } = useHomeSlides();
-  const { hero } = useHero();
+  const { slides, hero, loading, error, usingFallback } = useHomeSlides();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   usePageTitle();
@@ -29,7 +28,18 @@ export function HomePage() {
   }, [slides.length]);
 
   const activeIndex = slides.length > 0 ? currentSlide % slides.length : 0;
+  const nextIndex = slides.length > 1 ? (activeIndex + 1) % slides.length : activeIndex;
   const overlayOpacity = hero?.overlayOpacity ?? 0.6;
+  const heroDisplay = useMemo(() => parseHeroDisplay(hero), [hero]);
+  const headlineLines = useMemo(
+    () => (heroDisplay ? splitHeadlineLines(heroDisplay.headline) : []),
+    [heroDisplay]
+  );
+
+  const visibleSlideIndices = useMemo(() => new Set([activeIndex, nextIndex]), [activeIndex, nextIndex]);
+
+  const showEmptyState = loading && slides.length === 0;
+  const showErrorState = error && !usingFallback && slides.length === 0;
 
   return (
     <PageLayout
@@ -43,50 +53,74 @@ export function HomePage() {
         <section className="w-full flex flex-col overflow-x-hidden">
           <div className="w-full overflow-x-hidden" style={{ height: '100vh' }}>
             <div className="relative w-full h-full bg-white overflow-hidden transition-all duration-300">
-              <div id="image-slider" className="relative w-full h-full">
-                {loading && (
+              <div id="image-slider" className="hero">
+                {showEmptyState && (
                   <div className="absolute inset-0 flex items-center justify-center bg-[#f3fcf0] z-20">
                     <ContentMessage message="Loading…" />
                   </div>
                 )}
-                {error && !loading && !usingFallback && slides.length === 0 && (
+                {showErrorState && (
                   <div className="absolute inset-0 flex items-center justify-center bg-[#f3fcf0] z-20 px-6">
                     <ContentMessage message="Unable to load homepage slides. Check Supabase configuration and run seed scripts." />
                   </div>
                 )}
-                {!loading &&
-                  slides.length > 0 &&
-                  slides.map((slide, index) => (
-                    <LazyImage
-                      key={slide.id}
-                      src={slide.src}
-                      alt={slide.alt}
-                      eager={index === 0}
-                      fetchPriority={index === 0 ? 'high' : undefined}
-                      className="slider-image absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-                      style={{ opacity: index === activeIndex ? 1 : 0 }}
-                    />
-                  ))}
+                {slides.length > 0 &&
+                  slides.map((slide, index) =>
+                    visibleSlideIndices.has(index) ? (
+                      <LazyImage
+                        key={slide.id}
+                        src={slide.src}
+                        alt={slide.alt}
+                        eager={index === activeIndex}
+                        fetchPriority={index === activeIndex ? 'high' : undefined}
+                        className="slider-image absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+                        style={{ opacity: index === activeIndex ? 1 : 0 }}
+                      />
+                    ) : null
+                  )}
+
                 <div
-                  className="absolute inset-0 w-full h-full z-10"
-                  style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }}
+                  className="hero__overlay"
+                  style={{ opacity: overlayOpacity }}
+                  aria-hidden="true"
                 />
-                {hero?.headline && (
-                  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center px-6 text-center pointer-events-none">
-                    <h1 className="text-3xl sm:text-5xl md:text-6xl text-white gazzetta-bold uppercase tracking-wide mb-3 max-w-4xl">
-                      {hero.headline}
-                    </h1>
-                    {hero.subheadline && (
-                      <p className="text-sm sm:text-base text-gray-200 josefin tracking-2x uppercase max-w-2xl mb-6">
-                        {hero.subheadline}
+
+                {heroDisplay && (
+                  <div
+                    className={`hero__content${heroDisplay.showEyebrow ? '' : ' hero__content--no-eyebrow'}`}
+                  >
+                    {heroDisplay.showEyebrow && (
+                      <p className="hero__eyebrow">
+                        <span className="hero__eyebrow--strong">{heroDisplay.eyebrowStrong}</span>
+                        <span className="hero__eyebrow-sep" aria-hidden="true" />
+                        <span className="hero__eyebrow--soft">{heroDisplay.eyebrowSoft}</span>
                       </p>
                     )}
-                    {hero.ctaText && hero.ctaLink && (
-                      <Link
-                        to={hero.ctaLink}
-                        className="pointer-events-auto inline-block px-6 py-3 bg-[#F45D01] text-white josefin uppercase tracking-2x text-xs hover:bg-[#2A2F7F] transition-colors duration-300"
-                      >
-                        {hero.ctaText}
+
+                    <div
+                      className={`hero__divider${heroDisplay.showEyebrow ? ' hero__divider--after-eyebrow' : ' hero__divider--solo'}`}
+                      aria-hidden="true"
+                    />
+
+                    <h1 className="hero__headline">
+                      {headlineLines.map((line, index) => (
+                        <span key={line} className="hero__headline-line">
+                          {line}
+                          {index < headlineLines.length - 1 ? <br /> : null}
+                        </span>
+                      ))}
+                    </h1>
+
+                    {heroDisplay.descriptor && (
+                      <p className="hero__descriptor">{heroDisplay.descriptor}</p>
+                    )}
+
+                    {heroDisplay.ctaText && heroDisplay.ctaLink && (
+                      <Link to={heroDisplay.ctaLink} className="hero__cta">
+                        {heroDisplay.ctaText}
+                        <span className="hero__cta-arrow" aria-hidden="true">
+                          →
+                        </span>
                       </Link>
                     )}
                   </div>

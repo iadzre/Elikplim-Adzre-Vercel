@@ -3,8 +3,8 @@
 insert into public.hero (headline, subheadline, cta_text, cta_link, background_type, background_value)
 select
   'Elikplim Adzre',
-  'Illustrator · Filmmaker · Photographer · Storyteller',
-  'View Projects',
+  'WELCOME TO THE WORK|of::A journey through illustration, film, photography, and visual storytelling.',
+  'Explore projects',
   '/projects',
   'image',
   '/images/slider/_DSF2248.jpg'

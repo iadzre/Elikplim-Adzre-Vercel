@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "seed:generate": "node scripts/generate-seed.mjs",
+    "media:migrate": "node scripts/migrate-media-to-storage.mjs",
     "media:pull": "git lfs install && git lfs pull",
+    "supabase:media-urls": "supabase db query --file supabase/generated/update-media-urls.sql --linked",
     "supabase:setup": "bash scripts/setup-supabase.sh",
     "supabase:seed-cms": "supabase db query --file supabase/seed-cms.sql --linked",
     "supabase:seed-resources": "supabase db query --file supabase/seed-resources.sql --linked",
@@ -18,7 +20,6 @@
     "vercel:env": "bash scripts/sync-vercel-env.sh"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^9.6.0",
     "@supabase/supabase-js": "^2.49.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -27,6 +28,10 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.19",
     "vite": "^5.4.11"
   }
 }

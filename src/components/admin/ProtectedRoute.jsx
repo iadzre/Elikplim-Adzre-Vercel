@@ -1,7 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getSession, isSupabaseConfigured, supabase } from '../../lib/supabase';
-import '../../styles/admin.css';
 
 export function ProtectedRoute() {
   const location = useLocation();

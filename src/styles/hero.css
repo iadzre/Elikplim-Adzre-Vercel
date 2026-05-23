@@ -1,0 +1,221 @@
+/* Editorial hero text — Primland-inspired layout (home page only) */
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.5) 60%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1.5rem;
+  max-width: 780px;
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+/* Layer 1 — Eyebrow */
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  animation: hero-fade-up 0.9s ease forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.hero__eyebrow-sep {
+  width: 1px;
+  height: 1em;
+  background: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.hero__eyebrow--strong {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+}
+
+.hero__eyebrow--soft {
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+}
+
+/* Layer 2 — Divider */
+.hero__divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.35);
+  margin: 0 auto 24px;
+  animation: hero-fade-up 0.9s ease forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.hero__divider--after-eyebrow {
+  margin-top: 0;
+}
+
+.hero__divider--solo {
+  animation-delay: 0.2s;
+}
+
+/* Layer 3 — Headline */
+.hero__headline {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin: 0 0 20px;
+  animation: hero-fade-up 1.1s ease forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+.hero__headline-line {
+  display: block;
+}
+
+/* Layer 4 — Descriptor */
+.hero__descriptor {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(0.75rem, 1.3vw, 0.875rem);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
+  margin: 0 0 36px;
+  max-width: 420px;
+  line-height: 1.7;
+  animation: hero-fade-up 0.9s ease forwards;
+  animation-delay: 0.8s;
+  opacity: 0;
+}
+
+/* Layer 5 — CTA */
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+  padding-bottom: 4px;
+  pointer-events: auto;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  animation: hero-fade-up 0.9s ease forwards;
+  animation-delay: 1s;
+  opacity: 0;
+}
+
+.hero__cta:hover {
+  color: #ffffff;
+  border-bottom-color: rgba(255, 255, 255, 0.9);
+}
+
+.hero__cta-arrow {
+  font-size: 0.85rem;
+  transition: transform 0.3s ease;
+}
+
+.hero__cta:hover .hero__cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Stagger when eyebrow hidden — pull headline earlier */
+.hero__content--no-eyebrow .hero__headline {
+  animation-delay: 0.3s;
+}
+
+.hero__content--no-eyebrow .hero__descriptor {
+  animation-delay: 0.6s;
+}
+
+.hero__content--no-eyebrow .hero__cta {
+  animation-delay: 0.8s;
+}
+
+@media (max-width: 640px) {
+  .hero__headline {
+    font-size: clamp(2.2rem, 11vw, 3rem);
+    line-height: 1.12;
+  }
+
+  .hero__eyebrow {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero__eyebrow-sep {
+    display: none;
+  }
+
+  .hero__divider {
+    height: 24px;
+    margin-bottom: 16px;
+  }
+
+  .hero__descriptor {
+    font-size: 0.8rem;
+    max-width: 300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__eyebrow,
+  .hero__divider,
+  .hero__headline,
+  .hero__descriptor,
+  .hero__cta {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

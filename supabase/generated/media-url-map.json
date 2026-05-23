@@ -1,0 +1,1106 @@
+[
+  {
+    "localPath": "/images/Prj01/Christa Valley_Page_01.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj01/Christa Valley_Page_01.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj01/Christa%20Valley_Page_01.webp",
+    "bytes": 16730,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj01/Christa Valley_Page_05.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj01/Christa Valley_Page_05.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj01/Christa%20Valley_Page_05.webp",
+    "bytes": 22342,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj01/Christa Valley_Page_06.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj01/Christa Valley_Page_06.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj01/Christa%20Valley_Page_06.webp",
+    "bytes": 36070,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj01/Christa Valley_Page_07.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj01/Christa Valley_Page_07.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj01/Christa%20Valley_Page_07.webp",
+    "bytes": 39058,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj01/Christa Valley_Page_08.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj01/Christa Valley_Page_08.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj01/Christa%20Valley_Page_08.webp",
+    "bytes": 31090,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj01/Christa Valley_Page_09.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj01/Christa Valley_Page_09.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj01/Christa%20Valley_Page_09.webp",
+    "bytes": 54512,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj01/Christa Valley_Page_11.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj01/Christa Valley_Page_11.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj01/Christa%20Valley_Page_11.webp",
+    "bytes": 59618,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj01/Christa Valley_Page_12.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj01/Christa Valley_Page_12.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj01/Christa%20Valley_Page_12.webp",
+    "bytes": 132788,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj01/Christa Valley_Page_13.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj01/Christa Valley_Page_13.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj01/Christa%20Valley_Page_13.webp",
+    "bytes": 431684,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj01/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj01/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj01/cover.webp",
+    "bytes": 234004,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/313A9124.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/313A9124.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/313A9124.webp",
+    "bytes": 149144,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/313A9441.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/313A9441.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/313A9441.webp",
+    "bytes": 99076,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/Artboard 1.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/Artboard 1.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/Artboard%201.webp",
+    "bytes": 14628,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/CCW Thank You.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/CCW Thank You.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/CCW%20Thank%20You.webp",
+    "bytes": 167804,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/CCW TY.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/CCW TY.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/CCW%20TY.webp",
+    "bytes": 238588,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj02/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj02/cover.webp",
+    "bytes": 38188,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/IMG_0025.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/IMG_0025.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/IMG_0025.webp",
+    "bytes": 75698,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/IMG_0030.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/IMG_0030.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/IMG_0030.webp",
+    "bytes": 100612,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/IMG_0035.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/IMG_0035.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/IMG_0035.webp",
+    "bytes": 71098,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/IMG_0068.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/IMG_0068.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/IMG_0068.webp",
+    "bytes": 167944,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/IMG_0088.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/IMG_0088.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/IMG_0088.webp",
+    "bytes": 66808,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/IMG_0121.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/IMG_0121.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/IMG_0121.webp",
+    "bytes": 116822,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/IMG_0164.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/IMG_0164.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/IMG_0164.webp",
+    "bytes": 23802,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/IMG_9961.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/IMG_9961.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/IMG_9961.webp",
+    "bytes": 98922,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/IMG_9967.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/IMG_9967.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/IMG_9967.webp",
+    "bytes": 44326,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/OC 25.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/OC 25.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/OC%2025.webp",
+    "bytes": 105950,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/oc nu.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/oc nu.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/oc%20nu.webp",
+    "bytes": 109458,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/prod thank you.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/prod thank you.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/prod%20thank%20you.webp",
+    "bytes": 207930,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/pst Stanley.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/pst Stanley.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/pst%20Stanley.webp",
+    "bytes": 140792,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/Theatre Logo.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/Theatre Logo.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/Theatre%20Logo.webp",
+    "bytes": 44224,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj02/Theatre rehearsal.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj02/Theatre rehearsal.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj02/Theatre%20rehearsal.webp",
+    "bytes": 197334,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj03/golden nugget 2.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj03/golden nugget 2.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj03/golden%20nugget%202.webp",
+    "bytes": 41094,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj03/golden nugget.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj03/golden nugget.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj03/golden%20nugget.webp",
+    "bytes": 48502,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj03/Golden Nuggets cover back.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj03/Golden Nuggets cover back.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj03/Golden%20Nuggets%20cover%20back.webp",
+    "bytes": 150762,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj03/Golden Nuggets cover front.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj03/Golden Nuggets cover front.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj03/Golden%20Nuggets%20cover%20front.webp",
+    "bytes": 50806,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj04/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj04/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj04/cover.webp",
+    "bytes": 6120,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj04/cover.png",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj04/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj04/cover.webp",
+    "bytes": 23282,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj04/social media 2.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj04/social media 2.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj04/social%20media%202.webp",
+    "bytes": 32026,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj04/social media 3.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj04/social media 3.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj04/social%20media%203.webp",
+    "bytes": 32498,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj04/social media.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj04/social media.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj04/social%20media.webp",
+    "bytes": 29940,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj04/Trek Main Flyer 02.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj04/Trek Main Flyer 02.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj04/Trek%20Main%20Flyer%2002.webp",
+    "bytes": 73474,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj04/trek pics.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj04/trek pics.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj04/trek%20pics.webp",
+    "bytes": 492638,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj05/fb cover.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj05/fb cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj05/fb%20cover.webp",
+    "bytes": 91326,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj05/iWorship 24 ii.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj05/iWorship 24 ii.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj05/iWorship%2024%20ii.webp",
+    "bytes": 116726,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj05/tshirt 2 back.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj05/tshirt 2 back.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj05/tshirt%202%20back.webp",
+    "bytes": 37902,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj05/tshirt 2 front with logo.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj05/tshirt 2 front with logo.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj05/tshirt%202%20front%20with%20logo.webp",
+    "bytes": 29308,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj05/Untitled-1.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj05/Untitled-1.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj05/Untitled-1.webp",
+    "bytes": 68168,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj05/worship night.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj05/worship night.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj05/worship%20night.webp",
+    "bytes": 79326,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj06/Cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj06/Cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj06/Cover.webp",
+    "bytes": 26484,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj06/fuel 8.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj06/fuel 8.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj06/fuel%208.webp",
+    "bytes": 33102,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj06/oc.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj06/oc.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj06/oc.webp",
+    "bytes": 52612,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj06/ocii.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj06/ocii.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj06/ocii.webp",
+    "bytes": 50198,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj06/open.png",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj06/open.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj06/open.webp",
+    "bytes": 37830,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj06/shop 03.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj06/shop 03.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj06/shop%2003.webp",
+    "bytes": 32476,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj06/shop inside.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj06/shop inside.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj06/shop%20inside.webp",
+    "bytes": 27440,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj06/stage 6.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj06/stage 6.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj06/stage%206.webp",
+    "bytes": 20182,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj06/weights 02.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj06/weights 02.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj06/weights%2002.webp",
+    "bytes": 34688,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj07/revvd up 02.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj07/revvd up 02.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj07/revvd%20up%2002.webp",
+    "bytes": 246140,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj07/revvd up 03.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj07/revvd up 03.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj07/revvd%20up%2003.webp",
+    "bytes": 327202,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj07/revvd up_Page_1.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj07/revvd up_Page_1.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj07/revvd%20up_Page_1.webp",
+    "bytes": 10936,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj07/revvd up_Page_2.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj07/revvd up_Page_2.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj07/revvd%20up_Page_2.webp",
+    "bytes": 26164,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj07/revvd up_Page_3.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj07/revvd up_Page_3.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj07/revvd%20up_Page_3.webp",
+    "bytes": 18278,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj08/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj08/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj08/cover.webp",
+    "bytes": 89524,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj08/PSS Urbania HeadShots 01.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj08/PSS Urbania HeadShots 01.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj08/PSS%20Urbania%20HeadShots%2001.webp",
+    "bytes": 121306,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj08/PSS Urbania HeadShots 02.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj08/PSS Urbania HeadShots 02.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj08/PSS%20Urbania%20HeadShots%2002.webp",
+    "bytes": 148660,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj08/PSS Urbania HeadShots 03.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj08/PSS Urbania HeadShots 03.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj08/PSS%20Urbania%20HeadShots%2003.webp",
+    "bytes": 128008,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj08/PSS Urbania HeadShots 04.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj08/PSS Urbania HeadShots 04.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj08/PSS%20Urbania%20HeadShots%2004.webp",
+    "bytes": 104124,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj08/PSS Urbania HeadShots 05.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj08/PSS Urbania HeadShots 05.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj08/PSS%20Urbania%20HeadShots%2005.webp",
+    "bytes": 101888,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj08/PSS Urbania HeadShots 06.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj08/PSS Urbania HeadShots 06.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj08/PSS%20Urbania%20HeadShots%2006.webp",
+    "bytes": 48966,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2862.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2862.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2862.webp",
+    "bytes": 113572,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2876.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2876.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2876.webp",
+    "bytes": 138662,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2890.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2890.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2890.webp",
+    "bytes": 71408,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2896.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2896.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2896.webp",
+    "bytes": 165802,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2897.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2897.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2897.webp",
+    "bytes": 176546,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2944.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2944.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2944.webp",
+    "bytes": 102260,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2956.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2956.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2956.webp",
+    "bytes": 95858,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2958.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2958.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2958.webp",
+    "bytes": 95358,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2973.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2973.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2973.webp",
+    "bytes": 77596,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/_DSF2985.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj09/_DSF2985.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj09/_DSF2985.webp",
+    "bytes": 120312,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj09/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj09/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj09/cover.webp",
+    "bytes": 78726,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/_DSF2197.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj10/_DSF2197.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj10/_DSF2197.webp",
+    "bytes": 168588,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/_DSF2218.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj10/_DSF2218.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj10/_DSF2218.webp",
+    "bytes": 356286,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/_DSF2284.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj10/_DSF2284.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj10/_DSF2284.webp",
+    "bytes": 129166,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/_DSF2288.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj10/_DSF2288.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj10/_DSF2288.webp",
+    "bytes": 160452,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/_DSF2290.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj10/_DSF2290.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj10/_DSF2290.webp",
+    "bytes": 197834,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/_DSF2514.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj10/_DSF2514.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj10/_DSF2514.webp",
+    "bytes": 101710,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/_DSF2533.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj10/_DSF2533.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj10/_DSF2533.webp",
+    "bytes": 144786,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/_DSF2558.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj10/_DSF2558.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj10/_DSF2558.webp",
+    "bytes": 178332,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/_DSF2596.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj10/_DSF2596.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj10/_DSF2596.webp",
+    "bytes": 173244,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj10/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj10/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj10/cover.webp",
+    "bytes": 97876,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/04. Missionettes April 2022.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/04. Missionettes April 2022.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/04.%20Missionettes%20April%202022.webp",
+    "bytes": 115410,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/altered ego podcast.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/altered ego podcast.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/altered%20ego%20podcast.webp",
+    "bytes": 103448,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/Artboard 1.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/Artboard 1.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/Artboard%201.webp",
+    "bytes": 693082,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj11/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj11/cover.webp",
+    "bytes": 22468,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/diet & diet 01.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/diet & diet 01.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/diet%20%26%20diet%2001.webp",
+    "bytes": 118894,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/diet & diet 02.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/diet & diet 02.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/diet%20%26%20diet%2002.webp",
+    "bytes": 159212,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/dotstory.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/dotstory.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/dotstory.webp",
+    "bytes": 133862,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/Fundraising-1.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/Fundraising-1.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/Fundraising-1.webp",
+    "bytes": 238328,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/GT cover 0.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/GT cover 0.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/GT%20cover%200.webp",
+    "bytes": 220736,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/masthhead.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/masthhead.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/masthhead.webp",
+    "bytes": 133862,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/moody graduation si.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/moody graduation si.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/moody%20graduation%20si.webp",
+    "bytes": 112310,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/pp.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/pp.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/pp.webp",
+    "bytes": 59944,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/VOTE PRECIOUS.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/VOTE PRECIOUS.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/VOTE%20PRECIOUS.webp",
+    "bytes": 56906,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj11/Youth Camp 00.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj11/Youth Camp 00.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj11/Youth%20Camp%2000.webp",
+    "bytes": 137550,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj12/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj12/cover.webp",
+    "bytes": 100056,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/DSCF0510.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/DSCF0510.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/DSCF0510.webp",
+    "bytes": 78498,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/DSCF0534.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/DSCF0534.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/DSCF0534.webp",
+    "bytes": 36904,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/DSCF0715.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/DSCF0715.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/DSCF0715.webp",
+    "bytes": 212974,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/DSCF0747.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/DSCF0747.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/DSCF0747.webp",
+    "bytes": 61680,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/DSCF2927-Edit.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/DSCF2927-Edit.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/DSCF2927-Edit.webp",
+    "bytes": 114354,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/DSCF2929-Edit.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/DSCF2929-Edit.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/DSCF2929-Edit.webp",
+    "bytes": 106620,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/DSCF8712.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/DSCF8712.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/DSCF8712.webp",
+    "bytes": 103188,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/DSCF8734.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/DSCF8734.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/DSCF8734.webp",
+    "bytes": 96764,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/IMG_1204.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/IMG_1204.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/IMG_1204.webp",
+    "bytes": 131544,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/IMG_1228.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/IMG_1228.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/IMG_1228.webp",
+    "bytes": 67960,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/IMG_1238.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/IMG_1238.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/IMG_1238.webp",
+    "bytes": 168728,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/IMGL1682.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/IMGL1682.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/IMGL1682.webp",
+    "bytes": 147762,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/IMGL1701.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/IMGL1701.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/IMGL1701.webp",
+    "bytes": 84572,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/IMGL1704.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/IMGL1704.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/IMGL1704.webp",
+    "bytes": 123136,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/IMGL1851.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/IMGL1851.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/IMGL1851.webp",
+    "bytes": 71406,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj12/IMGL1902.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj12/IMGL1902.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj12/IMGL1902.webp",
+    "bytes": 184384,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj13/02_04110790.MP4",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj13/02_04110790.MP4",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj13/02_04110790.MP4",
+    "bytes": 16611327,
+    "compressed": false
+  },
+  {
+    "localPath": "/images/Prj13/ae animation.mp4",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj13/ae animation.mp4",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj13/ae%20animation.mp4",
+    "bytes": 181240,
+    "compressed": false
+  },
+  {
+    "localPath": "/images/Prj13/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj13/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj13/cover.webp",
+    "bytes": 20572,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj13/rehearse.mp4",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj13/rehearse.mp4",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj13/rehearse.mp4",
+    "bytes": 16572999,
+    "compressed": false
+  },
+  {
+    "localPath": "/images/Prj13/revv'd up.mp4",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj13/revv'd up.mp4",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj13/revv'd%20up.mp4",
+    "bytes": 9599315,
+    "compressed": false
+  },
+  {
+    "localPath": "/images/Prj13/yea.mp4",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj13/yea.mp4",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj13/yea.mp4",
+    "bytes": 28350820,
+    "compressed": false
+  },
+  {
+    "localPath": "/images/Prj14/cover.jpg",
+    "bucket": "project-covers",
+    "objectPath": "legacy/Prj14/cover.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-covers/legacy/Prj14/cover.webp",
+    "bytes": 149930,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj14/DJI_20250406164129_0007_D.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj14/DJI_20250406164129_0007_D.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj14/DJI_20250406164129_0007_D.webp",
+    "bytes": 275552,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj14/DJI_20250406170821_0014_D.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj14/DJI_20250406170821_0014_D.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj14/DJI_20250406170821_0014_D.webp",
+    "bytes": 396026,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj14/DJI_20250406170904_0018_D.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj14/DJI_20250406170904_0018_D.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj14/DJI_20250406170904_0018_D.webp",
+    "bytes": 423606,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj14/DJI_20250406182027_0052_D.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj14/DJI_20250406182027_0052_D.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj14/DJI_20250406182027_0052_D.webp",
+    "bytes": 437090,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/Prj14/DJI_20250406182251_0061_D.jpg",
+    "bucket": "project-gallery",
+    "objectPath": "legacy/Prj14/DJI_20250406182251_0061_D.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/project-gallery/legacy/Prj14/DJI_20250406182251_0061_D.webp",
+    "bytes": 441792,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/slider/_DSF2248.jpg",
+    "bucket": "hero-backgrounds",
+    "objectPath": "legacy/slider/_DSF2248.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/hero-backgrounds/legacy/slider/_DSF2248.webp",
+    "bytes": 289244,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/slider/3d model 03.png",
+    "bucket": "hero-backgrounds",
+    "objectPath": "legacy/slider/3d model 03.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/hero-backgrounds/legacy/slider/3d%20model%2003.webp",
+    "bytes": 26972,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/slider/3d model. 01.jpg",
+    "bucket": "hero-backgrounds",
+    "objectPath": "legacy/slider/3d model. 01.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/hero-backgrounds/legacy/slider/3d%20model.%2001.webp",
+    "bytes": 37412,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/slider/Christa Valley_Page_05.jpg",
+    "bucket": "hero-backgrounds",
+    "objectPath": "legacy/slider/Christa Valley_Page_05.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/hero-backgrounds/legacy/slider/Christa%20Valley_Page_05.webp",
+    "bytes": 25508,
+    "compressed": true
+  },
+  {
+    "localPath": "/images/slider/DSCF6665.jpg",
+    "bucket": "hero-backgrounds",
+    "objectPath": "legacy/slider/DSCF6665.webp",
+    "publicUrl": "https://aeqaiqkyuodeefivziua.supabase.co/storage/v1/object/public/hero-backgrounds/legacy/slider/DSCF6665.webp",
+    "bytes": 288374,
+    "compressed": true
+  }
+]

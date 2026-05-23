@@ -43,11 +43,14 @@ Deploys will succeed, but **images/videos under `/images/…` will not load** un
 
 ### 3. Move media off LFS (recommended long-term)
 
-Host files in **Supabase Storage** (buckets already exist: `project-covers`, `project-gallery`, `hero-backgrounds`):
+**Status:** Migration tooling is in place (`npm run media:migrate`). Most images are on Supabase Storage; see [MEDIA-STORAGE-MIGRATION.md](./MEDIA-STORAGE-MIGRATION.md).
 
-1. Upload assets from your local `public/images/` via the CMS (project covers/gallery) or Supabase dashboard.
-2. Ensure CMS `projects` / `project_gallery_items` use **public Supabase URLs**, not `/images/…` paths.
-3. After everything is on Supabase, you can stop relying on LFS entirely (optional: remove `public/images` from the repo in a future cleanup).
+Host files in **Supabase Storage** (buckets: `project-covers`, `project-gallery`, `hero-backgrounds`):
+
+1. Run `npm run media:migrate` (compresses images to WebP and uploads).
+2. Run `npm run supabase:media-urls` (updates CMS database paths).
+3. Redeploy Vercel — production no longer needs Git LFS for images.
+4. Optional: remove `public/images` from the repo in a future cleanup.
 
 Regenerate seed paths after local file changes:
 
