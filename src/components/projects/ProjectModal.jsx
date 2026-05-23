@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { mediaUrl } from '../../lib/mediaUrl';
 
 /**
  * @param {ReturnType<import('../../hooks/useProjectModal').useProjectModal>} props
@@ -95,7 +96,7 @@ export function ProjectModal(props) {
               id="modalImage"
               className="max-w-full max-h-full object-contain rounded-lg"
               alt="Project preview"
-              src={currentImageSrc}
+              src={currentImageSrc ? mediaUrl(currentImageSrc) : ''}
             />
             <div
               id="imageCounter"

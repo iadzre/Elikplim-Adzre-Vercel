@@ -59,6 +59,7 @@ export function HomePage() {
                       src={slide.src}
                       alt={slide.alt}
                       eager={index === 0}
+                      fetchPriority={index === 0 ? 'high' : undefined}
                       className="slider-image absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
                       style={{ opacity: index === activeIndex ? 1 : 0 }}
                     />

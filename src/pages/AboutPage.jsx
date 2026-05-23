@@ -3,7 +3,7 @@ import { PageLayout } from '../components/layout/PageLayout';
 import { Footer } from '../components/layout/Footer';
 import { SoftwareSlider } from '../components/about/SoftwareSlider';
 import { CareerTimeline } from '../components/about/CareerTimeline';
-import { PROFILE_PHOTO } from '../assets/branding';
+import profilePhoto from '../assets/profile.png';
 import { LazyImage } from '../components/shared/LazyImage';
 import { ContentMessage } from '../components/shared/ContentMessage';
 import { useHeaderBlur } from '../hooks/useHeaderBlur';
@@ -84,7 +84,7 @@ export function AboutPage() {
               <div className="flex justify-center lg:justify-end">
                 <div className="w-full max-w-lg aspect-square bg-white border-2 border-gray-200 overflow-hidden shadow-lg hover:shadow-xl hover:border-[#F45D01] transition-all duration-500 group">
                   <LazyImage
-                    src={PROFILE_PHOTO}
+                    src={profilePhoto}
                     alt="Elikplim Adzre"
                     eager
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

@@ -1,6 +1,56 @@
 /* CMS Admin — isolated from public site (import only in admin routes) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* Public styles.css hides the system cursor for the custom cursor — restore it in admin */
+@media (min-width: 769px) {
+  html.admin-route,
+  html.admin-route *,
+  body.admin-route,
+  body.admin-route *,
+  .admin-root,
+  .admin-root *,
+  .admin-login-page,
+  .admin-login-page * {
+    cursor: auto !important;
+  }
+
+  html.admin-route a,
+  html.admin-route button,
+  html.admin-route [role='button'],
+  html.admin-route label,
+  html.admin-route .admin-dropzone,
+  html.admin-route .admin-btn,
+  html.admin-route .admin-tab,
+  body.admin-route a,
+  body.admin-route button,
+  body.admin-route [role='button'],
+  body.admin-route label,
+  body.admin-route .admin-dropzone,
+  body.admin-route .admin-btn,
+  body.admin-route .admin-tab,
+  .admin-root a,
+  .admin-root button,
+  .admin-root [role='button'],
+  .admin-root label,
+  .admin-root .admin-dropzone,
+  .admin-root .admin-btn,
+  .admin-root .admin-tab {
+    cursor: pointer !important;
+  }
+
+  html.admin-route input:not([type='checkbox']):not([type='radio']),
+  html.admin-route textarea,
+  html.admin-route select,
+  body.admin-route input:not([type='checkbox']):not([type='radio']),
+  body.admin-route textarea,
+  body.admin-route select,
+  .admin-root input:not([type='checkbox']):not([type='radio']),
+  .admin-root textarea,
+  .admin-root select {
+    cursor: text !important;
+  }
+}
+
 .admin-root {
   --admin-bg: #0f1117;
   --admin-surface: #1a1d27;

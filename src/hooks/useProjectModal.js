@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { mediaUrl } from '../lib/mediaUrl';
 
 function isVideoFile(src) {
   const videoExtensions = ['.mp4', '.mov', '.webm', '.avi'];
@@ -63,7 +64,7 @@ export function useProjectModal() {
       if (!video || !sources[index]) return;
       video.pause();
       video.currentTime = 0;
-      video.src = sources[index];
+      video.src = mediaUrl(sources[index]);
       video.load();
       video.volume = volume / 100;
       setIsPlaying(false);
@@ -260,7 +261,7 @@ export function useProjectModal() {
       if (item?.type === 'video' && video) {
         video.pause();
         video.currentTime = 0;
-        video.src = item.src;
+        video.src = mediaUrl(item.src);
         video.load();
         video.volume = volume / 100;
         setIsPlaying(false);

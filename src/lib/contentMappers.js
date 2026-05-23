@@ -1,5 +1,3 @@
-import { mediaUrl } from './mediaUrl';
-
 /**
  * @typedef {'image' | 'video' | 'mixed'} ProjectMediaType
  */
@@ -57,10 +55,10 @@ export function mapProject(row) {
     subtitle: row.subtitle,
     tagLeft: row.tag_left,
     tagRight: row.tag_right,
-    coverSrc: mediaUrl(row.cover_src),
+    coverSrc: row.cover_src ? String(row.cover_src) : '',
     coverAlt: row.cover_alt,
     mediaType: row.media_type,
-    mediaSrcs: media.map((m) => mediaUrl(m.src)),
+    mediaSrcs: media.map((m) => (m.src ? String(m.src) : '')).filter(Boolean),
   };
 }
 
@@ -84,7 +82,7 @@ export function mapTestimonial(row) {
 export function mapHomeSlide(row) {
   return {
     id: row.id,
-    src: mediaUrl(row.src),
+    src: row.src ? String(row.src) : '',
     alt: row.alt_text || '',
   };
 }

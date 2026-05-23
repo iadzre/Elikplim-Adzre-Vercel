@@ -1,5 +1,4 @@
 import portfolioLogo from './portfolio.png';
-import profilePhoto from './profile.png';
 import adobeIcon from './icons/adobe.png';
 import premiereIcon from './icons/premiere-pro.png';
 import lightroomIcon from './icons/lightroom.png';
@@ -11,7 +10,6 @@ import indesignIcon from './icons/indesign.png';
 import davinciIcon from './icons/davinci-resolve.png';
 
 export const PORTFOLIO_LOGO = portfolioLogo;
-export const PROFILE_PHOTO = profilePhoto;
 
 export const SOFTWARE_ICONS = {
   adobe: adobeIcon,

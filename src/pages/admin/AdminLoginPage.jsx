@@ -15,8 +15,13 @@ export function AdminLoginPage() {
 
   useEffect(() => {
     document.title = 'Admin Login — Elikplim Adzre';
-    document.documentElement.className = '';
-    document.body.className = '';
+    document.documentElement.classList.add('admin-route');
+    document.body.classList.add('admin-route');
+    document.body.classList.remove('overflow-hidden', 'no-scroll');
+    return () => {
+      document.documentElement.classList.remove('admin-route');
+      document.body.classList.remove('admin-route');
+    };
   }, []);
 
   async function handleSubmit(e) {

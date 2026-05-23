@@ -20,8 +20,9 @@ export function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
-    document.documentElement.className = '';
-    document.body.className = '';
+    document.documentElement.classList.add('admin-route');
+    document.body.classList.add('admin-route');
+    document.body.classList.remove('overflow-hidden', 'no-scroll');
   }, []);
 
   async function handleSignOut() {
