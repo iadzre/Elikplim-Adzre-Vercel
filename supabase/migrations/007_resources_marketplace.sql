@@ -102,12 +102,8 @@ create table if not exists public.resources (
   max_downloads_per_day integer not null default 50 check (max_downloads_per_day > 0),
   seo_title text,
   seo_description text,
-  search_vector tsvector generated always as (
-    setweight(to_tsvector('english', coalesce(title, '')), 'A')
-      || setweight(to_tsvector('english', coalesce(short_description, '')), 'B')
-      || setweight(to_tsvector('english', coalesce(full_description, '')), 'C')
-      || setweight(to_tsvector('english', coalesce(array_to_string(tags, ' '), '')), 'B')
-  ) stored,
+  -- Maintained by trigger (english tsvector is not immutable for GENERATED columns)
+  search_vector tsvector,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   published_at timestamptz,
@@ -120,6 +116,48 @@ create table if not exists public.resources (
     status <> 'published' or published_at is not null
   )
 );
+
+-- Full-text search: trigger (to_tsvector('english', …) is not immutable for GENERATED columns)
+create or replace function public.resources_build_search_vector(
+  p_title text,
+  p_short_description text,
+  p_full_description text,
+  p_tags text[]
+)
+returns tsvector
+language sql
+stable
+parallel safe
+set search_path = public
+as $$
+  select
+    setweight(to_tsvector('english', coalesce(p_title, '')), 'A')
+    || setweight(to_tsvector('english', coalesce(p_short_description, '')), 'B')
+    || setweight(to_tsvector('english', coalesce(p_full_description, '')), 'C')
+    || setweight(to_tsvector('english', coalesce(array_to_string(p_tags, ' '), '')), 'B');
+$$;
+
+create or replace function public.trg_resources_set_search_vector()
+returns trigger
+language plpgsql
+set search_path = public
+as $$
+begin
+  new.search_vector := public.resources_build_search_vector(
+    new.title,
+    new.short_description,
+    new.full_description,
+    new.tags
+  );
+  return new;
+end;
+$$;
+
+drop trigger if exists resources_set_search_vector on public.resources;
+create trigger resources_set_search_vector
+  before insert or update of title, short_description, full_description, tags
+  on public.resources
+  for each row execute function public.trg_resources_set_search_vector();
 
 create index if not exists resources_status_published_idx
   on public.resources (status, published_at desc nulls last)
