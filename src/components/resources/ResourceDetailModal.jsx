@@ -6,7 +6,6 @@ import {
   startStripeCheckout,
   toggleFavorite,
   createReview,
-  signInWithGoogle,
 } from '../../lib/services/resourcesService';
 import { ALL_DOWNLOADS_FREE } from '../../lib/resources/marketplaceConfig';
 
@@ -224,29 +223,16 @@ export function ResourceDetailModal({
                   Purchase {priceLabel} →
                 </button>
               )}
-              <button
-                type="button"
-                onClick={handleFavorite}
-                className="text-xs josefin uppercase tracking-[0.2em] text-[#2A2F7F]/70 hover:text-[#F45D01]"
-              >
-                {isFavorited ? 'Unfavorite' : 'Favorite'}
-              </button>
-            </div>
-
-            {!isSignedIn && (
-              <div className="mt-4 pt-4 border-t border-[#2A2F7F]/10">
-                <p className="text-xs text-[#2A2F7F]/60 mb-2">
-                  {ALL_DOWNLOADS_FREE ? 'Sign in to save favorites.' : 'Sign in for purchases and favorites.'}
-                </p>
+              {isSignedIn && (
                 <button
                   type="button"
-                  onClick={() => signInWithGoogle(`/resources/${resource.slug}`)}
-                  className="text-xs josefin uppercase tracking-widest hover:text-[#F45D01]"
+                  onClick={handleFavorite}
+                  className="text-xs josefin uppercase tracking-[0.2em] text-[#2A2F7F]/70 hover:text-[#F45D01]"
                 >
-                  Continue with Google
+                  {isFavorited ? 'Unfavorite' : 'Favorite'}
                 </button>
-              </div>
-            )}
+              )}
+            </div>
 
             {reviews.length > 0 && (
               <div className="mt-6 pt-4 border-t border-[#2A2F7F]/10">

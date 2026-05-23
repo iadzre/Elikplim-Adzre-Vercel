@@ -411,16 +411,6 @@ export async function getAuthUser() {
   return { user: session?.user ?? null, session };
 }
 
-export async function signInWithGoogle(redirectPath = '/resources') {
-  if (!isSupabaseConfigured()) {
-    return { data: null, error: new Error('Supabase is not configured') };
-  }
-  return supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo: `${window.location.origin}${redirectPath}` },
-  });
-}
-
 export async function signInWithEmail(email, password) {
   if (!isSupabaseConfigured()) {
     return { data: null, error: new Error('Supabase is not configured') };
