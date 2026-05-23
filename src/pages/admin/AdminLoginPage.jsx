@@ -88,7 +88,7 @@ export function AdminLoginPage() {
           />
         </div>
 
-        <button type="submit" className="admin-btn admin-btn-primary" style={{ width: '100%' }} disabled={loading}>
+        <button type="submit" className="admin-btn admin-btn-primary admin-btn-block" disabled={loading}>
           {loading ? 'Signing in…' : 'Sign In'}
         </button>
       </form>

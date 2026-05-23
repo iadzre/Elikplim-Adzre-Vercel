@@ -111,23 +111,23 @@ export function AdminDashboardPage() {
   return (
     <>
       <h1 className="admin-page-title">Dashboard</h1>
-      <p style={{ color: 'var(--admin-muted)', marginBottom: '1.5rem' }}>
-        Changes here update the live site at{' '}
+      <p className="admin-page-lead">
+        Changes here update the live site.{' '}
         <a href="/" target="_blank" rel="noopener noreferrer">
           View live site →
         </a>
       </p>
 
       {stats.error && (
-        <p className="admin-feedback admin-feedback-error" style={{ marginBottom: '1rem' }}>
+        <div className="admin-alert admin-alert-error" role="alert">
           Could not load some stats: {stats.error}. Check Supabase RLS and that you are signed in.
-        </p>
+        </div>
       )}
 
       {stats.loading ? (
-        <p style={{ color: 'var(--admin-muted)' }}>Loading stats…</p>
+        <p className="admin-text-muted">Loading stats…</p>
       ) : (
-        <div className="admin-grid-4" style={{ marginBottom: '1.5rem' }}>
+        <div className="admin-grid-4" style={{ marginBottom: 'var(--admin-space-6)' }}>
           <div className="admin-stat-card">
             <h3>Shop</h3>
             <div className="value">{stats.shopPublished + stats.shopDraft}</div>
@@ -136,7 +136,7 @@ export function AdminDashboardPage() {
             </div>
           </div>
           <div className="admin-stat-card">
-            <h3>Projects (CMS)</h3>
+            <h3>Projects</h3>
             <div className="value">{stats.projectsPublished + stats.projectsDraft}</div>
             <div className="sub">
               {stats.projectsPublished} published · {stats.projectsDraft} draft
@@ -164,46 +164,48 @@ export function AdminDashboardPage() {
         </div>
       )}
 
-      <div className="admin-card" style={{ marginBottom: '1rem' }}>
-        <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem' }}>Content wired to the public site</h3>
-        <ul style={{ color: 'var(--admin-muted)', fontSize: '0.9rem', margin: 0, paddingLeft: '1.2rem' }}>
-          <li>
-            <strong>Projects</strong> — CMS <code>projects</code> + <code>project_gallery_items</code> (modal gallery);
-            legacy portfolio media is used only when a project has no CMS gallery rows.
-          </li>
-          <li>
-            <strong>Testimonials</strong> — CMS <code>testimonials</code> (approved), else legacy table.
-          </li>
-          <li>
-            <strong>About</strong> — CMS <code>about</code> + <code>skills</code>; career uses{' '}
-            <code>career_timeline_entries</code>.
-          </li>
-          <li>
-            <strong>Home</strong> — <code>home_slides</code> carousel; hero headline/CTA/overlay from{' '}
-            <code>hero</code>.
-          </li>
-          <li>
-            <strong>Header / footer</strong> — <code>nav_links</code>, <code>contact_info</code>,{' '}
-            <code>site_settings</code>.
-          </li>
-          <li>
-            <strong>Shop</strong> — <code>resources</code>, <code>resource_categories</code>,{' '}
-            <code>profiles</code>, <code>purchases</code>, <code>reviews</code>. Manage under Shop in the sidebar.
-          </li>
-        </ul>
+      <div className="admin-card">
+        <h2 className="admin-section-title">Content wired to the public site</h2>
+        <div className="admin-prose">
+          <ul>
+            <li>
+              <strong>Projects</strong> — CMS <code>projects</code> + <code>project_gallery_items</code> (modal
+              gallery); legacy portfolio media is used only when a project has no CMS gallery rows.
+            </li>
+            <li>
+              <strong>Testimonials</strong> — CMS <code>testimonials</code> (approved), else legacy table.
+            </li>
+            <li>
+              <strong>About</strong> — CMS <code>about</code> + <code>skills</code>; career uses{' '}
+              <code>career_timeline_entries</code>.
+            </li>
+            <li>
+              <strong>Home</strong> — <code>home_slides</code> carousel; hero headline/CTA/overlay from{' '}
+              <code>hero</code>.
+            </li>
+            <li>
+              <strong>Header / footer</strong> — <code>nav_links</code>, <code>contact_info</code>,{' '}
+              <code>site_settings</code>.
+            </li>
+            <li>
+              <strong>Shop</strong> — <code>resources</code>, <code>resource_categories</code>,{' '}
+              <code>profiles</code>, <code>purchases</code>, <code>reviews</code>. Manage under Shop in the sidebar.
+            </li>
+          </ul>
+        </div>
         {stats.shopPublished === 0 && (
-          <p style={{ color: 'var(--admin-warn, #f59e0b)', marginTop: '0.75rem', fontSize: '0.85rem' }}>
+          <p className="admin-callout admin-callout-warning">
             No published shop resources. Run <code>npm run supabase:db-push</code> and{' '}
             <code>npm run supabase:seed-resources</code>, or add resources in Shop.
           </p>
         )}
         {stats.shopPendingReviews > 0 && (
-          <p style={{ marginTop: '0.5rem', fontSize: '0.85rem' }}>
+          <p className="admin-callout-link">
             <Link to="/admin/shop/reviews">{stats.shopPendingReviews} review(s) awaiting approval →</Link>
           </p>
         )}
         {stats.projectsPublished === 0 && (
-          <p style={{ color: 'var(--admin-warn, #f59e0b)', marginTop: '0.75rem', fontSize: '0.85rem' }}>
+          <p className="admin-callout admin-callout-warning">
             No published CMS projects yet. Run <code>npm run supabase:migrate-cms</code> or publish projects in
             Manage Projects.
           </p>
@@ -211,8 +213,8 @@ export function AdminDashboardPage() {
       </div>
 
       <div className="admin-card">
-        <h3 style={{ margin: '0 0 1rem', fontSize: '1rem' }}>Quick links</h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <h2 className="admin-section-title">Quick links</h2>
+        <div className="admin-quick-links">
           {QUICK_LINKS.map((link) => (
             <Link key={link.to} to={link.to} className="admin-btn admin-btn-secondary admin-btn-sm">
               {link.label}

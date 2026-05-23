@@ -33,8 +33,7 @@ export function AdminResourceFiles({ resourceId }) {
           .from(row.storage_bucket || 'resource-files')
           .download(row.file_path);
         const missing =
-          storageError &&
-          /not found|object not found/i.test(storageError.message ?? '');
+          storageError && /not found|object not found/i.test(storageError.message ?? '');
         return { ...row, storageMissing: Boolean(missing) };
       })
     );
@@ -85,36 +84,32 @@ export function AdminResourceFiles({ resourceId }) {
 
   if (!resourceId) {
     return (
-      <p style={{ color: 'var(--admin-muted)', fontSize: '0.85rem' }}>Save the resource first to attach download files.</p>
+      <p className="admin-text-muted" style={{ fontSize: '0.8125rem' }}>
+        Save the resource first to attach download files.
+      </p>
     );
   }
 
   return (
-    <div className="admin-card" style={{ marginTop: '1rem' }}>
-      <h3 style={{ margin: '0 0 0.75rem', fontSize: '0.95rem' }}>Download files</h3>
+    <div className="admin-card" style={{ marginTop: 'var(--admin-space-4)' }}>
+      <h3 className="admin-section-title">Download files</h3>
       <AdminFeedback feedback={feedback} />
-      <label className="admin-btn admin-btn-secondary admin-btn-sm" style={{ display: 'inline-block', cursor: 'pointer' }}>
+      <label className="admin-btn admin-btn-secondary admin-btn-sm" style={{ cursor: 'pointer' }}>
         {uploading ? 'Uploading…' : 'Upload file'}
         <input type="file" hidden onChange={handleUpload} disabled={uploading} />
       </label>
       {loading ? (
-        <p style={{ color: 'var(--admin-muted)', marginTop: '0.75rem' }}>Loading files…</p>
+        <p className="admin-text-muted" style={{ marginTop: 'var(--admin-space-3)' }}>
+          Loading files…
+        </p>
       ) : files.length === 0 ? (
-        <p style={{ color: 'var(--admin-muted)', marginTop: '0.75rem', fontSize: '0.85rem' }}>No files yet.</p>
+        <p className="admin-text-muted" style={{ marginTop: 'var(--admin-space-3)', fontSize: '0.8125rem' }}>
+          No files yet.
+        </p>
       ) : (
-        <ul style={{ margin: '0.75rem 0 0', padding: 0, listStyle: 'none' }}>
+        <ul className="admin-file-list">
           {files.map((f) => (
-            <li
-              key={f.id}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '0.5rem 0',
-                borderTop: '1px solid var(--admin-border)',
-                fontSize: '0.85rem',
-              }}
-            >
+            <li key={f.id}>
               <span>
                 {f.file_name}
                 {f.is_primary && (
@@ -123,7 +118,7 @@ export function AdminResourceFiles({ resourceId }) {
                   </span>
                 )}
                 {f.storageMissing && (
-                  <span className="admin-badge admin-badge-draft" style={{ marginLeft: '0.35rem' }}>
+                  <span className="admin-badge admin-badge-pending" style={{ marginLeft: '0.35rem' }}>
                     Missing in storage — re-upload
                   </span>
                 )}

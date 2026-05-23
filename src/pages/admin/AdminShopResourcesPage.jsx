@@ -40,24 +40,25 @@ export function AdminShopResourcesPage() {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h1 className="admin-page-title" style={{ margin: 0 }}>
-          Shop — Resources
-        </h1>
-        <Link to="/admin/shop/resources/new" className="admin-btn admin-btn-primary">
-          Add resource
-        </Link>
+      <div className="admin-toolbar">
+        <h1 className="admin-page-title">Shop — Resources</h1>
+        <div className="admin-toolbar-actions">
+          <Link to="/admin/shop/resources/new" className="admin-btn admin-btn-primary">
+            Add resource
+          </Link>
+        </div>
       </div>
       <AdminFeedback feedback={feedback} />
 
       {loading ? (
-        <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>
+        <p className="admin-text-muted">Loading…</p>
       ) : items.length === 0 ? (
-        <p style={{ color: 'var(--admin-muted)' }}>
+        <div className="admin-empty-state">
           No resources in Supabase. Run <code>npm run supabase:seed-resources</code> or add one.
-        </p>
+        </div>
       ) : (
-        <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="admin-card admin-card-flush">
+          <div className="admin-table-wrap">
           <table className="admin-table">
             <thead>
               <tr>
@@ -88,7 +89,7 @@ export function AdminShopResourcesPage() {
                       </span>
                     )}
                   </td>
-                  <td style={{ color: 'var(--admin-muted)', fontSize: '0.8rem' }}>
+                  <td className="admin-text-muted">
                     {r.resource_categories?.name ?? '—'}
                   </td>
                   <td>{r.pricing_type === 'free' ? 'Free' : `$${r.price}`}</td>
@@ -99,7 +100,7 @@ export function AdminShopResourcesPage() {
                   </td>
                   <td>{r.download_count ?? 0}</td>
                   <td>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                    <div className="admin-inline-actions">
                       <Link to={`/admin/shop/resources/${r.id}`} className="admin-btn admin-btn-secondary admin-btn-sm">
                         Edit
                       </Link>
@@ -132,6 +133,7 @@ export function AdminShopResourcesPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </>
