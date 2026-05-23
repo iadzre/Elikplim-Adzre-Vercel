@@ -90,7 +90,7 @@ export function HomePage() {
                     className={`hero__content${heroDisplay.showEyebrow ? '' : ' hero__content--no-eyebrow'}`}
                   >
                     {heroDisplay.showEyebrow && (
-                      <p className="hero__eyebrow">
+                      <p className="hero__eyebrow josefin tracking-2x uppercase text-[10px] sm:text-xs">
                         <span className="hero__eyebrow--strong">{heroDisplay.eyebrowStrong}</span>
                         <span className="hero__eyebrow-sep" aria-hidden="true" />
                         <span className="hero__eyebrow--soft">{heroDisplay.eyebrowSoft}</span>
@@ -112,11 +112,16 @@ export function HomePage() {
                     </h1>
 
                     {heroDisplay.descriptor && (
-                      <p className="hero__descriptor">{heroDisplay.descriptor}</p>
+                      <p className="hero__descriptor josefin tracking-2x uppercase text-xs sm:text-sm text-gray-200 max-w-2xl">
+                        {heroDisplay.descriptor}
+                      </p>
                     )}
 
                     {heroDisplay.ctaText && heroDisplay.ctaLink && (
-                      <Link to={heroDisplay.ctaLink} className="hero__cta">
+                      <Link
+                        to={heroDisplay.ctaLink}
+                        className="hero__cta josefin tracking-2x uppercase text-[10px] sm:text-xs"
+                      >
                         {heroDisplay.ctaText}
                         <span className="hero__cta-arrow" aria-hidden="true">
                           →
