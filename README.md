@@ -83,17 +83,17 @@ Indexes are on `(is_published, sort_order)` for content tables and `project_medi
 
 ## CMS admin backend
 
-Migrations: `002_cms_schema.sql` (CMS tables + RLS), `003_storage_buckets.sql` (media buckets).
+Migrations: `002_cms_schema.sql` (CMS tables + RLS), `003_storage_buckets.sql` (media buckets), `004_project_gallery.sql` (gallery items + `projects.media_type`), `005_project_gallery_storage.sql` (`project-gallery` bucket).
 
-**Public site data flow:** Hooks read **CMS tables first** (`hero`, `about`, `projects`, `skills`, `testimonials`, `contact_info`, `nav_links`, `site_settings`). If a CMS table is empty, they fall back to legacy `portfolio_*` / `home_slides` / `about_bio_paragraphs` tables.
+**Public site data flow:** Hooks read **CMS tables first** (`hero`, `about`, `projects` + `project_gallery_items`, `skills`, `testimonials`, `contact_info`, `nav_links`, `site_settings`, `home_slides`). If a CMS table is empty, they fall back to legacy `portfolio_*` / `about_bio_paragraphs` tables. Project modal galleries use CMS gallery rows when present; otherwise legacy `project_media` is merged by matching project title.
 
 ### Apply migrations & seed CMS
 
 ```bash
 supabase link --project-ref YOUR_PROJECT_REF
-supabase db push
+npm run supabase:db-push           # apply all migrations (002–005)
 npm run supabase:seed-cms          # default hero, about, nav, contact rows
-npm run supabase:migrate-cms       # copy existing portfolio_* content into CMS (one-time)
+npm run supabase:migrate-cms       # copy portfolio_* + gallery into CMS (one-time)
 ```
 
 Or paste `supabase/seed-cms.sql` and `supabase/migrate-portfolio-to-cms.sql` into the Supabase SQL Editor.
@@ -109,11 +109,13 @@ Or paste `supabase/seed-cms.sql` and `supabase/migrate-portfolio-to-cms.sql` int
 |------|-------------|
 | `/admin/login` | Email/password sign-in |
 | `/admin` | Dashboard (stats + quick links) |
-| `/admin/hero` | Hero section editor |
+| `/admin/hero` | Hero headline, CTA, background |
+| `/admin/home-slides` | Home carousel images |
 | `/admin/about` | About / bio editor |
+| `/admin/career` | Career timeline entries |
 | `/admin/projects` | Projects list |
 | `/admin/projects/new` | Add project |
-| `/admin/projects/:id` | Edit project |
+| `/admin/projects/:id` | Edit project + **gallery (modal)** |
 | `/admin/skills` | Skills manager |
 | `/admin/testimonials` | Testimonials (pending / approved / rejected) |
 | `/admin/contact` | Contact & social links |
@@ -128,6 +130,7 @@ Admin UI is isolated at `/admin` (separate dark theme; does not change public si
 |--------|---------|
 | `hero-backgrounds` | Hero images/videos |
 | `project-covers` | Project cover images |
+| `project-gallery` | Modal gallery images/videos |
 | `profile-images` | Profile photo / CV PDF |
 | `testimonial-avatars` | Testimonial author photos |
 
