@@ -41,7 +41,7 @@ export function Header({
       </Link>
       <nav
         aria-label="Main navigation"
-        className={`absolute left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-10 xl:gap-14 2xl:gap-16 ${navColor} text-xs xl:text-sm tracking-2x uppercase josefin`}
+        className={`absolute left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-7 xl:gap-9 ${navColor} text-xs xl:text-sm tracking-2x uppercase josefin`}
       >
         <MainNavLinks
           location={location}
