@@ -11,7 +11,8 @@
     "media:pull": "git lfs install && git lfs pull",
     "supabase:setup": "bash scripts/setup-supabase.sh",
     "supabase:seed-cms": "supabase db query --file supabase/seed-cms.sql --linked",
-    "supabase:migrate-cms": "supabase db query --file supabase/migrate-portfolio-to-cms.sql --linked"
+    "supabase:migrate-cms": "supabase db query --file supabase/migrate-portfolio-to-cms.sql --linked",
+    "vercel:env": "bash scripts/sync-vercel-env.sh"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",

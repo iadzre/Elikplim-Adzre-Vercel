@@ -42,7 +42,13 @@ export function ProjectsPage() {
             </div>
             <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 pb-16 md:pb-20">
               {projectsError && (
-                <ContentMessage message="Unable to load projects from Supabase. Run migrations and seed.sql, then verify environment variables." />
+                <ContentMessage
+                  message={
+                    import.meta.env.DEV && projectsError?.message
+                      ? `Unable to load projects: ${projectsError.message}`
+                      : 'Unable to load projects from Supabase. Run migrations and seed.sql, then verify environment variables.'
+                  }
+                />
               )}
               {projectsLoading && !projectsError && <ContentMessage message="Loading projects…" />}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full max-w-5xl mx-auto">
