@@ -190,20 +190,5 @@ on conflict (slug) do update set
   seo_title = excluded.seo_title,
   seo_description = excluded.seo_description;
 
--- File metadata (upload binaries separately to resource-files/{resource_id}/1/…)
-insert into public.resource_files (resource_id, file_name, file_path, file_type, is_primary, version)
-select
-  r.id,
-  v.file_name,
-  r.id::text || '/1/' || v.file_name,
-  v.file_type,
-  true,
-  1
-from (values
-  ('cinematic-ui-kit', 'cinematic-ui-kit.zip', 'application/zip'),
-  ('portfolio-template-system', 'portfolio-templates.zip', 'application/zip'),
-  ('device-mockup-studio', 'mockup-studio.zip', 'application/zip'),
-  ('reel-transition-pack', 'reel-transitions.zip', 'application/zip')
-) as v(slug, file_name, file_type)
-join public.resources r on r.slug = v.slug
-on conflict (storage_bucket, file_path) do nothing;
+-- Download files: upload in Admin → Shop → each resource → Download files
+-- (do not seed resource_files rows without storage binaries)

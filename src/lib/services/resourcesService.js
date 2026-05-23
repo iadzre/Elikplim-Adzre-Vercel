@@ -260,23 +260,16 @@ export async function startStripeCheckout(purchaseId, resourceSlug) {
   return { url: body.url, sessionId: body.sessionId, error: null };
 }
 
-export async function downloadResourceFile(resourceId) {
-  if (!isSupabaseConfigured()) {
-    return { data: null, error: new Error('Supabase is not configured') };
-  }
-
-  const access = await checkResourceAccess(resourceId);
-  if (access.error) return { data: null, error: access.error };
-  if (!access.data) {
-    return { data: null, error: new Error('Purchase or sign-in required to download') };
-  }
-
+async function downloadResourceFileViaClient(resourceId) {
   const { data: files, error: filesError } = await supabase.rpc('get_downloadable_files', {
     p_resource_id: resourceId,
   });
   if (filesError) return { data: null, error: filesError };
   if (!files?.length) {
-    return { data: null, error: new Error('No downloadable files attached to this resource') };
+    return {
+      data: null,
+      error: new Error('No download file is attached. Upload one in Admin → Shop.'),
+    };
   }
 
   const file = files[0];
@@ -289,13 +282,59 @@ export async function downloadResourceFile(resourceId) {
 
   const { data: signed, error: signError } = await supabase.storage
     .from(file.storage_bucket)
-    .createSignedUrl(file.file_path, 120);
+    .createSignedUrl(file.file_path, 120, { download: file.file_name });
 
   if (signError) return { data: null, error: signError };
   return {
     data: { file, signedUrl: signed.signedUrl },
     error: null,
   };
+}
+
+export async function downloadResourceFile(resourceId) {
+  if (!isSupabaseConfigured()) {
+    return { data: null, error: new Error('Supabase is not configured') };
+  }
+
+  const access = await checkResourceAccess(resourceId);
+  if (access.error) return { data: null, error: access.error };
+  if (!access.data) {
+    return { data: null, error: new Error('Purchase or sign-in required to download') };
+  }
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const headers = { 'Content-Type': 'application/json' };
+  if (session?.access_token) {
+    headers.Authorization = `Bearer ${session.access_token}`;
+  }
+
+  try {
+    const res = await fetch(`${window.location.origin}/api/download-resource`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ resourceId, sessionId: getSessionId() }),
+    });
+
+    const isJson = res.headers.get('content-type')?.includes('application/json');
+    if (isJson) {
+      const body = await res.json();
+      if (res.ok && body.signedUrl) {
+        return {
+          data: { file: body.file, signedUrl: body.signedUrl },
+          error: null,
+        };
+      }
+      if (body.error) {
+        return { data: null, error: new Error(body.error) };
+      }
+    }
+  } catch {
+    /* fall through to client signing (e.g. local Vite without API routes) */
+  }
+
+  return downloadResourceFileViaClient(resourceId);
 }
 
 export async function createReview(resourceId, rating, reviewText = '') {

@@ -19,8 +19,26 @@ export function AdminResourceFiles({ resourceId }) {
       .select('*')
       .eq('resource_id', resourceId)
       .order('created_at', { ascending: false });
-    if (error) setFeedback({ type: 'error', message: error.message });
-    else setFiles(data ?? []);
+    if (error) {
+      setFeedback({ type: 'error', message: error.message });
+      setFiles([]);
+      setLoading(false);
+      return;
+    }
+
+    const rows = data ?? [];
+    const withStatus = await Promise.all(
+      rows.map(async (row) => {
+        const { error: storageError } = await supabase.storage
+          .from(row.storage_bucket || 'resource-files')
+          .download(row.file_path);
+        const missing =
+          storageError &&
+          /not found|object not found/i.test(storageError.message ?? '');
+        return { ...row, storageMissing: Boolean(missing) };
+      })
+    );
+    setFiles(withStatus);
     setLoading(false);
   }
 
@@ -102,6 +120,11 @@ export function AdminResourceFiles({ resourceId }) {
                 {f.is_primary && (
                   <span className="admin-badge admin-badge-published" style={{ marginLeft: '0.35rem' }}>
                     Primary
+                  </span>
+                )}
+                {f.storageMissing && (
+                  <span className="admin-badge admin-badge-draft" style={{ marginLeft: '0.35rem' }}>
+                    Missing in storage — re-upload
                   </span>
                 )}
               </span>
