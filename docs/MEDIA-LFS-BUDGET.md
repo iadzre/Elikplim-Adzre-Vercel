@@ -1,8 +1,25 @@
+
 # Git LFS budget exceeded
 
 Portfolio media under `public/images/` (~900MB, 140 files) is stored in **Git LFS**. GitHub blocks LFS downloads when the account’s **storage or bandwidth** quota is used up. You may see:
 
 > This repository exceeded its LFS budget.
+
+Or on Vercel:
+
+> Error: Command "git lfs install && git lfs pull && npm install" exited with 2
+
+## Fix Vercel deploy (do this first)
+
+`vercel.json` on `main` already uses **`npm install` only**. If Vercel still runs the old LFS command, the **dashboard is overriding** the repo config.
+
+1. [Vercel Dashboard](https://vercel.com) → your project → **Settings** → **Build and Deployment**
+2. **Install Command** → turn **Override** **off**, or set the value to exactly: `npm install`
+3. **Settings** → **Git** → disable **Git Large File Storage (LFS)**
+4. Optional: **Environment Variables** → add `GIT_LFS_SKIP_SMUDGE` = `1` (all environments)
+5. **Deployments** → **Redeploy** the latest commit (`5bf72c6` or newer) — not an old failed deployment
+
+Confirm the deployment log shows `Running "install" command: npm install...` (not `git lfs`).
 
 ## Quick fixes (pick one)
 
