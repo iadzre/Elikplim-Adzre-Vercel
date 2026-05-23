@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { PageLayout } from '../components/layout/PageLayout';
 import { Footer } from '../components/layout/Footer';
 import { ContactForm } from '../components/contact/ContactForm';
@@ -7,9 +7,7 @@ import { useHeaderBlur } from '../hooks/useHeaderBlur';
 export function LeaveANotePage() {
   const headerRef = useHeaderBlur(true);
 
-  useEffect(() => {
-    document.title = 'Elikplim Adzre - Leave a Note';
-  }, []);
+  usePageTitle('Leave a Note');
 
   return (
     <PageLayout

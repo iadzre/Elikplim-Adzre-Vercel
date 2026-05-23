@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PageLayout } from '../components/layout/PageLayout';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 export function NotFoundPage() {
-  useEffect(() => {
-    document.title = 'Elikplim Adzre - Page Not Found';
-  }, []);
+  usePageTitle('Page Not Found');
 
   return (
     <PageLayout

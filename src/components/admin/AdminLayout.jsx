@@ -6,7 +6,9 @@ import { signOut } from '../../lib/supabase';
 const NAV = [
   { to: '/admin', end: true, icon: '◉', label: 'Dashboard' },
   { to: '/admin/hero', icon: '▣', label: 'Hero' },
+  { to: '/admin/home-slides', icon: '▤', label: 'Home Slides' },
   { to: '/admin/about', icon: '◎', label: 'About' },
+  { to: '/admin/career', icon: '◇', label: 'Career' },
   { to: '/admin/projects', icon: '▦', label: 'Projects' },
   { to: '/admin/skills', icon: '◆', label: 'Skills' },
   { to: '/admin/testimonials', icon: '◈', label: 'Testimonials' },

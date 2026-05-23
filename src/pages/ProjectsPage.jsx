@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import { PageLayout } from '../components/layout/PageLayout';
 import { Footer } from '../components/layout/Footer';
 import { ProjectTile } from '../components/projects/ProjectTile';
@@ -11,6 +11,7 @@ import { ContentMessage } from '../components/shared/ContentMessage';
 import { useProjects } from '../hooks/useProjects';
 import { useTestimonials } from '../hooks/useTestimonials';
 import { useProjectModal } from '../hooks/useProjectModal';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 export function ProjectsPage() {
   const headerRef = useHeaderBlur(true);
@@ -18,9 +19,7 @@ export function ProjectsPage() {
   const { testimonials, loading: testimonialsLoading, error: testimonialsError } = useTestimonials();
   const modal = useProjectModal();
 
-  useEffect(() => {
-    document.title = 'Elikplim Adzre - Projects';
-  }, []);
+  usePageTitle('Projects');
 
   return (
     <>

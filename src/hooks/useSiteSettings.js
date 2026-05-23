@@ -7,6 +7,7 @@ const DEFAULTS = {
   meta_description: '',
   favicon_url: '/favicon.ico',
   footer_text: '',
+  copyright_text: '',
   primary_color: '#2A2F7F',
   accent_color: '#F45D01',
 };

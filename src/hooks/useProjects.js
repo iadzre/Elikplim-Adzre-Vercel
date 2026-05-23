@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { mapProject } from '../lib/contentMappers';
+import { enrichCmsProjectsWithPortfolio } from '../lib/enrichCmsProjects';
 
 /** @typedef {import('../lib/contentMappers').Project} Project */
 
-const PROJECT_SELECT = `
+const PORTFOLIO_SELECT = `
   id,
   title,
   subtitle,
@@ -17,7 +18,7 @@ const PROJECT_SELECT = `
   project_media ( src, sort_order )
 `;
 
-const PROJECT_SELECT_NO_MEDIA = `
+const PORTFOLIO_SELECT_NO_MEDIA = `
   id,
   title,
   subtitle,
@@ -28,6 +29,47 @@ const PROJECT_SELECT_NO_MEDIA = `
   media_type,
   sort_order
 `;
+
+const CMS_SELECT = `
+  id,
+  title,
+  description,
+  cover_image_url,
+  tags,
+  display_order,
+  status,
+  media_type,
+  project_gallery_items ( id, src, item_type, sort_order, alt_text )
+`;
+
+const CMS_SELECT_NO_GALLERY = `
+  id,
+  title,
+  description,
+  cover_image_url,
+  tags,
+  display_order,
+  status,
+  media_type
+`;
+
+async function loadPortfolioProjects() {
+  let result = await supabase
+    .from('portfolio_projects')
+    .select(PORTFOLIO_SELECT)
+    .eq('is_published', true)
+    .order('sort_order', { ascending: true });
+
+  if (result.error?.message?.includes('project_media')) {
+    result = await supabase
+      .from('portfolio_projects')
+      .select(PORTFOLIO_SELECT_NO_MEDIA)
+      .eq('is_published', true)
+      .order('sort_order', { ascending: true });
+  }
+
+  return result;
+}
 
 export function useProjects() {
   const [projects, setProjects] = useState(/** @type {Project[]} */ ([]));
@@ -51,33 +93,48 @@ export function useProjects() {
       setLoading(true);
       setError(null);
 
-      let result = await supabase
-        .from('portfolio_projects')
-        .select(PROJECT_SELECT)
-        .eq('is_published', true)
-        .order('sort_order', { ascending: true });
+      let cmsResult = await supabase
+        .from('projects')
+        .select(CMS_SELECT)
+        .eq('status', 'published')
+        .order('display_order', { ascending: true });
 
-      if (result.error?.message?.includes('project_media')) {
-        result = await supabase
-          .from('portfolio_projects')
-          .select(PROJECT_SELECT_NO_MEDIA)
-          .eq('is_published', true)
-          .order('sort_order', { ascending: true });
+      if (cmsResult.error?.message?.includes('project_gallery_items')) {
+        cmsResult = await supabase
+          .from('projects')
+          .select(CMS_SELECT_NO_GALLERY)
+          .eq('status', 'published')
+          .order('display_order', { ascending: true });
       }
+
+      const portfolioResult = await loadPortfolioProjects();
 
       if (cancelled) return;
 
-      if (result.error) {
+      if (portfolioResult.error && !cmsResult.data?.length) {
         if (import.meta.env.DEV) {
-          console.error('[useProjects]', result.error.message);
+          console.error('[useProjects]', portfolioResult.error.message);
         }
-        setError(result.error);
+        setError(portfolioResult.error);
         setProjects([]);
         setLoading(false);
         return;
       }
 
-      setProjects((result.data || []).map(mapProject));
+      if (cmsResult.data?.length) {
+        setProjects(
+          enrichCmsProjectsWithPortfolio(cmsResult.data, portfolioResult.data || [])
+        );
+        setLoading(false);
+        return;
+      }
+
+      if (portfolioResult.error) {
+        setError(portfolioResult.error);
+        setProjects([]);
+      } else {
+        setProjects((portfolioResult.data || []).map(mapProject));
+      }
       setLoading(false);
     }
 

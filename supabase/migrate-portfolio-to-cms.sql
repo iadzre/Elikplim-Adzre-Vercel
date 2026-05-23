@@ -29,6 +29,30 @@ from public.portfolio_projects p
 where not exists (select 1 from public.projects limit 1)
 order by p.sort_order;
 
+-- Sync media_type from legacy portfolio rows (matched by title)
+update public.projects cms
+set media_type = pp.media_type::text
+from public.portfolio_projects pp
+where lower(trim(cms.title)) = lower(trim(pp.title))
+  and pp.media_type is not null;
+
+-- ---------------------------------------------------------------------------
+-- Gallery: portfolio project_media → project_gallery_items (by title match)
+-- Requires migration 004_project_gallery.sql
+-- ---------------------------------------------------------------------------
+insert into public.project_gallery_items (project_id, src, item_type, sort_order, alt_text)
+select
+  cms.id,
+  pm.src,
+  pm.item_type::text,
+  pm.sort_order,
+  pm.alt_text
+from public.project_media pm
+inner join public.portfolio_projects pp on pp.id = pm.project_id
+inner join public.projects cms on lower(trim(cms.title)) = lower(trim(pp.title))
+where not exists (select 1 from public.project_gallery_items limit 1)
+order by cms.id, pm.sort_order;
+
 -- ---------------------------------------------------------------------------
 -- Testimonials: portfolio_testimonials → testimonials
 -- ---------------------------------------------------------------------------

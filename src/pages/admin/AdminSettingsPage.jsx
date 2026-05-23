@@ -7,7 +7,8 @@ const KEYS = [
   { key: 'site_title', label: 'Site title', hint: 'Used in document title and SEO' },
   { key: 'meta_description', label: 'Meta description', textarea: true },
   { key: 'favicon_url', label: 'Favicon URL' },
-  { key: 'footer_text', label: 'Footer text', textarea: true },
+  { key: 'footer_text', label: 'Footer tagline', textarea: true },
+  { key: 'copyright_text', label: 'Copyright line' },
   { key: 'primary_color', label: 'Primary color', color: true },
   { key: 'accent_color', label: 'Accent color', color: true },
 ];

@@ -4,7 +4,9 @@ import { supabase } from '../../lib/supabase';
 
 const QUICK_LINKS = [
   { to: '/admin/hero', label: 'Edit Hero' },
+  { to: '/admin/home-slides', label: 'Home Slides' },
   { to: '/admin/about', label: 'Edit About' },
+  { to: '/admin/career', label: 'Career Timeline' },
   { to: '/admin/projects', label: 'Manage Projects' },
   { to: '/admin/skills', label: 'Manage Skills' },
   { to: '/admin/testimonials', label: 'Testimonials' },
@@ -20,26 +22,62 @@ export function AdminDashboardPage() {
     testimonialsPending: 0,
     testimonialsApproved: 0,
     skills: 0,
+    homeSlides: 0,
+    navLinks: 0,
+    hasHero: false,
+    hasAbout: false,
     loading: true,
+    error: null,
   });
 
   useEffect(() => {
     document.title = 'Dashboard — CMS';
     async function load() {
-      const [pub, draft, pending, approved, skills] = await Promise.all([
+      const [
+        pub,
+        draft,
+        pending,
+        approved,
+        skills,
+        slides,
+        nav,
+        hero,
+        about,
+      ] = await Promise.all([
         supabase.from('projects').select('id', { count: 'exact', head: true }).eq('status', 'published'),
         supabase.from('projects').select('id', { count: 'exact', head: true }).eq('status', 'draft'),
         supabase.from('testimonials').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
         supabase.from('testimonials').select('id', { count: 'exact', head: true }).eq('status', 'approved'),
         supabase.from('skills').select('id', { count: 'exact', head: true }),
+        supabase.from('home_slides').select('id', { count: 'exact', head: true }).eq('is_published', true),
+        supabase.from('nav_links').select('id', { count: 'exact', head: true }).eq('visible', true),
+        supabase.from('hero').select('id').limit(1).maybeSingle(),
+        supabase.from('about').select('id').limit(1).maybeSingle(),
       ]);
+
+      const firstError =
+        pub.error ||
+        draft.error ||
+        pending.error ||
+        approved.error ||
+        skills.error ||
+        slides.error ||
+        nav.error ||
+        hero.error ||
+        about.error;
+
       setStats({
         projectsPublished: pub.count ?? 0,
         projectsDraft: draft.count ?? 0,
         testimonialsPending: pending.count ?? 0,
         testimonialsApproved: approved.count ?? 0,
         skills: skills.count ?? 0,
+        homeSlides: slides.count ?? 0,
+        navLinks: nav.count ?? 0,
+        hasHero: Boolean(hero.data),
+        hasAbout: Boolean(about.data),
         loading: false,
+        error: firstError?.message ?? null,
       });
     }
     load();
@@ -49,17 +87,24 @@ export function AdminDashboardPage() {
     <>
       <h1 className="admin-page-title">Dashboard</h1>
       <p style={{ color: 'var(--admin-muted)', marginBottom: '1.5rem' }}>
+        Changes here update the live site at{' '}
         <a href="/" target="_blank" rel="noopener noreferrer">
           View live site →
         </a>
       </p>
+
+      {stats.error && (
+        <p className="admin-feedback admin-feedback-error" style={{ marginBottom: '1rem' }}>
+          Could not load some stats: {stats.error}. Check Supabase RLS and that you are signed in.
+        </p>
+      )}
 
       {stats.loading ? (
         <p style={{ color: 'var(--admin-muted)' }}>Loading stats…</p>
       ) : (
         <div className="admin-grid-4" style={{ marginBottom: '1.5rem' }}>
           <div className="admin-stat-card">
-            <h3>Projects</h3>
+            <h3>Projects (CMS)</h3>
             <div className="value">{stats.projectsPublished + stats.projectsDraft}</div>
             <div className="sub">
               {stats.projectsPublished} published · {stats.projectsDraft} draft
@@ -75,10 +120,48 @@ export function AdminDashboardPage() {
           <div className="admin-stat-card">
             <h3>Skills</h3>
             <div className="value">{stats.skills}</div>
-            <div className="sub">Total skills listed</div>
+            <div className="sub">Shown on About page</div>
+          </div>
+          <div className="admin-stat-card">
+            <h3>Home</h3>
+            <div className="value">{stats.homeSlides}</div>
+            <div className="sub">
+              slides · hero {stats.hasHero ? '✓' : '—'} · about {stats.hasAbout ? '✓' : '—'}
+            </div>
           </div>
         </div>
       )}
+
+      <div className="admin-card" style={{ marginBottom: '1rem' }}>
+        <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem' }}>Content wired to the public site</h3>
+        <ul style={{ color: 'var(--admin-muted)', fontSize: '0.9rem', margin: 0, paddingLeft: '1.2rem' }}>
+          <li>
+            <strong>Projects</strong> — CMS <code>projects</code> + <code>project_gallery_items</code> (modal gallery);
+            legacy portfolio media is used only when a project has no CMS gallery rows.
+          </li>
+          <li>
+            <strong>Testimonials</strong> — CMS <code>testimonials</code> (approved), else legacy table.
+          </li>
+          <li>
+            <strong>About</strong> — CMS <code>about</code> + <code>skills</code>; career uses{' '}
+            <code>career_timeline_entries</code>.
+          </li>
+          <li>
+            <strong>Home</strong> — <code>home_slides</code> carousel; hero headline/CTA/overlay from{' '}
+            <code>hero</code>.
+          </li>
+          <li>
+            <strong>Header / footer</strong> — <code>nav_links</code>, <code>contact_info</code>,{' '}
+            <code>site_settings</code>.
+          </li>
+        </ul>
+        {stats.projectsPublished === 0 && (
+          <p style={{ color: 'var(--admin-warn, #f59e0b)', marginTop: '0.75rem', fontSize: '0.85rem' }}>
+            No published CMS projects yet. Run <code>npm run supabase:migrate-cms</code> or publish projects in
+            Manage Projects.
+          </p>
+        )}
+      </div>
 
       <div className="admin-card">
         <h3 style={{ margin: '0 0 1rem', fontSize: '1rem' }}>Quick links</h3>

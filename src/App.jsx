@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { SidePanelProvider } from './context/SidePanelContext';
 import { useCustomCursor } from './hooks/useCustomCursor';
+import { SiteMeta } from './components/shared/SiteMeta';
 import { HomePage } from './pages/HomePage';
 import { ProtectedRoute } from './components/admin/ProtectedRoute';
 import { AdminLayout } from './components/admin/AdminLayout';
@@ -51,6 +52,12 @@ const AdminNavigationPage = lazy(() =>
 const AdminSettingsPage = lazy(() =>
   import('./pages/admin/AdminSettingsPage').then((m) => ({ default: m.AdminSettingsPage }))
 );
+const AdminHomeSlidesPage = lazy(() =>
+  import('./pages/admin/AdminHomeSlidesPage').then((m) => ({ default: m.AdminHomeSlidesPage }))
+);
+const AdminCareerPage = lazy(() =>
+  import('./pages/admin/AdminCareerPage').then((m) => ({ default: m.AdminCareerPage }))
+);
 
 function PageFallback() {
   return (
@@ -89,6 +96,7 @@ function AppContent() {
 
   return (
     <>
+      <SiteMeta />
       <ScrollToTop />
       <Suspense fallback={<PageFallback />}>
         <Routes>
@@ -101,7 +109,9 @@ function AppContent() {
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/hero" element={<AdminHeroPage />} />
+              <Route path="/admin/home-slides" element={<AdminHomeSlidesPage />} />
               <Route path="/admin/about" element={<AdminAboutPage />} />
+              <Route path="/admin/career" element={<AdminCareerPage />} />
               <Route path="/admin/projects" element={<AdminProjectsPage />} />
               <Route path="/admin/projects/new" element={<AdminProjectFormPage />} />
               <Route path="/admin/projects/:id" element={<AdminProjectFormPage />} />

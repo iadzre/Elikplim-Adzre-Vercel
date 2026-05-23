@@ -1,13 +1,30 @@
 import { mediaUrl } from './mediaUrl';
 import { normalizeCoverSrc } from './normalizeCoverSrc';
+import { deriveProjectMediaType } from './projectMediaUtils';
 
 /**
- * @param {Record<string, unknown>} row
+ * @param {Record<string, unknown> & {
+ *   project_gallery_items?: Array<{
+ *     src: string;
+ *     item_type?: string;
+ *     sort_order?: number;
+ *   }>;
+ * }} row
  * @returns {import('./contentMappers').Project}
  */
 export function mapCmsProject(row) {
   const tags = /** @type {string[] | null} */ (row.tags) || [];
   const cover = normalizeCoverSrc(row.cover_image_url);
+
+  const gallery = [...(row.project_gallery_items || [])].sort(
+    (a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0)
+  );
+
+  const mediaSrcs = gallery
+    .map((item) => normalizeCoverSrc(item.src))
+    .filter((src) => src != null);
+
+  const resolvedSrcs = mediaSrcs.length ? mediaSrcs : cover ? [cover] : [];
 
   return {
     id: String(row.id),
@@ -17,8 +34,12 @@ export function mapCmsProject(row) {
     tagRight: tags[1] ?? '',
     coverSrc: cover,
     coverAlt: String(row.title ?? 'Project cover'),
-    mediaType: 'image',
-    mediaSrcs: cover ? [cover] : [],
+    mediaType: deriveProjectMediaType(
+      row.media_type ? String(row.media_type) : null,
+      gallery,
+      resolvedSrcs
+    ),
+    mediaSrcs: resolvedSrcs,
   };
 }
 
@@ -42,17 +63,15 @@ export function mapCmsTestimonial(row) {
 export function mapCmsHeroSlide(row) {
   const type = row.background_type;
   const value = String(row.background_value ?? '');
-  let src = value;
+  let src = normalizeCoverSrc(value);
 
-  if (type === 'image' && value) {
-    src = mediaUrl(value);
-  } else if (type === 'video' && value && !value.includes('youtube') && !value.includes('vimeo')) {
-    src = mediaUrl(value);
+  if ((type === 'image' || type === 'video') && !src) {
+    src = normalizeCoverSrc('/images/slider/_DSF2248.jpg');
   }
 
   return {
     id: String(row.id),
-    src: src || mediaUrl('/images/slider/_DSF2248.jpg'),
+    src: src ?? '',
     alt: String(row.headline ?? 'Hero'),
   };
 }
@@ -67,7 +86,7 @@ export function mapCmsAbout(row) {
     name: String(row.name ?? ''),
     title: String(row.title ?? ''),
     bioParagraphs: bio.split(/\n\n+|\n/).map((p) => p.trim()).filter(Boolean),
-    profileImageUrl: row.profile_image_url ? mediaUrl(String(row.profile_image_url)) : null,
+    profileImageUrl: normalizeCoverSrc(row.profile_image_url),
     cvUrl: row.cv_url ? String(row.cv_url) : null,
     email: row.email ? String(row.email) : null,
     phone: row.phone ? String(row.phone) : null,

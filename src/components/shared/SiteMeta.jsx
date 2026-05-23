@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 import { useSiteSettings } from '../../hooks/useSiteSettings';
 
-export function SiteMeta({ titleSuffix = '' }) {
+export function SiteMeta() {
   const { settings } = useSiteSettings();
 
   useEffect(() => {
-    const base = settings.site_title || 'Elikplim Adzre';
-    document.title = titleSuffix ? `${base} - ${titleSuffix}` : base;
-
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
       meta = document.createElement('meta');
@@ -27,7 +24,7 @@ export function SiteMeta({ titleSuffix = '' }) {
       }
       link.setAttribute('href', settings.favicon_url);
     }
-  }, [settings, titleSuffix]);
+  }, [settings]);
 
   return null;
 }

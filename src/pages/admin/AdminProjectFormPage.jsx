@@ -8,6 +8,7 @@ import { FileDropzone } from '../../components/admin/FileDropzone';
 import { ProjectCover } from '../../components/projects/ProjectCover';
 import { confirmAction, stringToTags, tagsToString } from '../../lib/adminUtils';
 import { normalizeCoverSrc } from '../../lib/normalizeCoverSrc';
+import { AdminProjectGallery } from '../../components/admin/AdminProjectGallery';
 
 const empty = {
   title: '',
@@ -19,6 +20,7 @@ const empty = {
   github_url: '',
   featured: false,
   status: 'draft',
+  media_type: 'image',
 };
 
 export function AdminProjectFormPage() {
@@ -68,14 +70,19 @@ export function AdminProjectFormPage() {
       github_url: form.github_url || null,
       featured: !!form.featured,
       status: form.status,
+      media_type: form.media_type || 'image',
     };
 
     let error;
     if (isNew) {
       const { count } = await supabase.from('projects').select('id', { count: 'exact', head: true });
-      const { error: insErr } = await supabase.from('projects').insert({ ...payload, display_order: count ?? 0 }).select().single();
+      const { data: created, error: insErr } = await supabase
+        .from('projects')
+        .insert({ ...payload, display_order: count ?? 0 })
+        .select('id')
+        .single();
       error = insErr;
-      if (!error) navigate('/admin/projects');
+      if (!error && created?.id) navigate(`/admin/projects/${created.id}`);
     } else {
       ({ error } = await supabase.from('projects').update(payload).eq('id', id));
     }
@@ -169,6 +176,21 @@ export function AdminProjectFormPage() {
           )}
         </div>
       </form>
+
+      {!isNew && (
+        <div className="admin-card" style={{ maxWidth: 720, marginTop: '1.5rem' }}>
+          <h2 style={{ margin: '0 0 0.5rem', fontSize: '1.1rem' }}>Gallery (modal)</h2>
+          <p style={{ color: 'var(--admin-muted)', fontSize: '0.9rem', marginBottom: '1rem' }}>
+            Images and videos shown when visitors open this project. Order matches the modal carousel.
+          </p>
+          <AdminProjectGallery
+            projectId={id}
+            mediaType={form.media_type || 'image'}
+            onMediaTypeChange={(value) => update('media_type', value)}
+            onFeedback={setFeedback}
+          />
+        </div>
+      )}
     </>
   );
 }

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { PageLayout } from '../components/layout/PageLayout';
 import { Footer } from '../components/layout/Footer';
 import { SoftwareSlider } from '../components/about/SoftwareSlider';
@@ -8,14 +7,15 @@ import { LazyImage } from '../components/shared/LazyImage';
 import { ContentMessage } from '../components/shared/ContentMessage';
 import { useHeaderBlur } from '../hooks/useHeaderBlur';
 import { useAboutContent } from '../hooks/useAboutContent';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 export function AboutPage() {
   const headerRef = useHeaderBlur(true);
-  const { bioParagraphs, skills, loading, error } = useAboutContent();
+  const { bioParagraphs, skills, name, title, profileImageUrl, loading, error } = useAboutContent();
 
-  useEffect(() => {
-    document.title = 'Elikplim Adzre - About Me';
-  }, []);
+  usePageTitle('About Me');
+
+  const profileSrc = profileImageUrl || profilePhoto;
 
   return (
     <PageLayout
@@ -36,13 +36,11 @@ export function AboutPage() {
                     HELLO, HII....i am
                   </p>
                   <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl uppercase tracking-[0.05em] font-medium text-[#2A2F7F] mb-0 leading-[1.1] gazzetta-bold">
-                    Elikplim Adzre
+                    {name}
                   </h1>
                 </div>
                 <div className="-mt-3 md:-mt-4">
-                  <p className="text-[#F45D01] josefin tracking-2x uppercase text-xs">
-                    Illustrator | Filmmaker | Photographer | Storyteller
-                  </p>
+                  <p className="text-[#F45D01] josefin tracking-2x uppercase text-xs">{title}</p>
                 </div>
                 <div className="space-y-1.5 md:space-y-2 pt-4 md:pt-2 border-t border-[#2A2F7F]">
                   {loading && <ContentMessage message="Loading bio…" className="text-left" />}
@@ -84,8 +82,8 @@ export function AboutPage() {
               <div className="flex justify-center lg:justify-end">
                 <div className="w-full max-w-lg aspect-square bg-white border-2 border-gray-200 overflow-hidden shadow-lg hover:shadow-xl hover:border-[#F45D01] transition-all duration-500 group">
                   <LazyImage
-                    src={profilePhoto}
-                    alt="Elikplim Adzre"
+                    src={profileSrc}
+                    alt={name}
                     eager
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
