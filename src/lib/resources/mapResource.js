@@ -1,3 +1,5 @@
+import { ALL_DOWNLOADS_FREE } from './marketplaceConfig';
+
 /**
  * Map Supabase resource row (+ optional category) to UI catalog shape.
  * @param {Record<string, unknown>} row
@@ -16,8 +18,8 @@ export function mapDbResourceToCatalog(row) {
     short_description: String(row.short_description ?? ''),
     longDescription: String(row.full_description ?? row.short_description ?? ''),
     categoryId: categorySlug,
-    price: Number(row.price ?? 0),
-    isFree: row.pricing_type === 'free',
+    price: ALL_DOWNLOADS_FREE ? 0 : Number(row.price ?? 0),
+    isFree: ALL_DOWNLOADS_FREE || row.pricing_type === 'free',
     featured: Boolean(row.featured),
     rating: Number(row.rating_average ?? 0),
     downloadCount: Number(row.download_count ?? 0),

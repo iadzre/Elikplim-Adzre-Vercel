@@ -16,6 +16,7 @@ import {
   fetchIsFavorited,
   fetchApprovedReviews,
 } from '../lib/services/resourcesService';
+import { ALL_DOWNLOADS_FREE } from '../lib/resources/marketplaceConfig';
 import '../styles/resources.css';
 
 const ResourceDetailModal = lazy(() =>
@@ -100,12 +101,17 @@ export function ResourcesPage() {
                 Resources
               </p>
               <p className="text-sm md:text-base text-[#2A2F7F] mt-3 leading-relaxed">
-                Templates, kits, and production files from client work — free where noted, or purchase to download.
-                Browse below or{' '}
-                <button type="button" onClick={handleBrowseFree} className="resources-link">
-                  see free items
-                </button>
-                .
+                {ALL_DOWNLOADS_FREE
+                  ? 'Templates, kits, and production files from client work — free to download. Browse below.'
+                  : 'Templates, kits, and production files from client work — free where noted, or purchase to download. Browse below or '}
+                {!ALL_DOWNLOADS_FREE && (
+                  <>
+                    <button type="button" onClick={handleBrowseFree} className="resources-link">
+                      see free items
+                    </button>
+                    .
+                  </>
+                )}
               </p>
             </div>
           </section>
@@ -158,7 +164,7 @@ export function ResourcesPage() {
             resource={selected}
             isOpen={modalOpen}
             onClose={closeModal}
-            hasAccess={modalMeta.hasAccess || (selected.isFree ?? false) || library.owns(selected.id)}
+            hasAccess={modalMeta.hasAccess || ALL_DOWNLOADS_FREE || (selected.isFree ?? false) || library.owns(selected.id)}
             isFavorited={modalMeta.isFavorited}
             onFavoriteChange={(v) => setModalMeta((m) => ({ ...m, isFavorited: v }))}
             onAccessGranted={() => {

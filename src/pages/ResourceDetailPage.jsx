@@ -8,6 +8,7 @@ import { ContentMessage } from '../components/shared/ContentMessage';
 import { useHeaderBlur } from '../hooks/useHeaderBlur';
 import { useResourceDetail } from '../features/resources/hooks/useResourceDetail';
 import { useResourceAuth } from '../features/resources/hooks/useResourceAuth';
+import { ALL_DOWNLOADS_FREE } from '../lib/resources/marketplaceConfig';
 import '../styles/resources.css';
 
 const ResourceDetailModal = lazy(() =>
@@ -72,7 +73,7 @@ export function ResourceDetailPage() {
               setModalOpen(false);
               navigate('/resources', { replace: true });
             }}
-            hasAccess={detail.hasAccess}
+            hasAccess={detail.hasAccess || ALL_DOWNLOADS_FREE}
             isFavorited={detail.isFavorited}
             onFavoriteChange={detail.setIsFavorited}
             onAccessGranted={() => {

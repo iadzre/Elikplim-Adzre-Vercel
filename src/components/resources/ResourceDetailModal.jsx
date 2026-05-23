@@ -8,6 +8,7 @@ import {
   createReview,
   signInWithGoogle,
 } from '../../lib/services/resourcesService';
+import { ALL_DOWNLOADS_FREE } from '../../lib/resources/marketplaceConfig';
 
 /**
  * @param {{
@@ -59,7 +60,8 @@ export function ResourceDetailModal({
 
   if (!resource) return null;
 
-  const priceLabel = resource.isFree ? 'Free' : `$${resource.price}`;
+  const priceLabel = ALL_DOWNLOADS_FREE || resource.isFree ? 'Free' : `$${resource.price}`;
+  const canDownload = ALL_DOWNLOADS_FREE || hasAccess || resource.isFree;
 
   async function handleDownload() {
     setBusy(true);
@@ -118,7 +120,7 @@ export function ResourceDetailModal({
       setMessage({ type: 'error', text: 'Sign in to leave a review.' });
       return;
     }
-    if (!hasAccess) {
+    if (!hasAccess && !ALL_DOWNLOADS_FREE) {
       setMessage({ type: 'error', text: 'Download or purchase before reviewing.' });
       return;
     }
@@ -203,7 +205,7 @@ export function ResourceDetailModal({
             )}
 
             <div className="flex flex-wrap gap-3 mt-6">
-              {hasAccess || resource.isFree ? (
+              {canDownload ? (
                 <button
                   type="button"
                   disabled={busy}
@@ -233,7 +235,9 @@ export function ResourceDetailModal({
 
             {!isSignedIn && (
               <div className="mt-4 pt-4 border-t border-[#2A2F7F]/10">
-                <p className="text-xs text-[#2A2F7F]/60 mb-2">Sign in for purchases and favorites.</p>
+                <p className="text-xs text-[#2A2F7F]/60 mb-2">
+                  {ALL_DOWNLOADS_FREE ? 'Sign in to save favorites.' : 'Sign in for purchases and favorites.'}
+                </p>
                 <button
                   type="button"
                   onClick={() => signInWithGoogle(`/resources/${resource.slug}`)}
@@ -258,7 +262,7 @@ export function ResourceDetailModal({
               </div>
             )}
 
-            {isSignedIn && hasAccess && (
+            {isSignedIn && canDownload && (
               <form onSubmit={handleReview} className="mt-6 pt-4 border-t border-[#2A2F7F]/10 space-y-2">
                 <h3 className="text-[10px] uppercase tracking-widest josefin text-[#2A2F7F]/60">Leave a review</h3>
                 <select

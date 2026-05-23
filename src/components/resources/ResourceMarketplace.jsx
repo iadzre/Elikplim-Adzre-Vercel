@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import { ResourceCard } from './ResourceCard';
 import { ResourceCardSkeleton } from './ResourceCardSkeleton';
+import { ALL_DOWNLOADS_FREE } from '../../lib/resources/marketplaceConfig';
 
 /**
  * @param {{
@@ -78,8 +79,12 @@ export function ResourceMarketplace({
             <option value="featured">Featured</option>
             <option value="downloads">Most downloaded</option>
             <option value="rating">Highest rated</option>
-            <option value="price-asc">Price: low to high</option>
-            <option value="price-desc">Price: high to low</option>
+            {!ALL_DOWNLOADS_FREE && (
+              <>
+                <option value="price-asc">Price: low to high</option>
+                <option value="price-desc">Price: high to low</option>
+              </>
+            )}
             <option value="newest">Newest</option>
           </select>
         </div>

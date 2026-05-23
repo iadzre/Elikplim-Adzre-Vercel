@@ -4,6 +4,7 @@
 
 import { supabase, isSupabaseConfigured } from '../supabase';
 import { mapDbResourceToCatalog } from '../resources/mapResource';
+import { ALL_DOWNLOADS_FREE } from '../resources/marketplaceConfig';
 
 export const PAGE_SIZE = 9;
 
@@ -191,6 +192,9 @@ export async function recordResourceView(resourceId) {
 }
 
 export async function checkResourceAccess(resourceId) {
+  if (ALL_DOWNLOADS_FREE) {
+    return { data: true, error: null };
+  }
   if (!isSupabaseConfigured()) {
     return { data: false, error: new Error('Supabase is not configured') };
   }
