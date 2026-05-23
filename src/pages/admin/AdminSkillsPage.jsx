@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase';
 import { AdminFeedback } from '../../components/admin/AdminFeedback';
 import { AdminField } from '../../components/admin/AdminField';
 import { ReorderControls, swapOrder } from '../../components/admin/ReorderControls';
+import { AdminPageHeader } from '../../components/admin/AdminPageHeader';
 import { confirmAction } from '../../lib/adminUtils';
 
 export function AdminSkillsPage() {
@@ -88,14 +89,11 @@ export function AdminSkillsPage() {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h1 className="admin-page-title" style={{ margin: 0 }}>
-          Skills
-        </h1>
+      <AdminPageHeader title="Skills">
         <button type="button" className="admin-btn admin-btn-primary" onClick={handleSaveAll} disabled={saving}>
           {saving ? 'Saving…' : 'Save All'}
         </button>
-      </div>
+      </AdminPageHeader>
       <AdminFeedback feedback={feedback} />
 
       <form className="admin-card" onSubmit={handleAdd}>
@@ -113,7 +111,7 @@ export function AdminSkillsPage() {
       </form>
 
       {loading ? (
-        <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>
+        <p className="admin-loading-line">Loading…</p>
       ) : (
         Object.entries(grouped).map(([category, list]) => (
           <div key={category} className="admin-card">

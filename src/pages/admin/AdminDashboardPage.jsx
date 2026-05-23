@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
+import { AdminPageHeader } from '../../components/admin/AdminPageHeader';
 
 const QUICK_LINKS = [
   { to: '/admin/hero', label: 'Edit Hero' },
@@ -110,7 +111,7 @@ export function AdminDashboardPage() {
 
   return (
     <>
-      <h1 className="admin-page-title">Dashboard</h1>
+      <AdminPageHeader title="Dashboard" />
       <p className="admin-page-lead">
         Changes here update the live site.{' '}
         <a href="/" target="_blank" rel="noopener noreferrer">

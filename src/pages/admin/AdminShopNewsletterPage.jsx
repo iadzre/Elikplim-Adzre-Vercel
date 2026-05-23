@@ -31,11 +31,12 @@ export function AdminShopNewsletterPage() {
       <AdminFeedback feedback={feedback} />
 
       {loading ? (
-        <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>
+        <p className="admin-loading-line">Loading…</p>
       ) : rows.length === 0 ? (
-        <p style={{ color: 'var(--admin-muted)' }}>No subscribers yet.</p>
+        <p className="admin-text-muted">No subscribers yet.</p>
       ) : (
-        <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="admin-card admin-card-flush">
+          <div className="admin-table-wrap">
           <table className="admin-table">
             <thead>
               <tr>
@@ -54,6 +55,7 @@ export function AdminShopNewsletterPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </>

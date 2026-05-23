@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase';
 import { uploadFile } from '../../lib/upload';
 import { AdminField } from '../../components/admin/AdminField';
 import { AdminFeedback } from '../../components/admin/AdminFeedback';
+import { AdminPageHeader } from '../../components/admin/AdminPageHeader';
 import { FileDropzone } from '../../components/admin/FileDropzone';
 
 const BG_TABS = [
@@ -133,14 +134,14 @@ export function AdminHeroPage() {
     else if (url) update('background_value', url);
   }
 
-  if (loading || !row) return <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>;
+  if (loading || !row) return <p className="admin-loading-line">Loading…</p>;
 
   const opacity = Number(row.overlay_opacity ?? 0.5);
   const previewBg = heroPreviewStyle(row.background_type, row.background_type === 'gradient' ? buildGradient(gradDir, gradStart, gradEnd) : row.background_value);
 
   return (
     <>
-      <h1 className="admin-page-title">Hero Section</h1>
+      <AdminPageHeader title="Hero Section" />
       <AdminFeedback feedback={feedback} />
 
       <div className="admin-grid-2">

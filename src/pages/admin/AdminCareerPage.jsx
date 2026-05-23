@@ -152,7 +152,7 @@ export function AdminCareerPage() {
       </form>
 
       {loading ? (
-        <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>
+        <p className="admin-loading-line">Loading…</p>
       ) : (
         <>
           {entries.map((entry, i) => (

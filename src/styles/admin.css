@@ -139,8 +139,8 @@ body.admin-route *::-webkit-scrollbar-thumb:hover {
   --admin-border-strong: #d0d5dd;
   --admin-text: #111827;
   --admin-text-secondary: #344054;
-  --admin-muted: #667085;
-  --admin-muted-soft: #98a2b3;
+  --admin-muted: #5c6578;
+  --admin-muted-soft: #8b95a8;
   --admin-accent: #2a2f7f;
   --admin-accent-hover: #1e2360;
   --admin-accent-soft: #eef0f8;
@@ -438,7 +438,8 @@ body.admin-route *::-webkit-scrollbar-thumb:hover {
 .admin-nav a.active {
   background: var(--admin-accent-soft);
   color: var(--admin-accent);
-  border-color: var(--admin-accent-muted);
+  border-color: transparent;
+  box-shadow: inset 3px 0 0 var(--admin-accent);
 }
 
 .admin-nav-icon {
@@ -524,8 +525,10 @@ body.admin-route *::-webkit-scrollbar-thumb:hover {
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding: var(--admin-space-6);
-  max-width: 1280px;
+  padding: var(--admin-space-6) var(--admin-space-8);
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 html.admin-route main.admin-content,
@@ -679,6 +682,57 @@ html.admin-route main.admin-content,
 
 .admin-field:last-child {
   margin-bottom: 0;
+}
+
+.admin-field-hint {
+  font-size: 0.75rem;
+  color: var(--admin-muted);
+  margin: var(--admin-space-2) 0 0;
+  line-height: 1.45;
+}
+
+.admin-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--admin-space-4);
+  max-width: 40rem;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--admin-space-4);
+}
+
+@media (max-width: 768px) {
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: var(--admin-space-2);
+  font-size: 0.875rem;
+  color: var(--admin-text-secondary);
+  cursor: pointer;
+}
+
+.admin-checkbox-row input[type='checkbox'] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--admin-accent);
+  cursor: pointer;
+}
+
+.admin-page-stack > * + * {
+  margin-top: 0;
+}
+
+.admin-loading-line {
+  color: var(--admin-muted);
+  font-size: 0.875rem;
 }
 
 /* Buttons */

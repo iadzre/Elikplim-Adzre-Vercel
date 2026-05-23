@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase';
 import { AdminField } from '../../components/admin/AdminField';
 import { AdminFeedback } from '../../components/admin/AdminFeedback';
 import { ReorderControls, swapOrder } from '../../components/admin/ReorderControls';
+import { AdminPageHeader } from '../../components/admin/AdminPageHeader';
 import { confirmAction } from '../../lib/adminUtils';
 
 const PLATFORMS = ['Email', 'Phone', 'LinkedIn', 'GitHub', 'Twitter/X', 'Instagram', 'WhatsApp', 'Website'];
@@ -77,15 +78,12 @@ export function AdminContactPage() {
     else load();
   }
 
-  if (loading) return <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>;
+  if (loading) return <p className="admin-loading-line">Loading…</p>;
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h1 className="admin-page-title" style={{ margin: 0 }}>
-          Contact & Social
-        </h1>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+      <AdminPageHeader title="Contact & Social">
+        <div className="admin-inline-actions">
           <button type="button" className="admin-btn admin-btn-secondary" onClick={handleAdd}>
             Add Entry
           </button>
@@ -93,7 +91,7 @@ export function AdminContactPage() {
             {saving ? 'Saving…' : 'Save'}
           </button>
         </div>
-      </div>
+      </AdminPageHeader>
       <AdminFeedback feedback={feedback} />
 
       {rows.map((r, i) => (

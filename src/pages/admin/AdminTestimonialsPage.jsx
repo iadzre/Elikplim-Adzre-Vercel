@@ -5,6 +5,7 @@ import { AdminField } from '../../components/admin/AdminField';
 import { AdminFeedback } from '../../components/admin/AdminFeedback';
 import { FileDropzone } from '../../components/admin/FileDropzone';
 import { ReorderControls, swapOrder } from '../../components/admin/ReorderControls';
+import { AdminPageHeader } from '../../components/admin/AdminPageHeader';
 import { confirmAction, formatDate } from '../../lib/adminUtils';
 
 const TABS = [
@@ -126,14 +127,11 @@ export function AdminTestimonialsPage() {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h1 className="admin-page-title" style={{ margin: 0 }}>
-          Testimonials
-        </h1>
+      <AdminPageHeader title="Testimonials">
         <button type="button" className="admin-btn admin-btn-primary" onClick={openAdd}>
           Add Testimonial
         </button>
-      </div>
+      </AdminPageHeader>
       <AdminFeedback feedback={feedback} />
 
       <div className="admin-tabs">
@@ -145,9 +143,9 @@ export function AdminTestimonialsPage() {
       </div>
 
       {loading ? (
-        <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>
+        <p className="admin-loading-line">Loading…</p>
       ) : items.length === 0 ? (
-        <p style={{ color: 'var(--admin-muted)' }}>No {tab} testimonials.</p>
+        <p className="admin-text-muted">No {tab} testimonials.</p>
       ) : (
         items.map((t, i) => (
           <div

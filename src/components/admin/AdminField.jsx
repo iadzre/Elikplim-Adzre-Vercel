@@ -6,7 +6,7 @@ export function AdminField({ label, children, hint }) {
     <div className="admin-field">
       <label className="admin-label">{label}</label>
       {children}
-      {hint && <p style={{ fontSize: '0.75rem', color: 'var(--admin-muted)', marginTop: '0.25rem' }}>{hint}</p>}
+      {hint && <p className="admin-field-hint">{hint}</p>}
     </div>
   );
 }

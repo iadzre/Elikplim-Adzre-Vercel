@@ -34,7 +34,7 @@ export function AdminShopProfilesPage() {
     }
   }
 
-  if (loading) return <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>;
+  if (loading) return <p className="admin-loading-line">Loading…</p>;
 
   return (
     <>
@@ -45,11 +45,12 @@ export function AdminShopProfilesPage() {
       <AdminFeedback feedback={feedback} />
 
       {profiles.length === 0 ? (
-        <p style={{ color: 'var(--admin-muted)' }}>
+        <p className="admin-text-muted">
           No profiles yet. Profiles are created when users sign up, or run migrations and sign in once.
         </p>
       ) : (
-        <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="admin-card admin-card-flush">
+          <div className="admin-table-wrap">
           <table className="admin-table">
             <thead>
               <tr>
@@ -67,6 +68,7 @@ export function AdminShopProfilesPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </>

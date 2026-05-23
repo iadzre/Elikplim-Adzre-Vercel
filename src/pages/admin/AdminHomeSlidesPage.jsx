@@ -123,7 +123,7 @@ export function AdminHomeSlidesPage() {
       </form>
 
       {loading ? (
-        <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>
+        <p className="admin-loading-line">Loading…</p>
       ) : (
         <>
           <div className="admin-table-wrap">

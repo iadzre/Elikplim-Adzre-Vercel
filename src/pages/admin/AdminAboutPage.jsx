@@ -65,7 +65,7 @@ export function AdminAboutPage() {
     setFeedback(error ? { type: 'error', message: error.message } : { type: 'success', message: 'About section saved.' });
   }
 
-  if (loading || !row) return <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>;
+  if (loading || !row) return <p className="admin-loading-line">Loading…</p>;
 
   const cvName = row.cv_url ? row.cv_url.split('/').pop() : null;
 

@@ -47,7 +47,7 @@ export function AdminSettingsPage() {
     setFeedback(error ? { type: 'error', message: error.message } : { type: 'success', message: 'Settings saved.' });
   }
 
-  if (loading) return <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>;
+  if (loading) return <p className="admin-loading-line">Loading…</p>;
 
   return (
     <>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { AdminFeedback } from '../../components/admin/AdminFeedback';
+import { AdminPageHeader } from '../../components/admin/AdminPageHeader';
 import { confirmAction, formatDate } from '../../lib/adminUtils';
 import { LazyImage } from '../../components/shared/LazyImage';
 
@@ -40,14 +41,11 @@ export function AdminShopResourcesPage() {
 
   return (
     <>
-      <div className="admin-toolbar">
-        <h1 className="admin-page-title">Shop — Resources</h1>
-        <div className="admin-toolbar-actions">
-          <Link to="/admin/shop/resources/new" className="admin-btn admin-btn-primary">
-            Add resource
-          </Link>
-        </div>
-      </div>
+      <AdminPageHeader title="Shop — Resources">
+        <Link to="/admin/shop/resources/new" className="admin-btn admin-btn-primary">
+          Add resource
+        </Link>
+      </AdminPageHeader>
       <AdminFeedback feedback={feedback} />
 
       {loading ? (

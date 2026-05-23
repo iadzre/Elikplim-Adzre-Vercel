@@ -43,11 +43,12 @@ export function AdminShopPurchasesPage() {
       <AdminFeedback feedback={feedback} />
 
       {loading ? (
-        <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>
+        <p className="admin-loading-line">Loading…</p>
       ) : items.length === 0 ? (
-        <p style={{ color: 'var(--admin-muted)' }}>No purchases yet.</p>
+        <p className="admin-text-muted">No purchases yet.</p>
       ) : (
-        <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="admin-card admin-card-flush">
+          <div className="admin-table-wrap">
           <table className="admin-table">
             <thead>
               <tr>
@@ -82,6 +83,7 @@ export function AdminShopPurchasesPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </>

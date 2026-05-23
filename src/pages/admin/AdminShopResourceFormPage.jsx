@@ -161,7 +161,7 @@ export function AdminShopResourceFormPage() {
     else if (url) update('preview_images', [...(form.preview_images ?? []), url]);
   }
 
-  if (loading) return <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>;
+  if (loading) return <p className="admin-loading-line">Loading…</p>;
 
   return (
     <>

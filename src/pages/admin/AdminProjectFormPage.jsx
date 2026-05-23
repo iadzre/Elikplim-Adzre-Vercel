@@ -98,7 +98,7 @@ export function AdminProjectFormPage() {
     else navigate('/admin/projects');
   }
 
-  if (loading) return <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>;
+  if (loading) return <p className="admin-loading-line">Loading…</p>;
 
   return (
     <>

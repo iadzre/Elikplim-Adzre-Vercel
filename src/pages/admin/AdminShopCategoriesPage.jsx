@@ -76,7 +76,7 @@ export function AdminShopCategoriesPage() {
     else load();
   }
 
-  if (loading) return <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>;
+  if (loading) return <p className="admin-loading-line">Loading…</p>;
 
   return (
     <>

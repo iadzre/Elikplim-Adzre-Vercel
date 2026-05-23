@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { AdminFeedback } from '../../components/admin/AdminFeedback';
 import { ReorderControls, swapOrder } from '../../components/admin/ReorderControls';
+import { AdminPageHeader } from '../../components/admin/AdminPageHeader';
 import { ProjectCover } from '../../components/projects/ProjectCover';
 import { confirmAction, formatDate } from '../../lib/adminUtils';
 import { normalizeCoverSrc } from '../../lib/normalizeCoverSrc';
@@ -59,22 +60,20 @@ export function AdminProjectsPage() {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h1 className="admin-page-title" style={{ margin: 0 }}>
-          Projects
-        </h1>
+      <AdminPageHeader title="Projects">
         <Link to="/admin/projects/new" className="admin-btn admin-btn-primary">
           Add New Project
         </Link>
-      </div>
+      </AdminPageHeader>
       <AdminFeedback feedback={feedback} />
 
       {loading ? (
-        <p style={{ color: 'var(--admin-muted)' }}>Loading…</p>
+        <p className="admin-loading-line">Loading…</p>
       ) : projects.length === 0 ? (
-        <p style={{ color: 'var(--admin-muted)' }}>No projects yet.</p>
+        <p className="admin-text-muted">No projects yet.</p>
       ) : (
-        <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="admin-card admin-card-flush">
+          <div className="admin-table-wrap">
           <table className="admin-table">
             <thead>
               <tr>
@@ -151,6 +150,7 @@ export function AdminProjectsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </>
