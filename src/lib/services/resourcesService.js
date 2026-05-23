@@ -61,7 +61,9 @@ export async function searchPublishedResources({
     return { data: [], total: 0, error: new Error('Supabase is not configured') };
   }
 
-  const offset = (page - 1) * pageSize;
+  const safeLimit = Math.min(100, Math.max(1, Number(pageSize) || PAGE_SIZE));
+  const safePage = Math.max(1, Number(page) || 1);
+  const offset = (safePage - 1) * safeLimit;
   const rpcSort = sort === 'featured' ? 'downloads' : mapSortToRpc(sort);
 
   const [listRes, countRes] = await Promise.all([
@@ -71,7 +73,7 @@ export async function searchPublishedResources({
       p_pricing_type: mapTierToPricingType(tierFilter),
       p_featured_only: featuredOnly,
       p_sort: rpcSort,
-      p_limit: pageSize,
+      p_limit: safeLimit,
       p_offset: offset,
     }),
     supabase.rpc('count_search_resources', {
@@ -87,10 +89,12 @@ export async function searchPublishedResources({
   }
 
   const rows = listRes.data ?? [];
+  const total = countRes.error ? rows.length : Number(countRes.data ?? rows.length);
+
   return {
     data: rows.map((row) => mapDbResourceToCatalog(row)),
-    total: Number(countRes.data ?? rows.length),
-    error: countRes.error,
+    total,
+    error: null,
   };
 }
 
