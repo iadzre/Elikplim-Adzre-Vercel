@@ -123,7 +123,16 @@ supabase/
 
 ## Media & Git
 
-Portfolio files in `public/images/` (~900MB) are tracked with [Git LFS](https://git-lfs.com). After clone: `git lfs install && git lfs pull`.
+Portfolio files in `public/images/` (~900MB) are tracked with [Git LFS](https://git-lfs.com). After clone: `npm run media:pull` (or `git lfs install && git lfs pull`).
+
+**Vercel:** Enable **Git → Git Large File Storage (LFS)** in project settings, then redeploy. `vercel.json` also runs `git lfs pull` during install. Without LFS, production serves 133-byte pointer files instead of images.
+
+To regenerate Supabase image links after adding files to `public/images/`:
+
+```bash
+npm run seed:generate
+supabase db query --file supabase/seed.sql --linked
+```
 
 After clone: `git lfs install` then `git lfs pull`
 

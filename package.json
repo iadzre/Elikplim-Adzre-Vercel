@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seed:generate": "node scripts/generate-seed.mjs",
+    "media:pull": "git lfs install && git lfs pull",
+    "supabase:setup": "bash scripts/setup-supabase.sh"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",

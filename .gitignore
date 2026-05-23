@@ -9,3 +9,4 @@ website.zip
 
 # Over 100MB — must use Git LFS (see .gitattributes)
 # public/images/Prj13/Director_2.mp4 is tracked via LFS
+.vercel
