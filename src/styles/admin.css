@@ -51,6 +51,42 @@
   }
 }
 
+/* Public styles.css locks document scroll (overflow-y: hidden) — re-enable on admin */
+html.admin-route,
+body.admin-route {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  position: static !important;
+}
+
+html.admin-route #root {
+  display: block !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow: visible !important;
+}
+
+html.admin-route *,
+body.admin-route * {
+  scrollbar-width: thin;
+  -ms-overflow-style: auto;
+}
+
+html.admin-route *::-webkit-scrollbar,
+body.admin-route *::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+  height: 8px;
+}
+
+html.admin-route *::-webkit-scrollbar-thumb,
+body.admin-route *::-webkit-scrollbar-thumb {
+  background: var(--admin-border, #2e3348);
+  border-radius: 4px;
+}
+
 .admin-root {
   --admin-bg: #0f1117;
   --admin-surface: #1a1d27;

@@ -86,7 +86,8 @@ function AppContent() {
     document.documentElement.classList.toggle('admin-route', isAdmin);
     document.body.classList.toggle('admin-route', isAdmin);
     if (isAdmin) {
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove('overflow-hidden', 'no-scroll');
+      document.documentElement.classList.remove('no-scroll');
     }
     return () => {
       document.documentElement.classList.remove('admin-route');
