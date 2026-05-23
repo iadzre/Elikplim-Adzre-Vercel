@@ -74,17 +74,17 @@ lines.push('begin;');
 lines.push('');
 lines.push('-- Clear existing content (dev / re-seed)');
 lines.push('delete from public.project_media;');
-lines.push('delete from public.projects;');
-lines.push('delete from public.testimonials;');
+lines.push('delete from public.portfolio_projects;');
+lines.push('delete from public.portfolio_testimonials;');
 lines.push('delete from public.home_slides;');
 lines.push('delete from public.career_timeline_entries;');
-lines.push('delete from public.skills;');
+lines.push('delete from public.portfolio_skills;');
 lines.push('delete from public.about_bio_paragraphs;');
 lines.push('');
 
-lines.push(`insert into public.testimonials (id, quote, author, role, sort_order, is_published) values ('00000000-0000-4000-8000-000000000001', '${sqlEscape('Exceptional attention to detail and creative vision. The project exceeded our expectations and brought our brand to life in ways we never imagined.')}', 'Jane Doe', 'Brand Director', 0, true);`);
-lines.push(`insert into public.testimonials (id, quote, author, role, sort_order, is_published) values ('00000000-0000-4000-8000-000000000002', '${sqlEscape('Professional, responsive, and incredibly talented. The final deliverables were not just beautiful but strategically aligned with our goals.')}', 'Michael Smith', 'Creative Lead', 1, true);`);
-lines.push(`insert into public.testimonials (id, quote, author, role, sort_order, is_published) values ('00000000-0000-4000-8000-000000000003', '${sqlEscape("Working with this team was a game-changer. Their innovative approach and dedication to quality made all the difference in our campaign's success.")}', 'Alexandra Williams', 'Marketing Head', 2, true);`);
+lines.push(`insert into public.portfolio_testimonials (id, quote, author, role, sort_order, is_published) values ('00000000-0000-4000-8000-000000000001', '${sqlEscape('Exceptional attention to detail and creative vision. The project exceeded our expectations and brought our brand to life in ways we never imagined.')}', 'Jane Doe', 'Brand Director', 0, true);`);
+lines.push(`insert into public.portfolio_testimonials (id, quote, author, role, sort_order, is_published) values ('00000000-0000-4000-8000-000000000002', '${sqlEscape('Professional, responsive, and incredibly talented. The final deliverables were not just beautiful but strategically aligned with our goals.')}', 'Michael Smith', 'Creative Lead', 1, true);`);
+lines.push(`insert into public.portfolio_testimonials (id, quote, author, role, sort_order, is_published) values ('00000000-0000-4000-8000-000000000003', '${sqlEscape("Working with this team was a game-changer. Their innovative approach and dedication to quality made all the difference in our campaign's success.")}', 'Alexandra Williams', 'Marketing Head', 2, true);`);
 lines.push('');
 
 const sliderDir = join(IMAGES, 'slider');
@@ -107,7 +107,7 @@ const skills = [
   'Lighting & Camera Setup',
 ];
 skills.forEach((label, i) => {
-  lines.push(`insert into public.skills (label, sort_order, is_published) values ('${sqlEscape(label)}', ${i}, true);`);
+  lines.push(`insert into public.portfolio_skills (label, sort_order, is_published) values ('${sqlEscape(label)}', ${i}, true);`);
 });
 lines.push('');
 
@@ -146,7 +146,7 @@ for (const project of PROJECTS) {
   const coverNames = new Set(['cover.jpg', 'Cover.jpg', 'cover.png', 'Cover.png']);
 
   lines.push(
-    `insert into public.projects (id, title, subtitle, tag_left, tag_right, cover_src, cover_alt, media_type, sort_order, is_published) values ('${project.id}', '${sqlEscape(project.title)}', '${sqlEscape(project.subtitle)}', '${sqlEscape(project.tagLeft)}', '${sqlEscape(project.tagRight)}', '${sqlEscape(coverSrc)}', '${sqlEscape(project.coverAlt)}', '${mediaType}', ${project.sortOrder}, true);`
+    `insert into public.portfolio_projects (id, title, subtitle, tag_left, tag_right, cover_src, cover_alt, media_type, sort_order, is_published) values ('${project.id}', '${sqlEscape(project.title)}', '${sqlEscape(project.subtitle)}', '${sqlEscape(project.tagLeft)}', '${sqlEscape(project.tagRight)}', '${sqlEscape(coverSrc)}', '${sqlEscape(project.coverAlt)}', '${mediaType}', ${project.sortOrder}, true);`
   );
 
   let order = 0;

@@ -23,7 +23,7 @@ export function useTestimonials() {
       setError(null);
 
       const { data, error: fetchError } = await supabase
-        .from('testimonials')
+        .from('portfolio_testimonials')
         .select('id, quote, author, role, sort_order')
         .eq('is_published', true)
         .order('sort_order', { ascending: true });

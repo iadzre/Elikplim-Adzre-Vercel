@@ -23,7 +23,7 @@ export function useProjects() {
       setError(null);
 
       const { data, error: fetchError } = await supabase
-        .from('projects')
+        .from('portfolio_projects')
         .select(
           `
           id,

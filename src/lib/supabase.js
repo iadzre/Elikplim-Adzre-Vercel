@@ -8,18 +8,46 @@ const supabaseAnonKey = (
 )?.trim();
 
 /**
- * Public anon client only — no user auth. Inserts/selects are governed by RLS
- * in supabase/migrations/001_initial_schema.sql.
+ * Supabase client — anon key + RLS. Auth session persisted for CMS admin routes from supabase/migrations/.
  *
  * @type {import('@supabase/supabase-js').SupabaseClient | null}
  */
 export const supabase =
   supabaseUrl && supabaseAnonKey
     ? createClient(supabaseUrl, supabaseAnonKey, {
-        auth: { persistSession: false, autoRefreshToken: false },
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+        },
       })
     : null;
 
 export function isSupabaseConfigured() {
   return Boolean(supabase);
+}
+
+/**
+ * @param {string} email
+ * @param {string} password
+ */
+export async function signIn(email, password) {
+  if (!supabase) {
+    return { data: null, error: new Error('Supabase is not configured') };
+  }
+  return supabase.auth.signInWithPassword({ email, password });
+}
+
+export async function signOut() {
+  if (!supabase) {
+    return { error: new Error('Supabase is not configured') };
+  }
+  return supabase.auth.signOut();
+}
+
+export async function getSession() {
+  if (!supabase) {
+    return { data: { session: null }, error: new Error('Supabase is not configured') };
+  }
+  return supabase.auth.getSession();
 }

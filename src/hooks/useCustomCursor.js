@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 
-export function useCustomCursor() {
+/** @param {boolean} [enabled=true] */
+export function useCustomCursor(enabled = true) {
   useEffect(() => {
-    if (window.innerWidth <= 768) return;
+    if (!enabled || window.innerWidth <= 768) return;
 
     const cursor = document.createElement('div');
     cursor.className = 'custom-cursor';
@@ -55,5 +56,5 @@ export function useCustomCursor() {
       observer.disconnect();
       cursor.remove();
     };
-  }, []);
+  }, [enabled]);
 }

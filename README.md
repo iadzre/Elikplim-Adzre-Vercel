@@ -65,12 +65,12 @@ Production-ready React portfolio migrated from the original static HTML site. Vi
 | Table | Purpose | Public access |
 |-------|---------|---------------|
 | `contact_submissions` | Leave a Note form (PII) | `INSERT` only |
-| `testimonials` | Projects page carousel | `SELECT` published |
-| `projects` | Portfolio tiles | `SELECT` published |
-| `project_media` | Gallery images/videos per project (FK → `projects`) | `SELECT` when parent published |
+| `portfolio_testimonials` | Projects page carousel | `SELECT` published |
+| `portfolio_projects` | Portfolio tiles | `SELECT` published |
+| `project_media` | Gallery images/videos per project (FK → `portfolio_projects`) | `SELECT` when parent published |
 | `home_slides` | Home hero slider | `SELECT` published |
 | `about_bio_paragraphs` | About page bio copy | `SELECT` published |
-| `skills` | About page skill tags | `SELECT` published |
+| `portfolio_skills` | About page skill tags | `SELECT` published |
 | `career_timeline_entries` | About page timeline | `SELECT` published |
 
 Indexes are on `(is_published, sort_order)` for content tables and `project_media(project_id, sort_order)`.
@@ -80,6 +80,64 @@ Indexes are on `(is_published, sort_order)` for content tables and `project_medi
 - **Anonymous:** insert contact submissions; read published content.
 - **Authenticated:** full read/write on CMS tables (for a future admin UI); read contact submissions.
 - Contact submissions are never readable by anonymous users.
+
+## CMS admin backend
+
+Migrations: `002_cms_schema.sql` (CMS tables + RLS), `003_storage_buckets.sql` (media buckets).
+
+**Public site data flow:** Hooks read **CMS tables first** (`hero`, `about`, `projects`, `skills`, `testimonials`, `contact_info`, `nav_links`, `site_settings`). If a CMS table is empty, they fall back to legacy `portfolio_*` / `home_slides` / `about_bio_paragraphs` tables.
+
+### Apply migrations & seed CMS
+
+```bash
+supabase link --project-ref YOUR_PROJECT_REF
+supabase db push
+npm run supabase:seed-cms          # default hero, about, nav, contact rows
+npm run supabase:migrate-cms       # copy existing portfolio_* content into CMS (one-time)
+```
+
+Or paste `supabase/seed-cms.sql` and `supabase/migrate-portfolio-to-cms.sql` into the Supabase SQL Editor.
+
+### Create the admin user (one owner)
+
+1. Supabase Dashboard → **Authentication** → **Users** → **Add user** (email + password).
+2. Disable public sign-ups: **Authentication** → **Providers** → Email → turn off **Enable sign up** (recommended after admin exists).
+
+### Admin routes
+
+| Path | Description |
+|------|-------------|
+| `/admin/login` | Email/password sign-in |
+| `/admin` | Dashboard (stats + quick links) |
+| `/admin/hero` | Hero section editor |
+| `/admin/about` | About / bio editor |
+| `/admin/projects` | Projects list |
+| `/admin/projects/new` | Add project |
+| `/admin/projects/:id` | Edit project |
+| `/admin/skills` | Skills manager |
+| `/admin/testimonials` | Testimonials (pending / approved / rejected) |
+| `/admin/contact` | Contact & social links |
+| `/admin/navigation` | Nav links |
+| `/admin/settings` | Site title, meta, colors, favicon |
+
+Admin UI is isolated at `/admin` (separate dark theme; does not change public site styles).
+
+### Storage buckets
+
+| Bucket | Purpose |
+|--------|---------|
+| `hero-backgrounds` | Hero images/videos |
+| `project-covers` | Project cover images |
+| `profile-images` | Profile photo / CV PDF |
+| `testimonial-avatars` | Testimonial author photos |
+
+Upload from admin code: `uploadFile(bucket, file, path)` in `src/lib/upload.js`.
+
+### Auth helpers (`src/lib/supabase.js`)
+
+- `signIn(email, password)`
+- `signOut()`
+- `getSession()`
 
 ## Deploy to Vercel
 
@@ -103,6 +161,8 @@ Indexes are on `(is_published, sort_order)` for content tables and `project_medi
 | `/about` | About Me |
 | `/projects` | Projects + testimonials |
 | `/leave-a-note` | Contact form |
+| `/admin/login` | CMS sign-in |
+| `/admin` | CMS dashboard (protected) |
 
 ## Project structure
 
@@ -110,12 +170,12 @@ Indexes are on `(is_published, sort_order)` for content tables and `project_medi
 public/           # robots.txt; portfolio media at public/images/ (stable /images/* URLs)
 src/
   assets/         # Logo, profile photo, software icons (bundled imports)
-  components/     # UI (Header, Footer, SidePanel, ProjectModal, …)
-  pages/          # Route pages
-  hooks/          # Supabase data hooks
+  components/     # UI (Header, Footer, SidePanel, ProjectModal, admin/, …)
+  pages/          # Route pages (+ pages/admin/)
   context/        # Side panel state
-  lib/            # supabase.js + contentMappers.js
-  styles/         # Global CSS (single source of truth)
+  hooks/          # Supabase data hooks (CMS-first, portfolio fallback)
+  lib/            # supabase.js, contentMappers.js, cmsMappers.js, upload.js
+  styles/         # styles.css (public) + admin.css (CMS only)
 supabase/
   migrations/     # SQL schema
   seed.sql        # Seed data

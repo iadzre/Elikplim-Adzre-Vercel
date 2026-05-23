@@ -27,7 +27,7 @@ export function useAboutContent() {
           .eq('is_published', true)
           .order('sort_order', { ascending: true }),
         supabase
-          .from('skills')
+          .from('portfolio_skills')
           .select('label, sort_order')
           .eq('is_published', true)
           .order('sort_order', { ascending: true }),
