@@ -133,6 +133,22 @@ npm run supabase:db-push
 npm run supabase:seed-resources
 ```
 
+Migration `009_marketplace_cms_admin.sql` grants the same **authenticated CMS login** full access to shop tables and storage uploads (no separate marketplace role required for the studio admin).
+
+## Admin CMS
+
+| Route | Purpose |
+|-------|---------|
+| `/admin/shop/resources` | List, publish, feature, delete products |
+| `/admin/shop/resources/new` | Create resource + upload previews |
+| `/admin/shop/categories` | Category CRUD + order |
+| `/admin/shop/profiles` | User roles (customer / creator / admin) |
+| `/admin/shop/reviews` | Approve / reject reviews |
+| `/admin/shop/purchases` | Sales log + revenue summary |
+| `/admin/shop/newsletter` | Subscriber emails |
+
+Public `/resources` loads published rows from Supabase; falls back to mock data if the table is empty.
+
 Set `site_settings.marketplace_admin_emails` to your admin email(s).
 
 Enable Google provider in Supabase Auth if using `signInWithGoogle()`.

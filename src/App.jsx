@@ -16,6 +16,9 @@ const ProjectsPage = lazy(() =>
 const ResourcesPage = lazy(() =>
   import('./pages/ResourcesPage').then((m) => ({ default: m.ResourcesPage }))
 );
+const ResourceDetailPage = lazy(() =>
+  import('./pages/ResourceDetailPage').then((m) => ({ default: m.ResourceDetailPage }))
+);
 const LeaveANotePage = lazy(() =>
   import('./pages/LeaveANotePage').then((m) => ({ default: m.LeaveANotePage }))
 );
@@ -60,6 +63,27 @@ const AdminHomeSlidesPage = lazy(() =>
 );
 const AdminCareerPage = lazy(() =>
   import('./pages/admin/AdminCareerPage').then((m) => ({ default: m.AdminCareerPage }))
+);
+const AdminShopResourcesPage = lazy(() =>
+  import('./pages/admin/AdminShopResourcesPage').then((m) => ({ default: m.AdminShopResourcesPage }))
+);
+const AdminShopResourceFormPage = lazy(() =>
+  import('./pages/admin/AdminShopResourceFormPage').then((m) => ({ default: m.AdminShopResourceFormPage }))
+);
+const AdminShopCategoriesPage = lazy(() =>
+  import('./pages/admin/AdminShopCategoriesPage').then((m) => ({ default: m.AdminShopCategoriesPage }))
+);
+const AdminShopProfilesPage = lazy(() =>
+  import('./pages/admin/AdminShopProfilesPage').then((m) => ({ default: m.AdminShopProfilesPage }))
+);
+const AdminShopReviewsPage = lazy(() =>
+  import('./pages/admin/AdminShopReviewsPage').then((m) => ({ default: m.AdminShopReviewsPage }))
+);
+const AdminShopPurchasesPage = lazy(() =>
+  import('./pages/admin/AdminShopPurchasesPage').then((m) => ({ default: m.AdminShopPurchasesPage }))
+);
+const AdminShopNewsletterPage = lazy(() =>
+  import('./pages/admin/AdminShopNewsletterPage').then((m) => ({ default: m.AdminShopNewsletterPage }))
 );
 
 function PageFallback() {
@@ -112,6 +136,7 @@ function AppContent() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
+          <Route path="/resources/:slug" element={<ResourceDetailPage />} />
           <Route path="/leave-a-note" element={<LeaveANotePage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route element={<ProtectedRoute />}>
@@ -124,6 +149,14 @@ function AppContent() {
               <Route path="/admin/projects" element={<AdminProjectsPage />} />
               <Route path="/admin/projects/new" element={<AdminProjectFormPage />} />
               <Route path="/admin/projects/:id" element={<AdminProjectFormPage />} />
+              <Route path="/admin/shop/resources" element={<AdminShopResourcesPage />} />
+              <Route path="/admin/shop/resources/new" element={<AdminShopResourceFormPage />} />
+              <Route path="/admin/shop/resources/:id" element={<AdminShopResourceFormPage />} />
+              <Route path="/admin/shop/categories" element={<AdminShopCategoriesPage />} />
+              <Route path="/admin/shop/profiles" element={<AdminShopProfilesPage />} />
+              <Route path="/admin/shop/reviews" element={<AdminShopReviewsPage />} />
+              <Route path="/admin/shop/purchases" element={<AdminShopPurchasesPage />} />
+              <Route path="/admin/shop/newsletter" element={<AdminShopNewsletterPage />} />
               <Route path="/admin/skills" element={<AdminSkillsPage />} />
               <Route path="/admin/testimonials" element={<AdminTestimonialsPage />} />
               <Route path="/admin/contact" element={<AdminContactPage />} />

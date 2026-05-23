@@ -12,15 +12,18 @@
     "supabase:setup": "bash scripts/setup-supabase.sh",
     "supabase:seed-cms": "supabase db query --file supabase/seed-cms.sql --linked",
     "supabase:seed-resources": "supabase db query --file supabase/seed-resources.sql --linked",
+    "supabase:validate-marketplace": "supabase db query --file supabase/scripts/validate_marketplace.sql --linked",
     "supabase:migrate-cms": "supabase db query --file supabase/migrate-portfolio-to-cms.sql --linked",
     "supabase:db-push": "supabase db push --linked",
     "vercel:env": "bash scripts/sync-vercel-env.sh"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^9.6.0",
     "@supabase/supabase-js": "^2.49.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0"
+    "react-router-dom": "^6.28.0",
+    "stripe": "^22.1.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",

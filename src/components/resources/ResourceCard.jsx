@@ -2,8 +2,8 @@ import { LazyImage } from '../shared/LazyImage';
 
 /**
  * @param {{
- *   resource: import('../../data/resourcesMock').RESOURCES[0];
- *   onSelect: (resource: import('../../data/resourcesMock').RESOURCES[0]) => void;
+ *   resource: Record<string, unknown>;
+ *   onSelect: (resource: Record<string, unknown>) => void;
  *   compact?: boolean;
  * }} props
  */

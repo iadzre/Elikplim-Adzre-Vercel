@@ -1,70 +1,90 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { PageLayout } from '../components/layout/PageLayout';
 import { Footer } from '../components/layout/Footer';
 import { ResourceMarketplace } from '../components/resources/ResourceMarketplace';
 import { ResourceLibraryBar } from '../components/resources/ResourceLibraryBar';
+import { ResourceErrorBoundary } from '../components/resources/ResourceErrorBoundary';
+import { ContentMessage } from '../components/shared/ContentMessage';
 import { useHeaderBlur } from '../hooks/useHeaderBlur';
 import { usePageTitle } from '../hooks/usePageTitle';
-import { useResourcesCatalog } from '../hooks/useResourcesCatalog';
+import { useMarketplace } from '../features/resources/hooks/useMarketplace';
+import { useUserLibrary } from '../features/resources/hooks/useUserLibrary';
+import { useResourceAuth } from '../features/resources/hooks/useResourceAuth';
+import {
+  checkResourceAccess,
+  fetchIsFavorited,
+  fetchApprovedReviews,
+} from '../lib/services/resourcesService';
 import '../styles/resources.css';
 
 const ResourceDetailModal = lazy(() =>
   import('../components/resources/ResourceDetailModal').then((m) => ({ default: m.ResourceDetailModal }))
 );
 
-const META_DESCRIPTION =
-  'Digital resources — templates, UI kits, and production tools. Free downloads and paid assets by Elikplim Adzre.';
-
 export function ResourcesPage() {
   const headerRef = useHeaderBlur(true);
   const marketplaceRef = useRef(null);
-  const [loading, setLoading] = useState(true);
-  const [selected, setSelected] = useState(/** @type {import('../data/resourcesMock').RESOURCES[0] | null} */ (null));
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selected, setSelected] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [checkoutNotice, setCheckoutNotice] = useState(null);
+  const [modalMeta, setModalMeta] = useState({
+    hasAccess: false,
+    isFavorited: false,
+    reviews: [],
+  });
 
-  const catalog = useResourcesCatalog();
+  const marketplace = useMarketplace();
+  const library = useUserLibrary();
+  const { isSignedIn } = useResourceAuth();
 
   usePageTitle('Resources');
 
   useEffect(() => {
-    let meta = document.querySelector('meta[name="description"]');
-    const prev = meta?.getAttribute('content') ?? '';
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', 'description');
-      document.head.appendChild(meta);
+    const checkout = searchParams.get('checkout');
+    const sessionId = searchParams.get('session_id');
+    if (checkout === 'success' && sessionId) {
+      setCheckoutNotice('Payment received. Your library will update shortly.');
+      setSearchParams({}, { replace: true });
+      library.refresh();
     }
-    meta.setAttribute('content', META_DESCRIPTION);
-    return () => {
-      if (meta) meta.setAttribute('content', prev);
-    };
-  }, []);
+  }, [searchParams, setSearchParams, library]);
 
-  useEffect(() => {
-    const t = window.setTimeout(() => setLoading(false), 320);
-    return () => window.clearTimeout(t);
-  }, []);
-
-  const openResource = useCallback((resource) => {
+  const openResource = useCallback(async (resource) => {
     setSelected(resource);
     setModalOpen(true);
+    window.history.pushState(null, '', `/resources/${resource.slug}`);
+    const [accessRes, favRes, revRes] = await Promise.all([
+      checkResourceAccess(resource.id),
+      fetchIsFavorited(resource.id),
+      fetchApprovedReviews(resource.id),
+    ]);
+    setModalMeta({
+      hasAccess: Boolean(accessRes.data),
+      isFavorited: Boolean(favRes.data),
+      reviews: revRes.data ?? [],
+    });
   }, []);
 
   const closeModal = useCallback(() => {
     setModalOpen(false);
+    setSelected(null);
+    if (window.location.pathname.startsWith('/resources/')) {
+      window.history.replaceState(null, '', '/resources');
+    }
   }, []);
 
   const handleBrowseFree = useCallback(() => {
-    catalog.setCategory('all');
-    catalog.setQuery('');
-    catalog.setTierFilter('free');
-    catalog.setSort('downloads');
+    marketplace.setCategory('all');
+    marketplace.setQuery('');
+    marketplace.setTierFilter('free');
+    marketplace.setSort('downloads');
     marketplaceRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, [catalog]);
+  }, [marketplace]);
 
   return (
-    <>
+    <ResourceErrorBoundary>
       <PageLayout
         htmlClass="resources-page-html"
         bodyClass="resources-page bg-gradient-to-b from-[#f3fcf0] to-[#f5f1ca] min-h-screen flex flex-col"
@@ -76,10 +96,7 @@ export function ResourcesPage() {
         <main className="resources-page w-full flex flex-col bg-gradient-to-b from-[#f3fcf0] to-[#f5f1ca] min-h-screen pb-16 md:pb-20">
           <section className="w-full flex flex-col" aria-labelledby="resources-intro">
             <div className="text-center mb-8 px-4 md:px-8 pt-24 sm:pt-28 md:pt-32 max-w-3xl mx-auto">
-              <p
-                id="resources-intro"
-                className="text-xs uppercase tracking-[0.4em] text-[#F45D01] josefin"
-              >
+              <p id="resources-intro" className="text-xs uppercase tracking-[0.4em] text-[#F45D01] josefin">
                 Resources
               </p>
               <p className="text-sm md:text-base text-[#2A2F7F] mt-3 leading-relaxed">
@@ -93,29 +110,37 @@ export function ResourcesPage() {
             </div>
           </section>
 
-          <ResourceLibraryBar items={catalog.libraryItems} onOpen={openResource} />
+          {checkoutNotice && (
+            <div className="px-4 max-w-5xl mx-auto w-full mb-4">
+              <ContentMessage message={checkoutNotice} />
+            </div>
+          )}
+
+          {marketplace.error && (
+            <div className="px-4 max-w-5xl mx-auto w-full">
+              <ContentMessage message={`Could not load shop: ${marketplace.error.message}`} />
+            </div>
+          )}
+
+          <ResourceLibraryBar items={library.items} onOpen={openResource} />
 
           <ResourceMarketplace
             sectionRef={marketplaceRef}
-            query={catalog.query}
-            setQuery={catalog.setQuery}
-            category={catalog.category}
-            setCategory={catalog.setCategory}
-            sort={catalog.sort}
-            setSort={catalog.setSort}
-            page={catalog.page}
-            setPage={catalog.setPage}
-            totalPages={catalog.totalPages}
-            items={catalog.paginated}
-            isEmpty={catalog.isEmpty}
-            loading={loading}
+            categories={marketplace.categories}
+            query={marketplace.query}
+            setQuery={marketplace.setQuery}
+            category={marketplace.category}
+            setCategory={marketplace.setCategory}
+            sort={marketplace.sort}
+            setSort={marketplace.setSort}
+            page={marketplace.page}
+            setPage={marketplace.setPage}
+            totalPages={marketplace.totalPages}
+            items={marketplace.resources}
+            isEmpty={marketplace.isEmpty}
+            loading={marketplace.loading}
             onSelect={openResource}
-            onResetFilters={() => {
-              catalog.setQuery('');
-              catalog.setCategory('all');
-              catalog.setSort('featured');
-              catalog.setTierFilter('all');
-            }}
+            onResetFilters={marketplace.resetFilters}
           />
 
           <p className="text-center text-xs text-[#2A2F7F]/70 px-4 pb-8 josefin tracking-wide">
@@ -126,15 +151,25 @@ export function ResourcesPage() {
           </p>
         </main>
       </PageLayout>
+
       <Suspense fallback={null}>
-        <ResourceDetailModal
-          resource={selected}
-          isOpen={modalOpen}
-          onClose={closeModal}
-          onPurchased={catalog.addToLibrary}
-          inLibrary={selected ? catalog.library.includes(selected.id) : false}
-        />
+        {selected && (
+          <ResourceDetailModal
+            resource={selected}
+            isOpen={modalOpen}
+            onClose={closeModal}
+            hasAccess={modalMeta.hasAccess || (selected.isFree ?? false) || library.owns(selected.id)}
+            isFavorited={modalMeta.isFavorited}
+            onFavoriteChange={(v) => setModalMeta((m) => ({ ...m, isFavorited: v }))}
+            onAccessGranted={() => {
+              setModalMeta((m) => ({ ...m, hasAccess: true }));
+              library.refresh();
+            }}
+            reviews={modalMeta.reviews}
+            isSignedIn={isSignedIn}
+          />
+        )}
       </Suspense>
-    </>
+    </ResourceErrorBoundary>
   );
 }

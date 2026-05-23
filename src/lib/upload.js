@@ -1,6 +1,6 @@
 import { supabase } from './supabase';
 
-/** @typedef {'hero-backgrounds' | 'project-covers' | 'project-gallery' | 'profile-images' | 'testimonial-avatars'} CmsBucket */
+/** @typedef {'hero-backgrounds' | 'project-covers' | 'project-gallery' | 'profile-images' | 'testimonial-avatars' | 'resource-previews' | 'resource-files' | 'user-avatars'} CmsBucket */
 
 /**
  * Upload a file to a CMS storage bucket and return its public URL.

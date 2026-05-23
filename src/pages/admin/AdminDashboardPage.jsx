@@ -8,6 +8,11 @@ const QUICK_LINKS = [
   { to: '/admin/about', label: 'Edit About' },
   { to: '/admin/career', label: 'Career Timeline' },
   { to: '/admin/projects', label: 'Manage Projects' },
+  { to: '/admin/shop/resources', label: 'Shop Resources' },
+  { to: '/admin/shop/categories', label: 'Shop Categories' },
+  { to: '/admin/shop/profiles', label: 'Shop Profiles' },
+  { to: '/admin/shop/reviews', label: 'Shop Reviews' },
+  { to: '/admin/shop/purchases', label: 'Shop Purchases' },
   { to: '/admin/skills', label: 'Manage Skills' },
   { to: '/admin/testimonials', label: 'Testimonials' },
   { to: '/admin/contact', label: 'Contact & Social' },
@@ -24,6 +29,10 @@ export function AdminDashboardPage() {
     skills: 0,
     homeSlides: 0,
     navLinks: 0,
+    shopPublished: 0,
+    shopDraft: 0,
+    shopPendingReviews: 0,
+    shopPurchases: 0,
     hasHero: false,
     hasAbout: false,
     loading: true,
@@ -41,6 +50,10 @@ export function AdminDashboardPage() {
         skills,
         slides,
         nav,
+        shopPub,
+        shopDr,
+        shopReviews,
+        shopPurch,
         hero,
         about,
       ] = await Promise.all([
@@ -51,6 +64,10 @@ export function AdminDashboardPage() {
         supabase.from('skills').select('id', { count: 'exact', head: true }),
         supabase.from('home_slides').select('id', { count: 'exact', head: true }).eq('is_published', true),
         supabase.from('nav_links').select('id', { count: 'exact', head: true }).eq('visible', true),
+        supabase.from('resources').select('id', { count: 'exact', head: true }).eq('status', 'published'),
+        supabase.from('resources').select('id', { count: 'exact', head: true }).eq('status', 'draft'),
+        supabase.from('reviews').select('id', { count: 'exact', head: true }).eq('approved', false),
+        supabase.from('purchases').select('id', { count: 'exact', head: true }).eq('payment_status', 'completed'),
         supabase.from('hero').select('id').limit(1).maybeSingle(),
         supabase.from('about').select('id').limit(1).maybeSingle(),
       ]);
@@ -63,6 +80,10 @@ export function AdminDashboardPage() {
         skills.error ||
         slides.error ||
         nav.error ||
+        shopPub.error ||
+        shopDr.error ||
+        shopReviews.error ||
+        shopPurch.error ||
         hero.error ||
         about.error;
 
@@ -74,6 +95,10 @@ export function AdminDashboardPage() {
         skills: skills.count ?? 0,
         homeSlides: slides.count ?? 0,
         navLinks: nav.count ?? 0,
+        shopPublished: shopPub.count ?? 0,
+        shopDraft: shopDr.count ?? 0,
+        shopPendingReviews: shopReviews.count ?? 0,
+        shopPurchases: shopPurch.count ?? 0,
         hasHero: Boolean(hero.data),
         hasAbout: Boolean(about.data),
         loading: false,
@@ -103,6 +128,13 @@ export function AdminDashboardPage() {
         <p style={{ color: 'var(--admin-muted)' }}>Loading stats…</p>
       ) : (
         <div className="admin-grid-4" style={{ marginBottom: '1.5rem' }}>
+          <div className="admin-stat-card">
+            <h3>Shop</h3>
+            <div className="value">{stats.shopPublished + stats.shopDraft}</div>
+            <div className="sub">
+              {stats.shopPublished} published · {stats.shopDraft} draft · {stats.shopPurchases} sales
+            </div>
+          </div>
           <div className="admin-stat-card">
             <h3>Projects (CMS)</h3>
             <div className="value">{stats.projectsPublished + stats.projectsDraft}</div>
@@ -154,7 +186,22 @@ export function AdminDashboardPage() {
             <strong>Header / footer</strong> — <code>nav_links</code>, <code>contact_info</code>,{' '}
             <code>site_settings</code>.
           </li>
+          <li>
+            <strong>Shop</strong> — <code>resources</code>, <code>resource_categories</code>,{' '}
+            <code>profiles</code>, <code>purchases</code>, <code>reviews</code>. Manage under Shop in the sidebar.
+          </li>
         </ul>
+        {stats.shopPublished === 0 && (
+          <p style={{ color: 'var(--admin-warn, #f59e0b)', marginTop: '0.75rem', fontSize: '0.85rem' }}>
+            No published shop resources. Run <code>npm run supabase:db-push</code> and{' '}
+            <code>npm run supabase:seed-resources</code>, or add resources in Shop.
+          </p>
+        )}
+        {stats.shopPendingReviews > 0 && (
+          <p style={{ marginTop: '0.5rem', fontSize: '0.85rem' }}>
+            <Link to="/admin/shop/reviews">{stats.shopPendingReviews} review(s) awaiting approval →</Link>
+          </p>
+        )}
         {stats.projectsPublished === 0 && (
           <p style={{ color: 'var(--admin-warn, #f59e0b)', marginTop: '0.75rem', fontSize: '0.85rem' }}>
             No published CMS projects yet. Run <code>npm run supabase:migrate-cms</code> or publish projects in

@@ -29,3 +29,14 @@ export function stringToTags(str) {
     .map((t) => t.trim())
     .filter(Boolean);
 }
+
+/** @param {string} str */
+export function slugify(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}

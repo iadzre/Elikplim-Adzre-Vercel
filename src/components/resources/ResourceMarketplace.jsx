@@ -1,5 +1,4 @@
 import { useId } from 'react';
-import { RESOURCE_CATEGORIES } from '../../data/resourcesMock';
 import { ResourceCard } from './ResourceCard';
 import { ResourceCardSkeleton } from './ResourceCardSkeleton';
 
@@ -19,6 +18,7 @@ import { ResourceCardSkeleton } from './ResourceCardSkeleton';
  *   loading: boolean;
  *   onSelect: (r: import('../../data/resourcesMock').RESOURCES[0]) => void;
  *   onResetFilters?: () => void;
+ *   categories?: Array<{ id: string; label: string }>;
  *   sectionRef?: import('react').RefObject<HTMLElement | null>;
  * }} props
  */
@@ -37,12 +37,13 @@ export function ResourceMarketplace({
   loading,
   onSelect,
   onResetFilters,
+  categories = [{ id: 'all', label: 'All' }],
   sectionRef,
 }) {
   const searchId = useId();
   const sortId = useId();
 
-  const tabs = [{ id: 'all', label: 'All' }, ...RESOURCE_CATEGORIES.map((c) => ({ id: c.id, label: c.label }))];
+  const tabs = categories.length ? categories : [{ id: 'all', label: 'All' }];
 
   return (
     <section
