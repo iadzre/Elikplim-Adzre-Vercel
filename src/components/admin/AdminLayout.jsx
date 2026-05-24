@@ -71,7 +71,9 @@ function resolvePageTitle(pathname) {
 export function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+  );
 
   const topbarTitle = useMemo(() => resolvePageTitle(location.pathname), [location.pathname]);
 
@@ -81,6 +83,12 @@ export function AdminLayout() {
     document.body.classList.remove('overflow-hidden', 'no-scroll');
   }, []);
 
+  useEffect(() => {
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      setCollapsed(true);
+    }
+  }, [location.pathname]);
+
   async function handleSignOut() {
     await signOut();
     navigate('/admin/login', { replace: true });
@@ -88,6 +96,14 @@ export function AdminLayout() {
 
   return (
     <div className="admin-root admin-shell">
+      {!collapsed && (
+        <button
+          type="button"
+          className="admin-sidebar-backdrop"
+          aria-label="Close menu"
+          onClick={() => setCollapsed(true)}
+        />
+      )}
       <aside className={`admin-sidebar${collapsed ? ' collapsed' : ''}`} aria-label="CMS navigation">
         <div className="admin-sidebar-brand">
           <span className="admin-sidebar-brand-title">Elikplim</span>
