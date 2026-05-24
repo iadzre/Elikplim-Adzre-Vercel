@@ -37,7 +37,7 @@ export function useCareerTimeline() {
         return;
       }
 
-      setEntries((data || []).map(mapCareerTimelineEntry));
+      setEntries((data || []).map((row, i, arr) => mapCareerTimelineEntry(row, i, arr.length)));
       setLoading(false);
     }
 

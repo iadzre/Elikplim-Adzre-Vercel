@@ -3,6 +3,7 @@
  */
 
 import { normalizeCoverSrc } from './normalizeCoverSrc';
+import { computeLeftOffsetPercent } from './careerTimelineLayout';
 
 /**
  * @typedef {Object} Project
@@ -93,13 +94,14 @@ export function mapHomeSlide(row) {
 
 /**
  * @param {Record<string, unknown>} row
+ * @param {number} [index]
  * @returns {CareerTimelineEntry}
  */
-export function mapCareerTimelineEntry(row) {
+export function mapCareerTimelineEntry(row, index = 0) {
   return {
     id: row.id,
     position: row.position,
-    left: row.left_offset,
+    left: computeLeftOffsetPercent(index),
     period: row.period,
     title: row.title,
     detail: row.detail,

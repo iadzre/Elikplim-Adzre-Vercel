@@ -122,16 +122,17 @@ bios.forEach((body, i) => {
 lines.push('');
 
 const timeline = [
-  ['top', '4.7%', '2008 – 2012', 'LABONE SENIOR HIGH SCHOOL', 'WASSCE Certificate'],
-  ['bottom', '17.2%', '2011', 'PRECIOUS METAL MARKETING COMPANY (PMMC),', 'Attachment'],
-  ['top', '29.7%', '2016 – 2020', 'RADFORD UNIVERSITY COLLEGE', 'BSc Graphic Design'],
-  ['bottom', '42.2%', '2018', 'PSYPERTXT/ AKATUAPA LIMITED', 'Intern Illustrator'],
-  ['top', '54.7%', '2019', 'PARABLES ANIMATION STUDIOS', 'Intern Illustrator/Animator'],
-  ['bottom', '67.2%', '2019 – 2021', 'VOME STUDIOS', 'Videographer, Photographer, and Illustrator'],
-  ['top', '79.7%', '2021 – Present', 'FREELANCE DESIGNER AND CONTENT CREATOR', 'Leading creative projects and building meaningful brands'],
-  ['bottom', '92.2%', '2024 – 2025', 'THEOVISION INTERNATIONAL', 'Video and Motion Graphics Technician'],
+  ['top', '2008 – 2012', 'LABONE SENIOR HIGH SCHOOL', 'WASSCE Certificate'],
+  ['bottom', '2011', 'PRECIOUS METAL MARKETING COMPANY (PMMC),', 'Attachment'],
+  ['top', '2016 – 2020', 'RADFORD UNIVERSITY COLLEGE', 'BSc Graphic Design'],
+  ['bottom', '2018', 'PSYPERTXT/ AKATUAPA LIMITED', 'Intern Illustrator'],
+  ['top', '2019', 'PARABLES ANIMATION STUDIOS', 'Intern Illustrator/Animator'],
+  ['bottom', '2019 – 2021', 'VOME STUDIOS', 'Videographer, Photographer, and Illustrator'],
+  ['top', '2021 – Present', 'FREELANCE DESIGNER AND CONTENT CREATOR', 'Leading creative projects and building meaningful brands'],
+  ['bottom', '2024 – 2025', 'THEOVISION INTERNATIONAL', 'Video and Motion Graphics Technician'],
 ];
-timeline.forEach(([position, left, period, title, detail], i) => {
+timeline.forEach(([position, period, title, detail], i) => {
+  const left = `${(4.7 + i * 12.5).toFixed(1)}%`;
   lines.push(
     `insert into public.career_timeline_entries (position, left_offset, period, title, detail, sort_order, is_published) values ('${position}', '${left}', '${sqlEscape(period)}', '${sqlEscape(title)}', '${sqlEscape(detail)}', ${i}, true);`
   );

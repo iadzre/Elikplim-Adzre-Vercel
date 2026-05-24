@@ -1,6 +1,14 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useMemo } from 'react';
 import { ContentMessage } from '../shared/ContentMessage';
 import { useCareerTimeline } from '../../hooks/useCareerTimeline';
+import {
+  computeTimelineMinWidth,
+  computeTimelineSvgLayout,
+  TIMELINE_ITEM_WIDTH,
+  TIMELINE_SVG_Y,
+  timelineTickStroke,
+  timelineTickStrokeWidth,
+} from '../../lib/careerTimelineLayout';
 
 export function CareerTimeline() {
   const { entries, loading, error } = useCareerTimeline();
@@ -64,6 +72,15 @@ export function CareerTimeline() {
     };
   }, [updateScrollIndicators, entries.length]);
 
+  const timelineLayout = useMemo(
+    () => computeTimelineSvgLayout(entries.length),
+    [entries.length]
+  );
+  const timelineMinWidth = useMemo(
+    () => computeTimelineMinWidth(entries.length),
+    [entries.length]
+  );
+
   if (!loading && !error && entries.length === 0) {
     return null;
   }
@@ -108,33 +125,42 @@ export function CareerTimeline() {
             className="timeline-scroll relative h-56 sm:h-64 md:h-72 overflow-x-auto overflow-y-hidden scroll-smooth w-full"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            <div className="relative timeline-container h-full min-w-[1200px] sm:min-w-[1400px] md:min-w-[1600px]">
+            <div className="relative timeline-container h-full" style={{ minWidth: timelineMinWidth }}>
               <svg
                 className="absolute top-1/2 left-0 w-full h-full transform -translate-y-1/2 timeline-svg"
-                viewBox="0 0 1600 256"
+                viewBox={`0 0 ${timelineLayout.viewBoxWidth} ${timelineLayout.viewBoxHeight}`}
                 preserveAspectRatio="none"
               >
                 <path
-                  d="M 150 128 L 1550 128"
+                  d={`M ${timelineLayout.lineStart} ${TIMELINE_SVG_Y} L ${timelineLayout.lineEnd} ${TIMELINE_SVG_Y}`}
                   stroke="#d1d5db"
                   strokeWidth="1.5"
                   fill="none"
                   vectorEffect="nonScalingStroke"
                 />
-                <line x1="150" y1="118" x2="150" y2="138" stroke="#2A2F7F" strokeWidth="2.5" vectorEffect="nonScalingStroke" />
-                <line x1="350" y1="118" x2="350" y2="138" stroke="#d1d5db" strokeWidth="1.5" vectorEffect="nonScalingStroke" />
-                <line x1="550" y1="118" x2="550" y2="138" stroke="#d1d5db" strokeWidth="1.5" vectorEffect="nonScalingStroke" />
-                <line x1="750" y1="118" x2="750" y2="138" stroke="#d1d5db" strokeWidth="1.5" vectorEffect="nonScalingStroke" />
-                <line x1="950" y1="118" x2="950" y2="138" stroke="#d1d5db" strokeWidth="1.5" vectorEffect="nonScalingStroke" />
-                <line x1="1150" y1="118" x2="1150" y2="138" stroke="#d1d5db" strokeWidth="1.5" vectorEffect="nonScalingStroke" />
-                <line x1="1350" y1="118" x2="1350" y2="138" stroke="#F45D01" strokeWidth="2.5" vectorEffect="nonScalingStroke" />
-                <line x1="1550" y1="118" x2="1550" y2="138" stroke="#d1d5db" strokeWidth="1.5" vectorEffect="nonScalingStroke" />
+                {timelineLayout.tickXs.map((x, i) => (
+                  <line
+                    key={x}
+                    x1={x}
+                    y1={TIMELINE_SVG_Y - 10}
+                    x2={x}
+                    y2={TIMELINE_SVG_Y + 10}
+                    stroke={timelineTickStroke(i, entries.length)}
+                    strokeWidth={timelineTickStrokeWidth(i, entries.length)}
+                    vectorEffect="nonScalingStroke"
+                  />
+                ))}
               </svg>
               {entries.map((item) => (
                 <div
                   key={item.id}
                   className={`absolute timeline-item timeline-${item.position}`}
-                  style={{ left: item.left, top: item.position === 'top' ? 0 : undefined, bottom: item.position === 'bottom' ? 0 : undefined, width: '9.4%' }}
+                  style={{
+                    left: item.left,
+                    top: item.position === 'top' ? 0 : undefined,
+                    bottom: item.position === 'bottom' ? 0 : undefined,
+                    width: `${TIMELINE_ITEM_WIDTH}%`,
+                  }}
                 >
                   <div className="flex flex-col items-center">
                     <div
