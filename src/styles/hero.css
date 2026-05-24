@@ -99,9 +99,7 @@
 
 /* Layer 3 — Headline */
 .hero__headline {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
   font-size: clamp(2.8rem, 7vw, 5.5rem);
-  font-weight: 300;
   line-height: 1.08;
   letter-spacing: -0.01em;
   color: #ffffff;

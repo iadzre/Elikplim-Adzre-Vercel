@@ -73,6 +73,7 @@ export function ResourceDetailPage() {
             }}
             hasAccess={detail.hasAccess || ALL_DOWNLOADS_FREE}
             onAccessGranted={() => detail.refresh()}
+            onStatsUpdated={() => detail.refresh()}
             reviews={detail.reviews}
           />
         </Suspense>

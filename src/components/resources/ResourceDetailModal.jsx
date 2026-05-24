@@ -2,29 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import { LazyImage } from '../shared/LazyImage';
 import { downloadResourceFile } from '../../lib/services/resourcesService';
 import { ALL_DOWNLOADS_FREE } from '../../lib/resources/marketplaceConfig';
+import { formatResourceStatsLine } from '../../lib/resources/formatResourceStats';
 
-/**
- * @param {{
- *   resource: import('../../lib/resources/mapResource').mapDbResourceToCatalog extends (r: infer R) => unknown ? ReturnType<typeof import('../../lib/resources/mapResource').mapDbResourceToCatalog> : never | null;
- *   isOpen: boolean;
- *   onClose: () => void;
- *   hasAccess: boolean;
- *   onAccessGranted: () => void;
- *   reviews?: Array<{ rating: number; review_text?: string; profiles?: { full_name?: string } }>;
- * }} props
- */
 export function ResourceDetailModal({
   resource,
   isOpen,
   onClose,
   hasAccess,
   onAccessGranted,
+  onStatsUpdated,
   reviews = [],
 }) {
   const closeRef = useRef(null);
   const [previewIndex, setPreviewIndex] = useState(0);
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState(/** @type {{ type: 'error'|'success'; text: string } | null} */ (null));
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -47,6 +39,8 @@ export function ResourceDetailModal({
 
   const priceLabel = ALL_DOWNLOADS_FREE || resource.isFree ? 'Free' : `$${resource.price}`;
   const canDownload = ALL_DOWNLOADS_FREE || hasAccess || resource.isFree;
+  const metaLine = `${formatResourceStatsLine(resource)} · ${priceLabel}`;
+  const formats = Array.isArray(resource.formats) ? resource.formats : [];
 
   async function handleDownload() {
     setBusy(true);
@@ -61,35 +55,46 @@ export function ResourceDetailModal({
       window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
       setMessage({ type: 'success', text: 'Download started.' });
       onAccessGranted();
+      onStatsUpdated?.();
     }
   }
 
   return (
     <div
-      className={`resources-modal fixed inset-0 z-[2000] flex items-end sm:items-center justify-center p-0 sm:p-6 bg-[#2A2F7F]/30 ${
-        isOpen ? 'is-open' : ''
-      }`}
+      className={`resources-modal fixed inset-0 z-[2000] flex items-end sm:items-center justify-center p-0 sm:p-6 ${isOpen ? 'is-open' : ''}`}
       onClick={(e) => e.target === e.currentTarget && onClose()}
       role="dialog"
       aria-modal="true"
       aria-labelledby="resource-detail-title"
       aria-hidden={!isOpen}
     >
-      <div className="resources-modal-panel resources-page w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-t-lg sm:rounded-lg bg-[#f5f1ca] border border-[#2A2F7F]/10">
-        <div className="flex justify-end p-3">
+      <div className="resources-modal-panel resources-page w-full sm:max-w-4xl max-h-[94vh] sm:max-h-[88vh] flex flex-col overflow-hidden rounded-t-2xl sm:rounded-lg">
+        <header className="resources-modal-header shrink-0">
+          <div className="resources-modal-header__label">
+            <span className="resources-modal-eyebrow josefin">Resource</span>
+            <span className="resources-modal-eyebrow-sep" aria-hidden="true" />
+            <span
+              className={`resources-modal-badge josefin ${resource.isFree ? 'resources-modal-badge--free' : 'resources-modal-badge--paid'}`}
+            >
+              {resource.isFree ? 'Free' : 'Paid'}
+            </span>
+          </div>
           <button
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="p-2 text-[#2A2F7F]/60 hover:text-[#F45D01] text-sm josefin uppercase tracking-widest"
+            className="resources-modal-close"
+            aria-label="Close"
           >
-            Close
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
-        </div>
+        </header>
 
-        <div className="grid md:grid-cols-2 gap-6 px-5 pb-8 md:px-6 -mt-2">
-          <div>
-            <div className="aspect-[4/3] rounded overflow-hidden bg-[#cddcc8]/30">
+        <div className="resources-modal-body overflow-y-auto flex-1">
+          <div className="resources-modal-media">
+            <div className="resources-modal-preview">
               <LazyImage
                 src={resource.previews[previewIndex] ?? resource.thumbnail}
                 alt={`Preview of ${resource.title}`}
@@ -97,15 +102,15 @@ export function ResourceDetailModal({
               />
             </div>
             {resource.previews.length > 1 && (
-              <div className="flex gap-2 mt-2 overflow-x-auto">
+              <div className="resources-modal-thumbs" role="tablist" aria-label="Preview images">
                 {resource.previews.map((src, i) => (
                   <button
                     key={src}
                     type="button"
+                    role="tab"
+                    aria-selected={previewIndex === i}
                     onClick={() => setPreviewIndex(i)}
-                    className={`shrink-0 w-14 h-14 rounded overflow-hidden border ${
-                      previewIndex === i ? 'border-[#F45D01]' : 'border-[#2A2F7F]/15'
-                    }`}
+                    className={`resources-modal-thumb ${previewIndex === i ? 'is-active' : ''}`}
                   >
                     <LazyImage src={src} alt="" className="w-full h-full object-cover" />
                   </button>
@@ -114,49 +119,64 @@ export function ResourceDetailModal({
             )}
           </div>
 
-          <div className="text-sm text-[#2A2F7F]">
-            <h2 id="resource-detail-title" className="text-lg font-medium">
+          <div className="resources-modal-info">
+            <h2 id="resource-detail-title" className="resources-detail-title resources-modal-title">
               {resource.title}
             </h2>
-            <p className="mt-3 text-[#2A2F7F]/75 leading-relaxed">{resource.longDescription}</p>
-            <p className="mt-4 text-xs text-[#2A2F7F]/55">
-              {resource.rating} rating · {resource.downloadCount.toLocaleString()} downloads · {priceLabel}
-            </p>
-
+            <div className="resources-modal-divider" aria-hidden="true" />
+            <p className="resources-modal-description">{resource.longDescription}</p>
+            <p className="resources-modal-meta">{metaLine}</p>
+            {formats.length > 0 && (
+              <div className="resources-modal-formats">
+                {formats.map((format) => (
+                  <span key={format} className="resources-modal-format josefin">
+                    {format}
+                  </span>
+                ))}
+              </div>
+            )}
             {message && (
               <p
-                className={`mt-3 text-xs ${message.type === 'error' ? 'text-red-700' : 'text-[#2A2F7F]'}`}
+                className={`resources-modal-message ${message.type === 'error' ? 'resources-modal-message--error' : 'resources-modal-message--success'}`}
                 role="status"
               >
                 {message.text}
               </p>
             )}
-
-            {canDownload && (
-              <div className="mt-6">
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={handleDownload}
-                  className="text-xs josefin uppercase tracking-[0.2em] hover:text-[#F45D01] disabled:opacity-50"
-                >
-                  Download →
-                </button>
-              </div>
+            {canDownload ? (
+              <button
+                type="button"
+                disabled={busy}
+                onClick={handleDownload}
+                className="resources-modal-download josefin"
+              >
+                <span>{busy ? 'Preparing…' : 'Download file'}</span>
+                {!busy && (
+                  <span className="resources-modal-download__arrow" aria-hidden="true">
+                    →
+                  </span>
+                )}
+              </button>
+            ) : (
+              <p className="resources-modal-locked josefin">
+                Sign in and purchase to download this resource.
+              </p>
             )}
-
             {reviews.length > 0 && (
-              <div className="mt-6 pt-4 border-t border-[#2A2F7F]/10">
-                <h3 className="text-[10px] uppercase tracking-widest josefin text-[#2A2F7F]/60 mb-2">Reviews</h3>
-                <ul className="space-y-2 text-xs text-[#2A2F7F]/75">
-                  {reviews.slice(0, 3).map((r) => (
-                    <li key={`${r.rating}-${r.review_text}`}>
-                      {r.rating}★ — {r.review_text || 'No comment'}{' '}
-                      {r.profiles?.full_name && `· ${r.profiles.full_name}`}
+              <section className="resources-modal-reviews" aria-label="Reviews">
+                <h3 className="resources-modal-reviews__heading josefin">Reviews</h3>
+                <ul className="resources-modal-reviews__list">
+                  {reviews.slice(0, 3).map((r, i) => (
+                    <li key={`${r.rating}-${i}`} className="resources-modal-review">
+                      <span className="resources-modal-review__rating">{r.rating}★</span>
+                      <span>{r.review_text || 'No comment'}</span>
+                      {r.profiles?.full_name && (
+                        <span className="resources-modal-review__author">· {r.profiles.full_name}</span>
+                      )}
                     </li>
                   ))}
                 </ul>
-              </div>
+              </section>
             )}
           </div>
         </div>

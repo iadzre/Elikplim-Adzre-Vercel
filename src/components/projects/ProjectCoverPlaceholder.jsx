@@ -18,7 +18,7 @@ export function ProjectCoverPlaceholder({ title, projectId, className = '' }) {
       role="img"
       aria-label={title ? `${title} cover placeholder` : 'Project cover placeholder'}
     >
-      <span className="project-cover-placeholder__initial gazzetta-bold">{initial}</span>
+      <span className="project-cover-placeholder__initial font-display">{initial}</span>
     </div>
   );
 }

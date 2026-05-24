@@ -22,7 +22,7 @@ export function ResourceLibraryBar({ items, onOpen }) {
               <button
                 type="button"
                 onClick={() => onOpen(r)}
-                className="whitespace-nowrap hover:text-[#F45D01] transition-colors"
+                className="resources-library-item whitespace-nowrap hover:text-[#F45D01] transition-colors"
               >
                 {r.title}
               </button>

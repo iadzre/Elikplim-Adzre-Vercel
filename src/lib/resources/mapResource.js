@@ -22,6 +22,7 @@ export function mapDbResourceToCatalog(row) {
     isFree: ALL_DOWNLOADS_FREE || row.pricing_type === 'free',
     featured: Boolean(row.featured),
     rating: Number(row.rating_average ?? 0),
+    ratingCount: Number(row.rating_count ?? 0),
     downloadCount: Number(row.download_count ?? 0),
     tags: Array.isArray(row.tags) ? row.tags : [],
     thumbnail: String(row.thumbnail_url ?? ''),

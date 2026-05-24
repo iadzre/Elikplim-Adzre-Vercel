@@ -35,7 +35,7 @@ export function AboutPage() {
                   <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] mb-1 text-[#F45D01] josefin">
                     HELLO, HII....i am
                   </p>
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl uppercase tracking-[0.05em] font-medium text-[#2A2F7F] mb-0 leading-[1.1] gazzetta-bold">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl uppercase tracking-[0.05em] text-[#2A2F7F] mb-0 leading-tight font-display whitespace-nowrap">
                     {name}
                   </h1>
                 </div>

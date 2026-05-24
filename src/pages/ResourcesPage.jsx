@@ -10,7 +10,7 @@ import { useHeaderBlur } from '../hooks/useHeaderBlur';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { useMarketplace } from '../features/resources/hooks/useMarketplace';
 import { useUserLibrary } from '../features/resources/hooks/useUserLibrary';
-import { fetchApprovedReviews } from '../lib/services/resourcesService';
+import { fetchApprovedReviews, fetchResourceBySlug } from '../lib/services/resourcesService';
 import { ALL_DOWNLOADS_FREE } from '../lib/resources/marketplaceConfig';
 import '../styles/resources.css';
 
@@ -61,6 +61,13 @@ export function ResourcesPage() {
     }
   }, []);
 
+  const refreshResourceStats = useCallback(async () => {
+    marketplace.refresh();
+    if (!selected?.slug) return;
+    const { data } = await fetchResourceBySlug(selected.slug);
+    if (data) setSelected(data);
+  }, [marketplace, selected?.slug]);
+
   const handleBrowseFree = useCallback(() => {
     marketplace.setCategory('all');
     marketplace.setQuery('');
@@ -79,7 +86,7 @@ export function ResourcesPage() {
         showFooter
         footer={<Footer />}
       >
-        <main className="resources-page w-full flex flex-col bg-gradient-to-b from-[#f3fcf0] to-[#f5f1ca] min-h-screen pb-16 md:pb-20">
+        <main className="resources-page w-full flex flex-col flex-1 bg-gradient-to-b from-[#f3fcf0] to-[#f5f1ca] min-h-screen pb-16 md:pb-20">
           <section className="w-full flex flex-col" aria-labelledby="resources-intro">
             <div className="text-center mb-8 px-4 md:px-8 pt-24 sm:pt-28 md:pt-32 max-w-3xl mx-auto">
               <p id="resources-intro" className="text-xs uppercase tracking-[0.4em] text-[#F45D01] josefin">
@@ -134,12 +141,17 @@ export function ResourcesPage() {
             onResetFilters={marketplace.resetFilters}
           />
 
-          <p className="text-center text-xs text-[#2A2F7F]/70 px-4 pb-8 josefin tracking-wide">
-            Custom brief or collaboration?{' '}
-            <Link to="/leave-a-note" className="resources-link">
+          <section className="resources-cta flex-shrink-0" aria-label="Collaboration">
+            <p className="resources-cta__lead text-[#F45D01] text-sm font-semibold uppercase tracking-[0.2em]">
+              Custom brief or collaboration?
+            </p>
+            <Link to="/leave-a-note" className="resources-cta__link josefin">
               Leave a note
+              <span className="resources-cta__arrow" aria-hidden="true">
+                →
+              </span>
             </Link>
-          </p>
+          </section>
         </main>
       </PageLayout>
 
@@ -151,6 +163,7 @@ export function ResourcesPage() {
             onClose={closeModal}
             hasAccess={ALL_DOWNLOADS_FREE || (selected.isFree ?? false) || library.owns(selected.id)}
             onAccessGranted={() => library.refresh()}
+            onStatsUpdated={refreshResourceStats}
             reviews={modalMeta.reviews}
           />
         )}

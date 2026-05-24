@@ -1,4 +1,5 @@
 import { LazyImage } from '../shared/LazyImage';
+import { formatResourceStatsLine } from '../../lib/resources/formatResourceStats';
 
 /**
  * @param {{
@@ -42,7 +43,7 @@ export function ResourceCard({ resource, onSelect, compact = false }) {
         )}
         <div className="flex items-center justify-between gap-2 pt-2 text-xs text-[#2A2F7F]/55">
           <span>
-            {resource.rating} · {resource.downloadCount.toLocaleString()} downloads
+            {formatResourceStatsLine(resource)}
           </span>
           <span className="text-[#2A2F7F] font-medium">{priceLabel}</span>
         </div>

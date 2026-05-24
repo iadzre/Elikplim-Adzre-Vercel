@@ -65,8 +65,8 @@ export function ResourceSeo({ resource }) {
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
       },
-      aggregateRating: resource.rating
-        ? { '@type': 'AggregateRating', ratingValue: resource.rating, reviewCount: 1 }
+      aggregateRating: resource.rating && resource.ratingCount
+        ? { '@type': 'AggregateRating', ratingValue: resource.rating, reviewCount: resource.ratingCount }
         : undefined,
     });
   }, [resource]);

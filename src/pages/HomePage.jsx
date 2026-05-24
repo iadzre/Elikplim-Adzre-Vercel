@@ -102,7 +102,7 @@ export function HomePage() {
                       aria-hidden="true"
                     />
 
-                    <h1 className="hero__headline">
+                    <h1 className="hero__headline font-display">
                       {headlineLines.map((line, index) => (
                         <span key={line} className="hero__headline-line">
                           {line}

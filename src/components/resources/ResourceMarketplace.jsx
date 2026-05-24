@@ -50,7 +50,7 @@ export function ResourceMarketplace({
     <section
       ref={sectionRef}
       id="resource-marketplace"
-      className="w-full px-4 sm:px-6 md:px-8 lg:px-12 pb-12"
+      className="resources-marketplace w-full px-4 sm:px-6 md:px-8 lg:px-12 pb-[var(--resources-cta-gutter,4rem)]"
       aria-label="Resource catalog"
     >
       <div className="max-w-5xl mx-auto">
