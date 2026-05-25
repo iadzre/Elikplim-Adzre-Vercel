@@ -3,7 +3,6 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { PageLayout } from '../components/layout/PageLayout';
 import { Footer } from '../components/layout/Footer';
 import { ResourceMarketplace } from '../components/resources/ResourceMarketplace';
-import { ResourceLibraryBar } from '../components/resources/ResourceLibraryBar';
 import { ResourceErrorBoundary } from '../components/resources/ResourceErrorBoundary';
 import { ContentMessage } from '../components/shared/ContentMessage';
 import { useHeaderBlur } from '../hooks/useHeaderBlur';
@@ -119,8 +118,6 @@ export function ResourcesPage() {
               <ContentMessage message={`Could not load shop: ${marketplace.error.message}`} />
             </div>
           )}
-
-          <ResourceLibraryBar items={library.items} onOpen={openResource} />
 
           <ResourceMarketplace
             sectionRef={marketplaceRef}
