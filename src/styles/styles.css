@@ -871,7 +871,8 @@ footer {
 }
 
 .timeline-container {
-    min-width: 1200px;
+    min-width: 0;
+    width: 100%;
 }
 
 .timeline-svg {
@@ -892,46 +893,28 @@ footer {
     transform: translateY(0);
 }
 
-/* Responsive timeline container */
-@media (max-width: 1024px) {
-    .timeline-container {
-        min-width: 1400px;
-    }
-}
-
+/* Responsive timeline — width set inline from entry count */
 @media (max-width: 768px) {
-    .timeline-container {
-        min-width: 1200px;
-    }
-    
     .timeline-item {
         max-width: 120px;
     }
 }
 
 @media (max-width: 640px) {
-    .timeline-container {
-        min-width: 1000px;
-    }
-    
     .timeline-item {
         max-width: 100px;
     }
-    
+
     .timeline-scroll {
         height: 224px !important;
     }
 }
 
 @media (max-width: 480px) {
-    .timeline-container {
-        min-width: 900px;
-    }
-    
     .timeline-item {
         max-width: 90px;
     }
-    
+
     .timeline-scroll {
         height: 200px !important;
     }

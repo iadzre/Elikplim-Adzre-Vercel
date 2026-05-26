@@ -67,20 +67,37 @@ export function AdminCareerPage() {
     e.preventDefault();
     if (!draft.title.trim() || !draft.period.trim()) return;
     const nextIndex = entries.length;
-    const { error } = await supabase.from('career_timeline_entries').insert({
-      ...draft,
-      title: draft.title.trim(),
-      period: draft.period.trim(),
-      detail: draft.detail.trim(),
-      sort_order: nextIndex,
-      left_offset: computeLeftOffsetPercent(nextIndex),
-    });
-    if (error) setFeedback({ type: 'error', message: error.message });
-    else {
-      setDraft(emptyEntry);
-      setFeedback({ type: 'success', message: 'Entry added.' });
-      load();
+    const nextCount = entries.length + 1;
+    const { data: created, error } = await supabase
+      .from('career_timeline_entries')
+      .insert({
+        ...draft,
+        title: draft.title.trim(),
+        period: draft.period.trim(),
+        detail: draft.detail.trim(),
+        sort_order: nextIndex,
+        left_offset: computeLeftOffsetPercent(nextIndex, nextCount),
+      })
+      .select('*')
+      .single();
+
+    if (error) {
+      setFeedback({ type: 'error', message: error.message });
+      return;
     }
+
+    const reordered = [...entries, created];
+    const results = await persistTimelineEntries(reordered);
+    const err = results.find((r) => r.error)?.error;
+    if (err) {
+      setFeedback({ type: 'error', message: err.message });
+      load();
+      return;
+    }
+
+    setDraft(emptyEntry);
+    setFeedback({ type: 'success', message: 'Entry added — timeline line extended.' });
+    load();
   }
 
   async function handleDelete(id) {
@@ -148,7 +165,7 @@ export function AdminCareerPage() {
           <AdminField label="Auto position">
             <input
               className="admin-input"
-              value={computeLeftOffsetPercent(entries.length)}
+              value={computeLeftOffsetPercent(entries.length, entries.length + 1)}
               readOnly
               disabled
             />
@@ -203,7 +220,7 @@ export function AdminCareerPage() {
                 </button>
               </div>
               <p style={{ margin: '0 0 0.75rem', fontSize: '0.8rem', color: 'var(--admin-muted)' }}>
-                Auto position: {computeLeftOffsetPercent(i)}
+                Auto position: {computeLeftOffsetPercent(i, entries.length)}
               </p>
               <div className="admin-grid-2">
                 <AdminField label="Position">

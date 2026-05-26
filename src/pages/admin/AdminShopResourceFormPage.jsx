@@ -7,6 +7,8 @@ import { AdminFeedback } from '../../components/admin/AdminFeedback';
 import { FileDropzone } from '../../components/admin/FileDropzone';
 import { AdminResourceFiles } from '../../components/admin/AdminResourceFiles';
 import { confirmAction, slugify, stringToTags, tagsToString } from '../../lib/adminUtils';
+import { ensureMyShopProfile } from '../../lib/shop/ensureProfile';
+import '../../styles/admin-shop-resource.css';
 
 const empty = {
   slug: '',
@@ -30,6 +32,33 @@ const empty = {
   seo_description: '',
 };
 
+function statusBadgeClass(status) {
+  if (status === 'published') return 'admin-badge-published';
+  if (status === 'archived') return 'admin-badge-archived';
+  return 'admin-badge-draft';
+}
+
+function statusLabel(status) {
+  if (status === 'published') return 'Published';
+  if (status === 'archived') return 'Archived';
+  return 'Draft';
+}
+
+/**
+ * @param {{ title: string; description?: string; children: import('react').ReactNode }} props
+ */
+function FormSection({ title, description, children }) {
+  return (
+    <section className="admin-shop-section">
+      <div className="admin-shop-section__head">
+        <h2 className="admin-shop-section__title">{title}</h2>
+        {description ? <p className="admin-shop-section__desc">{description}</p> : null}
+      </div>
+      <div className="admin-shop-section__body">{children}</div>
+    </section>
+  );
+}
+
 export function AdminShopResourceFormPage() {
   const { id } = useParams();
   const isNew = !id || id === 'new';
@@ -45,7 +74,7 @@ export function AdminShopResourceFormPage() {
   const [resourceId, setResourceId] = useState(isNew ? null : id);
 
   useEffect(() => {
-    document.title = isNew ? 'New Resource — Shop CMS' : 'Edit Resource — Shop CMS';
+    document.title = isNew ? 'New resource — Shop' : 'Edit resource — Shop';
     supabase
       .from('resource_categories')
       .select('id, name, slug')
@@ -91,8 +120,12 @@ export function AdminShopResourceFormPage() {
     setSaving(true);
     setFeedback(null);
 
-    const { data: session } = await supabase.auth.getSession();
-    const uid = session?.session?.user?.id ?? null;
+    const { profileId, error: profileError } = await ensureMyShopProfile();
+    if (profileError) {
+      setSaving(false);
+      setFeedback({ type: 'error', message: profileError.message });
+      return;
+    }
 
     const payload = {
       slug: form.slug || slugify(form.title),
@@ -103,7 +136,7 @@ export function AdminShopResourceFormPage() {
       preview_images: form.preview_images ?? [],
       preview_video_url: form.preview_video_url || null,
       category_id: form.category_id || null,
-      creator_id: uid,
+      creator_id: profileId,
       pricing_type: form.pricing_type,
       price: form.pricing_type === 'free' ? 0 : Number(form.price) || 0,
       compare_at_price: form.compare_at_price ? Number(form.compare_at_price) : null,
@@ -135,7 +168,7 @@ export function AdminShopResourceFormPage() {
 
     setSaving(false);
     if (error) setFeedback({ type: 'error', message: error.message });
-    else if (!isNew) setFeedback({ type: 'success', message: 'Resource saved.' });
+    else setFeedback({ type: 'success', message: isNew ? 'Resource created.' : 'Changes saved.' });
   }
 
   async function handleDelete() {
@@ -161,155 +194,281 @@ export function AdminShopResourceFormPage() {
     else if (url) update('preview_images', [...(form.preview_images ?? []), url]);
   }
 
-  if (loading) return <p className="admin-loading-line">Loading…</p>;
+  if (loading) {
+    return <p className="admin-loading-line">Loading resource…</p>;
+  }
+
+  const displaySlug = form.slug || slugify(form.title) || '…';
 
   return (
-    <>
-      <div style={{ marginBottom: '1rem' }}>
-        <Link to="/admin/shop/resources" className="admin-btn admin-btn-ghost admin-btn-sm">
-          ← Resources
-        </Link>
-      </div>
-      <h1 className="admin-page-title">{isNew ? 'New resource' : 'Edit resource'}</h1>
-      <AdminFeedback feedback={feedback} />
-
-      <form onSubmit={handleSave} className="admin-card">
-        <div className="admin-grid-2">
-          <AdminField label="Title" required>
-            <input value={form.title} onChange={(e) => update('title', e.target.value)} required />
-          </AdminField>
-          <AdminField label="Slug" required>
-            <input value={form.slug} onChange={(e) => update('slug', slugify(e.target.value))} required />
-          </AdminField>
-        </div>
-
-        <AdminField label="Short description">
-          <textarea rows={2} value={form.short_description ?? ''} onChange={(e) => update('short_description', e.target.value)} />
-        </AdminField>
-        <AdminField label="Full description">
-          <textarea rows={4} value={form.full_description ?? ''} onChange={(e) => update('full_description', e.target.value)} />
-        </AdminField>
-
-        <div className="admin-grid-2">
-          <AdminField label="Category">
-            <select value={form.category_id ?? ''} onChange={(e) => update('category_id', e.target.value)}>
-              <option value="">— None —</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </AdminField>
-          <AdminField label="License">
-            <input value={form.license_type ?? ''} onChange={(e) => update('license_type', e.target.value)} />
-          </AdminField>
-        </div>
-
-        <div className="admin-grid-2">
-          <AdminField label="Pricing">
-            <select value={form.pricing_type} onChange={(e) => update('pricing_type', e.target.value)}>
-              <option value="free">Free</option>
-              <option value="paid">Paid</option>
-            </select>
-          </AdminField>
-          <AdminField label="Price (USD)">
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={form.price}
-              disabled={form.pricing_type === 'free'}
-              onChange={(e) => update('price', e.target.value)}
-            />
-          </AdminField>
-          <AdminField label="Compare at">
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={form.compare_at_price}
-              onChange={(e) => update('compare_at_price', e.target.value)}
-            />
-          </AdminField>
-        </div>
-
-        <div className="admin-grid-2">
-          <AdminField label="Status">
-            <select value={form.status} onChange={(e) => update('status', e.target.value)}>
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
-              <option value="archived">Archived</option>
-            </select>
-          </AdminField>
-          <AdminField label="Options">
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
-              <input type="checkbox" checked={!!form.featured} onChange={(e) => update('featured', e.target.checked)} />
-              Featured on shop
-            </label>
-          </AdminField>
-        </div>
-
-        <AdminField label="Tags (comma-separated)">
-          <input value={tagsStr} onChange={(e) => setTagsStr(e.target.value)} />
-        </AdminField>
-        <div className="admin-grid-2">
-          <AdminField label="File formats">
-            <input value={formatsStr} onChange={(e) => setFormatsStr(e.target.value)} placeholder="Figma, ZIP, PDF" />
-          </AdminField>
-          <AdminField label="Compatibility">
-            <input value={compatStr} onChange={(e) => setCompatStr(e.target.value)} />
-          </AdminField>
-        </div>
-
-        <AdminField label="Thumbnail">
-          <FileDropzone accept="image/*" onFile={uploadThumbnail} />
-          {form.thumbnail_url && (
-            <img src={form.thumbnail_url} alt="" style={{ maxWidth: 160, marginTop: '0.5rem', borderRadius: 4 }} />
-          )}
-        </AdminField>
-
-        <AdminField label="Gallery previews">
-          <FileDropzone accept="image/*" onFile={uploadPreview} />
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
-            {(form.preview_images ?? []).map((url) => (
-              <div key={url} style={{ position: 'relative' }}>
-                <img src={url} alt="" style={{ width: 72, height: 72, objectFit: 'cover', borderRadius: 4 }} />
-                <button
-                  type="button"
-                  className="admin-btn admin-btn-danger admin-btn-sm"
-                  style={{ position: 'absolute', top: 2, right: 2, padding: '0 0.35rem' }}
-                  onClick={() => update('preview_images', form.preview_images.filter((u) => u !== url))}
-                >
-                  ×
-                </button>
-              </div>
-            ))}
+    <div className="admin-shop-resource">
+      <header className="admin-shop-header">
+        <div className="admin-shop-header__main">
+          <Link to="/admin/shop/resources" className="admin-shop-header__nav">
+            ← Back to resources
+          </Link>
+          <div className="admin-shop-header__title-row">
+            <h1 className="admin-shop-header__title">{isNew ? 'New resource' : form.title || 'Edit resource'}</h1>
+            <span className={`admin-badge ${statusBadgeClass(form.status)}`}>{statusLabel(form.status)}</span>
+            {form.featured && <span className="admin-badge admin-badge-featured">Featured</span>}
           </div>
-        </AdminField>
-
-        <div className="admin-grid-2">
-          <AdminField label="SEO title">
-            <input value={form.seo_title ?? ''} onChange={(e) => update('seo_title', e.target.value)} />
-          </AdminField>
-          <AdminField label="SEO description">
-            <input value={form.seo_description ?? ''} onChange={(e) => update('seo_description', e.target.value)} />
-          </AdminField>
+          <p className="admin-shop-header__slug">/resources/{displaySlug}</p>
         </div>
-
-        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-          <button type="submit" className="admin-btn admin-btn-primary" disabled={saving}>
-            {saving ? 'Saving…' : 'Save'}
-          </button>
+        <div className="admin-shop-header__actions">
           {!isNew && (
-            <button type="button" className="admin-btn admin-btn-danger" onClick={handleDelete}>
+            <button type="button" className="admin-btn admin-btn-ghost admin-btn-sm" onClick={handleDelete}>
               Delete
             </button>
           )}
+          <button type="submit" form="shop-resource-form" className="admin-btn admin-btn-primary" disabled={saving}>
+            {saving ? 'Saving…' : isNew ? 'Create resource' : 'Save changes'}
+          </button>
+        </div>
+      </header>
+
+      <AdminFeedback feedback={feedback} />
+
+      <form id="shop-resource-form" onSubmit={handleSave}>
+        <div className="admin-shop-layout">
+          <div className="admin-shop-main">
+            <FormSection title="Basics" description="Name and URL shown on the resources page.">
+              <AdminField label="Title" hint="Shown on the shop card and detail modal.">
+                <input
+                  className="admin-input"
+                  value={form.title}
+                  onChange={(e) => update('title', e.target.value)}
+                  required
+                  placeholder="e.g. Cinematic UI Kit"
+                />
+              </AdminField>
+              <AdminField label="URL slug" hint="Lowercase, hyphenated. Auto-filled from title for new resources.">
+                <input
+                  className="admin-input"
+                  value={form.slug}
+                  onChange={(e) => update('slug', slugify(e.target.value))}
+                  required
+                  placeholder="cinematic-ui-kit"
+                />
+              </AdminField>
+            </FormSection>
+
+            <FormSection title="Description" description="Short line for cards; full text in the detail view.">
+              <AdminField label="Short description">
+                <textarea
+                  className="admin-textarea"
+                  rows={2}
+                  value={form.short_description ?? ''}
+                  onChange={(e) => update('short_description', e.target.value)}
+                  placeholder="One sentence summary"
+                />
+              </AdminField>
+              <AdminField label="Full description">
+                <textarea
+                  className="admin-textarea"
+                  rows={5}
+                  value={form.full_description ?? ''}
+                  onChange={(e) => update('full_description', e.target.value)}
+                  placeholder="What’s included, how to use it, etc."
+                />
+              </AdminField>
+            </FormSection>
+
+            <FormSection title="Listing details" description="Category, tags, and file metadata.">
+              <div className="admin-form-grid">
+                <AdminField label="Category">
+                  <select
+                    className="admin-select"
+                    value={form.category_id ?? ''}
+                    onChange={(e) => update('category_id', e.target.value)}
+                  >
+                    <option value="">No category</option>
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </AdminField>
+                <AdminField label="License">
+                  <input
+                    className="admin-input"
+                    value={form.license_type ?? ''}
+                    onChange={(e) => update('license_type', e.target.value)}
+                    placeholder="commercial"
+                  />
+                </AdminField>
+              </div>
+              <AdminField label="Tags" hint="Comma-separated">
+                <input
+                  className="admin-input"
+                  value={tagsStr}
+                  onChange={(e) => setTagsStr(e.target.value)}
+                  placeholder="Figma, Web, SaaS"
+                />
+              </AdminField>
+              <div className="admin-form-grid">
+                <AdminField label="File formats" hint="Comma-separated">
+                  <input
+                    className="admin-input"
+                    value={formatsStr}
+                    onChange={(e) => setFormatsStr(e.target.value)}
+                    placeholder="Figma, PDF"
+                  />
+                </AdminField>
+                <AdminField label="Compatibility" hint="Comma-separated">
+                  <input
+                    className="admin-input"
+                    value={compatStr}
+                    onChange={(e) => setCompatStr(e.target.value)}
+                    placeholder="Figma 116+"
+                  />
+                </AdminField>
+              </div>
+            </FormSection>
+
+            <FormSection title="Gallery" description="Extra preview images in the resource modal.">
+              <FileDropzone accept="image/*" onFile={uploadPreview} />
+              {(form.preview_images ?? []).length > 0 && (
+                <div className="admin-shop-thumb-grid">
+                  {(form.preview_images ?? []).map((url) => (
+                    <div key={url} className="admin-shop-thumb">
+                      <img src={url} alt="" />
+                      <button
+                        type="button"
+                        className="admin-btn admin-btn-danger admin-btn-sm admin-shop-thumb__remove"
+                        onClick={() => update('preview_images', form.preview_images.filter((u) => u !== url))}
+                        aria-label="Remove preview"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </FormSection>
+
+            <FormSection title="SEO" description="Optional overrides for search and social previews.">
+              <div className="admin-form-grid">
+                <AdminField label="SEO title">
+                  <input
+                    className="admin-input"
+                    value={form.seo_title ?? ''}
+                    onChange={(e) => update('seo_title', e.target.value)}
+                    placeholder={form.title || 'Defaults to resource title'}
+                  />
+                </AdminField>
+                <AdminField label="SEO description">
+                  <input
+                    className="admin-input"
+                    value={form.seo_description ?? ''}
+                    onChange={(e) => update('seo_description', e.target.value)}
+                    placeholder="Short meta description"
+                  />
+                </AdminField>
+              </div>
+            </FormSection>
+          </div>
+
+          <aside className="admin-shop-aside">
+            <section className="admin-shop-section">
+              <div className="admin-shop-section__head">
+                <h2 className="admin-shop-section__title">Cover image</h2>
+              </div>
+              <div className="admin-shop-preview">
+                <div className="admin-shop-preview__frame">
+                  {form.thumbnail_url ? (
+                    <img src={form.thumbnail_url} alt="" />
+                  ) : (
+                    <p className="admin-shop-preview__empty">No cover yet</p>
+                  )}
+                </div>
+                <div className="admin-shop-preview__drop">
+                  <FileDropzone accept="image/*" onFile={uploadThumbnail} />
+                </div>
+              </div>
+            </section>
+
+            <section className="admin-shop-section">
+              <div className="admin-shop-section__head">
+                <h2 className="admin-shop-section__title">Visibility</h2>
+              </div>
+              <div className="admin-shop-section__body">
+                <AdminField label="Status">
+                  <select
+                    className="admin-select"
+                    value={form.status}
+                    onChange={(e) => update('status', e.target.value)}
+                  >
+                    <option value="draft">Draft — hidden from shop</option>
+                    <option value="published">Published — live on site</option>
+                    <option value="archived">Archived — hidden</option>
+                  </select>
+                </AdminField>
+                <label className="admin-checkbox-row">
+                  <input
+                    type="checkbox"
+                    checked={!!form.featured}
+                    onChange={(e) => update('featured', e.target.checked)}
+                  />
+                  Feature on resources page
+                </label>
+              </div>
+            </section>
+
+            <section className="admin-shop-section">
+              <div className="admin-shop-section__head">
+                <h2 className="admin-shop-section__title">Pricing</h2>
+              </div>
+              <div className="admin-shop-section__body">
+                <div className="admin-shop-pills" role="group" aria-label="Pricing type">
+                  <button
+                    type="button"
+                    className={`admin-shop-pill${form.pricing_type === 'free' ? ' is-active' : ''}`}
+                    onClick={() => update('pricing_type', 'free')}
+                  >
+                    Free
+                  </button>
+                  <button
+                    type="button"
+                    className={`admin-shop-pill${form.pricing_type === 'paid' ? ' is-active' : ''}`}
+                    onClick={() => update('pricing_type', 'paid')}
+                  >
+                    Paid
+                  </button>
+                </div>
+                <div className={`admin-shop-price-row${form.pricing_type === 'free' ? ' is-disabled' : ''}`}>
+                  <AdminField label="Price (USD)">
+                    <input
+                      className="admin-input"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={form.price}
+                      disabled={form.pricing_type === 'free'}
+                      onChange={(e) => update('price', e.target.value)}
+                    />
+                  </AdminField>
+                  <AdminField label="Compare at (USD)" hint="Optional strike price">
+                    <input
+                      className="admin-input"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={form.compare_at_price}
+                      disabled={form.pricing_type === 'free'}
+                      onChange={(e) => update('compare_at_price', e.target.value)}
+                    />
+                  </AdminField>
+                </div>
+              </div>
+            </section>
+          </aside>
         </div>
       </form>
 
-      <AdminResourceFiles resourceId={resourceId} />
-    </>
+      <div className="admin-shop-downloads">
+        <AdminResourceFiles resourceId={resourceId} />
+      </div>
+    </div>
   );
 }

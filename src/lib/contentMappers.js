@@ -94,14 +94,16 @@ export function mapHomeSlide(row) {
 
 /**
  * @param {Record<string, unknown>} row
- * @param {number} [index]
+ * @param {number} index
+ * @param {number} count total entries in timeline
  * @returns {CareerTimelineEntry}
  */
-export function mapCareerTimelineEntry(row, index = 0) {
+export function mapCareerTimelineEntry(row, index, count) {
+  const n = Math.max(1, count ?? index + 1);
   return {
     id: row.id,
     position: row.position,
-    left: computeLeftOffsetPercent(index),
+    left: computeLeftOffsetPercent(index, n),
     period: row.period,
     title: row.title,
     detail: row.detail,

@@ -6,6 +6,7 @@ import {
   computeTimelineSvgLayout,
   TIMELINE_ITEM_WIDTH,
   TIMELINE_SVG_Y,
+  timelinePointRadius,
   timelineTickStroke,
   timelineTickStrokeWidth,
 } from '../../lib/careerTimelineLayout';
@@ -125,30 +126,44 @@ export function CareerTimeline() {
             className="timeline-scroll relative h-56 sm:h-64 md:h-72 overflow-x-auto overflow-y-hidden scroll-smooth w-full"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            <div className="relative timeline-container h-full" style={{ minWidth: timelineMinWidth }}>
+            <div
+              className="relative timeline-container h-full"
+              style={{ minWidth: `${timelineMinWidth}px` }}
+            >
               <svg
                 className="absolute top-1/2 left-0 w-full h-full transform -translate-y-1/2 timeline-svg"
                 viewBox={`0 0 ${timelineLayout.viewBoxWidth} ${timelineLayout.viewBoxHeight}`}
                 preserveAspectRatio="none"
+                aria-hidden
               >
                 <path
-                  d={`M ${timelineLayout.lineStart} ${TIMELINE_SVG_Y} L ${timelineLayout.lineEnd} ${TIMELINE_SVG_Y}`}
+                  d={`M ${timelineLayout.linePathStart} ${TIMELINE_SVG_Y} L ${timelineLayout.linePathEnd} ${TIMELINE_SVG_Y}`}
                   stroke="#d1d5db"
                   strokeWidth="1.5"
                   fill="none"
                   vectorEffect="nonScalingStroke"
                 />
                 {timelineLayout.tickXs.map((x, i) => (
-                  <line
-                    key={x}
-                    x1={x}
-                    y1={TIMELINE_SVG_Y - 10}
-                    x2={x}
-                    y2={TIMELINE_SVG_Y + 10}
-                    stroke={timelineTickStroke(i, entries.length)}
-                    strokeWidth={timelineTickStrokeWidth(i, entries.length)}
-                    vectorEffect="nonScalingStroke"
-                  />
+                  <g key={`tick-${i}-${x}`}>
+                    <line
+                      x1={x}
+                      y1={TIMELINE_SVG_Y - 10}
+                      x2={x}
+                      y2={TIMELINE_SVG_Y + 10}
+                      stroke={timelineTickStroke(i, entries.length)}
+                      strokeWidth={timelineTickStrokeWidth(i, entries.length)}
+                      vectorEffect="nonScalingStroke"
+                    />
+                    <circle
+                      cx={x}
+                      cy={TIMELINE_SVG_Y}
+                      r={timelinePointRadius(i, entries.length)}
+                      fill="#ffffff"
+                      stroke={timelineTickStroke(i, entries.length)}
+                      strokeWidth={timelineTickStrokeWidth(i, entries.length)}
+                      vectorEffect="nonScalingStroke"
+                    />
+                  </g>
                 ))}
               </svg>
               {entries.map((item) => (
