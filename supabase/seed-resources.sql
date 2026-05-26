@@ -12,7 +12,8 @@ values
   ('Production Systems', 'production', 'Workflows that scale', '⚙', false, 6),
   ('Design Resources', 'design', 'Textures, type, and utilities', '✦', false, 7),
   ('Code Components', 'code', 'React and front-end blocks', '</>', false, 8),
-  ('Business Documents', 'business', 'Proposals and client kits', '▤', false, 9)
+  ('Business Documents', 'business', 'Proposals and client kits', '▤', false, 9),
+  ('Lightroom Mobile Presets', 'lightroom-mobile-presets', 'Color grades and looks for Adobe Lightroom mobile', '◐', true, 10)
 on conflict (slug) do update set
   name = excluded.name,
   description = excluded.description,
