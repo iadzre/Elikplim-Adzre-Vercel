@@ -260,36 +260,8 @@ export async function startStripeCheckout(purchaseId, resourceSlug) {
   return { url: body.url, sessionId: body.sessionId, error: null };
 }
 
-async function downloadResourceFileViaClient(resourceId) {
-  const { data: files, error: filesError } = await supabase.rpc('get_downloadable_files', {
-    p_resource_id: resourceId,
-  });
-  if (filesError) return { data: null, error: filesError };
-  if (!files?.length) {
-    return {
-      data: null,
-      error: new Error('No download file is attached. Upload one in Admin → Shop.'),
-    };
-  }
-
-  const file = files[0];
-  const { error: logError } = await supabase.rpc('record_resource_download', {
-    p_resource_id: resourceId,
-    p_resource_file_id: file.file_id,
-    p_session_id: getSessionId(),
-  });
-  if (logError) return { data: null, error: logError };
-
-  const { data: signed, error: signError } = await supabase.storage
-    .from(file.storage_bucket)
-    .createSignedUrl(file.file_path, 120, { download: file.file_name });
-
-  if (signError) return { data: null, error: signError };
-  return {
-    data: { file, signedUrl: signed.signedUrl },
-    error: null,
-  };
-}
+const DOWNLOAD_API_UNAVAILABLE =
+  'Downloads are not configured. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (local) or Vercel env (production), then restart.';
 
 export async function downloadResourceFile(resourceId) {
   if (!isSupabaseConfigured()) {
@@ -317,8 +289,8 @@ export async function downloadResourceFile(resourceId) {
       body: JSON.stringify({ resourceId, sessionId: getSessionId() }),
     });
 
-    const isJson = res.headers.get('content-type')?.includes('application/json');
-    if (isJson) {
+    const contentType = res.headers.get('content-type') ?? '';
+    if (contentType.includes('application/json')) {
       const body = await res.json();
       if (res.ok && body.signedUrl) {
         return {
@@ -330,11 +302,18 @@ export async function downloadResourceFile(resourceId) {
         return { data: null, error: new Error(body.error) };
       }
     }
-  } catch {
-    /* fall through to client signing (e.g. local Vite without API routes) */
+
+    if (res.status === 404 || res.status === 405) {
+      return { data: null, error: new Error(DOWNLOAD_API_UNAVAILABLE) };
+    }
+  } catch (err) {
+    return {
+      data: null,
+      error: err instanceof Error ? err : new Error(DOWNLOAD_API_UNAVAILABLE),
+    };
   }
 
-  return downloadResourceFileViaClient(resourceId);
+  return { data: null, error: new Error(DOWNLOAD_API_UNAVAILABLE) };
 }
 
 export async function createReview(resourceId, rating, reviewText = '') {

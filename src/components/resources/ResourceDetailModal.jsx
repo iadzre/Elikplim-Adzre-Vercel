@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { LazyImage } from '../shared/LazyImage';
 import { downloadResourceFile } from '../../lib/services/resourcesService';
+import { triggerFileDownload } from '../../lib/resources/triggerDownload';
 import { ALL_DOWNLOADS_FREE } from '../../lib/resources/marketplaceConfig';
 import { formatResourceStatsLine } from '../../lib/resources/formatResourceStats';
 
@@ -52,7 +53,7 @@ export function ResourceDetailModal({
       return;
     }
     if (data?.signedUrl) {
-      window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
+      triggerFileDownload(data.signedUrl, data.file?.file_name);
       setMessage({ type: 'success', text: 'Download started.' });
       onAccessGranted();
       onStatsUpdated?.();

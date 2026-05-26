@@ -5,7 +5,7 @@ async function storageObjectExists(admin, bucket, filePath) {
   if (!error) return true;
   const msg = (error.message ?? '').toLowerCase();
   if (msg.includes('not found') || msg.includes('object not found')) return false;
-  return false;
+  throw new Error(error.message ?? 'Could not verify file in storage');
 }
 
 export default async function handler(req, res) {
