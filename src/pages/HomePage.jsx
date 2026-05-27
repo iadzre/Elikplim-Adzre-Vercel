@@ -44,14 +44,14 @@ export function HomePage() {
   return (
     <PageLayout
       htmlClass="index-page-html"
-      bodyClass="index-page bg-gradient-to-b from-[#f3fcf0] to-[#cddcc8] min-h-screen flex flex-col"
+      bodyClass="index-page bg-[#cddcc8] overflow-hidden"
       headerVariant="index"
       headerRef={headerRef}
-      pageShellClassName="w-full h-screen overflow-hidden page-shell"
+      pageShellClassName="w-full overflow-hidden page-shell index-page-shell"
     >
-      <main className="w-full overflow-hidden flex flex-col">
-        <section className="w-full flex flex-col overflow-x-hidden">
-          <div className="w-full overflow-x-hidden" style={{ height: '100vh' }}>
+      <main className="index-page-main w-full overflow-hidden flex flex-col">
+        <section className="w-full flex flex-col overflow-x-hidden flex-1 min-h-0">
+          <div className="index-hero-viewport w-full overflow-x-hidden">
             <div className="relative w-full h-full bg-white overflow-hidden transition-all duration-300">
               <div id="image-slider" className="hero">
                 {showEmptyState && (

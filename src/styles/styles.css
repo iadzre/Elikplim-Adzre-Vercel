@@ -109,7 +109,7 @@ section, div {
 
 /* Responsive fixes for very small screens */
 @media (max-width: 320px) {
-    .page-shell {
+    .page-shell:not(.index-page-shell) {
         padding: 0.5rem;
     }
     
@@ -753,9 +753,47 @@ header.header-blur button {
 
 /* Main Content Responsive */
 @media (max-width: 1024px) {
-    main {
+    main:not(.index-page-main) {
         padding-top: 1rem;
         padding-bottom: 1rem;
+    }
+}
+
+/* Home / index — full viewport hero, no mobile gutters */
+html.index-page-html,
+body.index-page {
+    height: 100%;
+    height: 100dvh;
+    overflow: hidden !important;
+}
+
+body.index-page #root {
+    min-height: 100dvh;
+    height: 100dvh;
+}
+
+body.index-page .index-page-shell {
+    min-height: 100dvh;
+    height: 100dvh;
+    padding: 0;
+}
+
+body.index-page .index-page-main {
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.index-hero-viewport {
+    height: 100%;
+    height: 100dvh;
+    min-height: 0;
+}
+
+@media (max-width: 320px) {
+    body.index-page .index-page-shell {
+        padding: 0;
     }
 }
 
