@@ -100,7 +100,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="topic" className="block text-black text-[10px] md:text-xs tracking-2x uppercase josefin mb-1.5">
-          TOPIC
+          TITLE / ROLE
         </label>
         <input
           type="text"
@@ -111,7 +111,7 @@ export function ContactForm() {
           onChange={(e) => setTopic(e.target.value)}
           aria-describedby="topic-error"
           className={`w-full px-3 py-2 md:py-2 bg-transparent border border-gray-300 focus:outline-none focus:border-[#F45D01] transition-colors duration-300 text-black placeholder-gray-400 text-sm${fieldErrors.topic ? ' error' : ''}`}
-          placeholder="What topic would you like to discuss?"
+          placeholder="e.g. Wedding client, Brand manager"
         />
         <span
           id="topic-error"
@@ -123,7 +123,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="message" className="block text-black text-[10px] md:text-xs tracking-2x uppercase josefin mb-1.5">
-          YOUR MESSAGE
+          YOUR TESTIMONIAL
         </label>
         <textarea
           id="message"
@@ -134,7 +134,7 @@ export function ContactForm() {
           onChange={(e) => setMessage(e.target.value)}
           aria-describedby="message-error"
           className={`w-full px-3 py-2 md:py-2 bg-transparent border border-gray-300 focus:outline-none focus:border-[#F45D01] transition-colors duration-300 text-black placeholder-gray-400 resize-none text-sm${fieldErrors.message ? ' error' : ''}`}
-          placeholder="Tell us more about your message..."
+          placeholder="Share your experience — leave a blank line between paragraphs."
         />
         <span
           id="message-error"
@@ -150,7 +150,7 @@ export function ContactForm() {
         aria-busy={isSubmitting}
         className="w-full px-4 py-2.5 md:py-2 bg-[#F45D01] text-white hover:bg-opacity-90 transition-all duration-300 text-[10px] md:text-xs tracking-2x uppercase josefin font-medium disabled:opacity-70"
       >
-        {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
+        {isSubmitting ? 'SENDING...' : 'SUBMIT TESTIMONIAL'}
       </button>
     </form>
   );

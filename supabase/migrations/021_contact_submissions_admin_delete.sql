@@ -1,8 +1,11 @@
--- Allow authenticated admins to delete visitor notes ("Leave a Note" submissions)
--- from the CMS. Insert stays anon-only, select stays authenticated-only.
+-- Allow CMS admins (profiles.role = 'admin') to delete visitor notes ("Leave a Note"
+-- submissions). Marketplace shoppers (customer/creator roles) share the same auth
+-- session, so restrict deletes to admins only. Insert stays anon-only, select stays
+-- authenticated-only.
 
 drop policy if exists "contact_authenticated_delete" on public.contact_submissions;
-create policy "contact_authenticated_delete"
+drop policy if exists "contact_admin_delete" on public.contact_submissions;
+create policy "contact_admin_delete"
   on public.contact_submissions for delete
   to authenticated
-  using (true);
+  using (public.is_marketplace_admin());

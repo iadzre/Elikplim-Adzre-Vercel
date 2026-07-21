@@ -63,11 +63,14 @@ export function useContactForm() {
 
     setIsSubmitting(true);
 
-    const { error } = await supabase.from('contact_submissions').insert({
-      name: data.name.trim(),
-      email: data.email.trim(),
-      topic: data.topic.trim(),
-      message: data.message.trim(),
+    // "Leave a Note" submissions become pending client testimonials. They are held
+    // for admin approval in the CMS before appearing in the testimonials carousel.
+    const { error } = await supabase.from('testimonials').insert({
+      author_name: data.name.trim(),
+      author_title: data.topic.trim() || null,
+      content: data.message.trim(),
+      rating: 5,
+      status: 'pending',
     });
 
     setIsSubmitting(false);
@@ -79,7 +82,7 @@ export function useContactForm() {
       return { ok: false, error };
     }
 
-    setFormMessage('Thank you! Your message has been sent successfully.');
+    setFormMessage('Thank you! Your note has been submitted and will appear once approved.');
     setIsSuccess(true);
     return { ok: true };
   }, [clearFormState]);

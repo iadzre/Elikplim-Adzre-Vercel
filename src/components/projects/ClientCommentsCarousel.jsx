@@ -1,6 +1,21 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 
 /**
+ * Split a testimonial quote into paragraphs on blank lines (or single line breaks),
+ * trimming surrounding whitespace and dropping empty segments.
+ * @param {string} [quote]
+ * @returns {string[]}
+ */
+function splitQuoteIntoParagraphs(quote) {
+  if (!quote) return [];
+  const paragraphs = quote
+    .split(/\n{2,}|\r\n{2,}|\n|\r/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+  return paragraphs.length > 0 ? paragraphs : [quote.trim()];
+}
+
+/**
  * @param {{ testimonials: Array<{ id: string; quote: string; author: string; role: string }>; loading?: boolean }} props
  */
 export function ClientCommentsCarousel({ testimonials, loading = false }) {
@@ -56,7 +71,7 @@ export function ClientCommentsCarousel({ testimonials, loading = false }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="max-w-3xl mx-auto relative">
+      <div className="max-w-5xl mx-auto relative">
         <div className="mb-6 text-center">
           <p className="text-[10px] uppercase tracking-[0.4em] text-[#F45D01]">Client Testimonials</p>
         </div>
@@ -65,12 +80,27 @@ export function ClientCommentsCarousel({ testimonials, loading = false }) {
             className="client-comments-wrapper flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
-            {testimonials.map((item) => (
+            {testimonials.map((item) => {
+              const paragraphs = splitQuoteIntoParagraphs(item.quote);
+              return (
               <div key={item.id} className="client-comment-card min-w-full flex-shrink-0 px-4">
                 <div className="text-center">
-                  <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-6 max-w-2xl mx-auto">
-                    &quot;{item.quote}&quot;
-                  </p>
+                  <div className="mb-6 max-w-4xl mx-auto space-y-4">
+                    {paragraphs.map((paragraph, paragraphIndex) => (
+                      <p
+                        key={paragraphIndex}
+                        className="text-gray-700 text-sm md:text-base leading-relaxed"
+                      >
+                        {paragraphs.length === 1
+                          ? `\u201C${paragraph}\u201D`
+                          : paragraphIndex === 0
+                            ? `\u201C${paragraph}`
+                            : paragraphIndex === paragraphs.length - 1
+                              ? `${paragraph}\u201D`
+                              : paragraph}
+                      </p>
+                    ))}
+                  </div>
                   <div className="flex flex-col items-center">
                     <h4 className="font-semibold text-[#F45D01] text-sm mb-1 uppercase tracking-[0.2em]">
                       {item.author}
@@ -79,7 +109,8 @@ export function ClientCommentsCarousel({ testimonials, loading = false }) {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
         <div className="flex justify-center items-center space-x-2 sm:space-x-2.5 md:space-x-3 mt-4 sm:mt-6">

@@ -234,8 +234,8 @@ export function AdminTestimonialsPage() {
               />
               {form.author_image_url && <img src={form.author_image_url} alt="" className="admin-thumb" style={{ marginTop: '0.5rem', borderRadius: '50%' }} />}
             </AdminField>
-            <AdminField label="Comment">
-              <textarea className="admin-textarea" value={form.content} onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))} required />
+            <AdminField label="Comment" hint="Leave a blank line between paragraphs to split the testimonial into multiple paragraphs.">
+              <textarea className="admin-textarea" rows={6} value={form.content} onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))} required />
             </AdminField>
             <AdminField label={`Rating (${form.rating} stars)`}>
               <input type="range" min={1} max={5} value={form.rating} onChange={(e) => setForm((f) => ({ ...f, rating: Number(e.target.value) }))} style={{ width: '100%' }} />
