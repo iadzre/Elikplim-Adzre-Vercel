@@ -91,6 +91,9 @@ const AdminShopPurchasesPage = lazy(() =>
 const AdminShopNewsletterPage = lazy(() =>
   import('./pages/admin/AdminShopNewsletterPage').then((m) => ({ default: m.AdminShopNewsletterPage }))
 );
+const AdminNotesPage = lazy(() =>
+  import('./pages/admin/AdminNotesPage').then((m) => ({ default: m.AdminNotesPage }))
+);
 
 function PageFallback() {
   return (
@@ -166,6 +169,7 @@ function AppContent() {
               <Route path="/admin/skills" element={<AdminSkillsPage />} />
               <Route path="/admin/testimonials" element={<AdminTestimonialsPage />} />
               <Route path="/admin/contact" element={<AdminContactPage />} />
+              <Route path="/admin/notes" element={<AdminNotesPage />} />
               <Route path="/admin/navigation" element={<AdminNavigationPage />} />
               <Route path="/admin/settings" element={<AdminSettingsPage />} />
             </Route>

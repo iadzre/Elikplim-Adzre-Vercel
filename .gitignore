@@ -4,6 +4,7 @@ dist
 .env.*
 !.env.example
 .DS_Store
+._*
 website.zip
 .vscode
 

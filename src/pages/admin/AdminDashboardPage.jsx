@@ -17,6 +17,7 @@ const QUICK_LINKS = [
   { to: '/admin/skills', label: 'Manage Skills' },
   { to: '/admin/testimonials', label: 'Testimonials' },
   { to: '/admin/contact', label: 'Contact & Social' },
+  { to: '/admin/notes', label: 'Notes Left' },
   { to: '/admin/navigation', label: 'Navigation' },
   { to: '/admin/settings', label: 'Site Settings' },
 ];
@@ -34,6 +35,7 @@ export function AdminDashboardPage() {
     shopDraft: 0,
     shopPendingReviews: 0,
     shopPurchases: 0,
+    notes: 0,
     hasHero: false,
     hasAbout: false,
     loading: true,
@@ -55,6 +57,7 @@ export function AdminDashboardPage() {
         shopDr,
         shopReviews,
         shopPurch,
+        notes,
         hero,
         about,
       ] = await Promise.all([
@@ -69,6 +72,7 @@ export function AdminDashboardPage() {
         supabase.from('resources').select('id', { count: 'exact', head: true }).eq('status', 'draft'),
         supabase.from('reviews').select('id', { count: 'exact', head: true }).eq('approved', false),
         supabase.from('purchases').select('id', { count: 'exact', head: true }).eq('payment_status', 'completed'),
+        supabase.from('contact_submissions').select('id', { count: 'exact', head: true }),
         supabase.from('hero').select('id').limit(1).maybeSingle(),
         supabase.from('about').select('id').limit(1).maybeSingle(),
       ]);
@@ -85,6 +89,7 @@ export function AdminDashboardPage() {
         shopDr.error ||
         shopReviews.error ||
         shopPurch.error ||
+        notes.error ||
         hero.error ||
         about.error;
 
@@ -100,6 +105,7 @@ export function AdminDashboardPage() {
         shopDraft: shopDr.count ?? 0,
         shopPendingReviews: shopReviews.count ?? 0,
         shopPurchases: shopPurch.count ?? 0,
+        notes: notes.count ?? 0,
         hasHero: Boolean(hero.data),
         hasAbout: Boolean(about.data),
         loading: false,
@@ -161,6 +167,11 @@ export function AdminDashboardPage() {
             <div className="sub">
               slides · hero {stats.hasHero ? '✓' : '—'} · about {stats.hasAbout ? '✓' : '—'}
             </div>
+          </div>
+          <div className="admin-stat-card">
+            <h3>Notes</h3>
+            <div className="value">{stats.notes}</div>
+            <div className="sub">from “Leave a Note”</div>
           </div>
         </div>
       )}

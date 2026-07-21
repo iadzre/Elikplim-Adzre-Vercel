@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "clean:junk": "find . -name '._*' -type f -delete; find . -name '.DS_Store' -type f -delete",
     "seed:generate": "node scripts/generate-seed.mjs",
     "media:migrate": "node scripts/migrate-media-to-storage.mjs",
     "media:pull": "git lfs install && git lfs pull",
