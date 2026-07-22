@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { SidePanelProvider } from './context/SidePanelContext';
 import { SiteDataProvider } from './context/SiteDataContext';
 import { useCustomCursor } from './hooks/useCustomCursor';
@@ -91,10 +91,6 @@ const AdminShopPurchasesPage = lazy(() =>
 const AdminShopNewsletterPage = lazy(() =>
   import('./pages/admin/AdminShopNewsletterPage').then((m) => ({ default: m.AdminShopNewsletterPage }))
 );
-const AdminNotesPage = lazy(() =>
-  import('./pages/admin/AdminNotesPage').then((m) => ({ default: m.AdminNotesPage }))
-);
-
 function PageFallback() {
   return (
     <div className="min-h-[40vh] flex items-center justify-center text-[#2A2F7F] josefin text-sm tracking-widest uppercase">
@@ -169,7 +165,7 @@ function AppContent() {
               <Route path="/admin/skills" element={<AdminSkillsPage />} />
               <Route path="/admin/testimonials" element={<AdminTestimonialsPage />} />
               <Route path="/admin/contact" element={<AdminContactPage />} />
-              <Route path="/admin/notes" element={<AdminNotesPage />} />
+              <Route path="/admin/notes" element={<Navigate to="/admin/testimonials" replace />} />
               <Route path="/admin/navigation" element={<AdminNavigationPage />} />
               <Route path="/admin/settings" element={<AdminSettingsPage />} />
             </Route>
